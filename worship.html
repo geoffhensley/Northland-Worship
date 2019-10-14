@@ -1,0 +1,3034 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
+<script type="text/javascript">WebFont.load({  google: {    families: ["Lato:100,100italic,300,300italic,400,400italic,700,700italic,900,900italic","Inconsolata:400,700","Roboto:300,regular,500,700,900","Roboto Condensed:300,regular,700","Roboto Mono:regular"]  }});</script>
+
+    <!-- Bootstrap CSS -->
+<!--	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700|Roboto:400,700" rel="stylesheet">	-->
+
+
+
+    <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+	<link rel="stylesheet" href="/newworship/newworship">
+
+    <title>Northland Worship Page</title>
+	
+</head>
+
+<body>
+<?php
+
+	// Establish chat id, use member ID if logged in, otherwise generate new one
+	$member_id_reference = $this->EE->session->userdata('member_id');
+	if ($member_id_reference == 0) 
+	{
+		$member_id_reference = 1;
+
+		$sql="UPDATE usercounter SET counter = counter + 1";
+		mysql_query($sql) or die();
+		$sql = "SELECT counter FROM usercounter";
+		$result = mysql_query($sql) or die();
+
+		while ($row = mysql_fetch_array($result)) {
+			$member_id_reference = $row['counter'];
+		}
+	}
+
+?>
+
+<!-- Paceholder for style change -->
+<div id="friends_hide"><style></style></div>
+
+<!-- Modal -->
+<div data-swiftype-index="false" class="modal fade" id="worshipModal" tabindex="-1" role="dialog" aria-labelledby="worshipModalTitle" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="worshipModalTitle">Northland - Worship</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+
+			<div class="modal-body">aaa
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<!--				<button type="button" class="btn btn-primary">Save changes</button>	-->
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- ================================================================================== -->
+<!-- 							Welcome Modal for Logged In user						-->
+<!-- ================================================================================== -->
+<div data-swiftype-index="false" class="modal fade" id="welcomeLoggedInModal" tabindex="-1" role="dialog" aria-labelledby="welcomeLoggedInModalLabel" data-backdrop="false" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="welcomeModalLabel">Welcome back {screen_name}!</h4>
+			</div>
+
+			<div class="modal-body">
+				<form id="welcomeLoggedIn" action="#" class="form-horizontal">
+					<div class="form-group">
+						<label for="num_worshipers" class="control-label">How many people are worshiping with you today?</label>
+						<input type="text" class="form-control" id="num_worshipers" name="num_worshipers" required maxlength="3">
+					</div>
+
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-block" id="update_number_worshipers">Submit</button>
+					</div>
+
+					<div id="welcomeLoggedIn_error" 	class="alert alert-danger" role="alert" style="display:none">
+						Message for immediate attention.
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- ================================================================================== -->
+<!-- 									Welcome Modal 									-->
+<!-- ================================================================================== -->
+<div data-swiftype-index="false" class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="welcomeModal" data-backdrop="false" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="welcomeModalLabel">Welcome to Online Worship at Northland!</h4>
+			</div>
+
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-md-12 col-sm-12">
+						<button type="button" class="btn btn-primary btn-block login-button" id="login-button">Click to Login with Northland</button>
+					</div>
+				</div>
+				<br />
+				<div class="row">
+					<div class="col-md-12 col-sm-12">
+						<button type="button" class="btn btn-primary btn-block login-button-anonymous">Join Worship without Login</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- ================================================================================== -->
+<!-- 						Welcome Modal for Not Logged In user						-->
+<!-- ================================================================================== -->
+<div data-swiftype-index="false" class="modal fade" id="welcomeNotLoggedInModal" tabindex="-1" role="dialog" aria-labelledby="welcomeNotLoggedInModalLabel" data-backdrop="false" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="welcomeModalLabel">Welcome to Online Worship at Northland!</h4>
+			</div>
+
+			<div class="modal-body">
+				<form id="welcomeNotLoggedIn" action="#" class="form-horizontal">
+					<div class="form-group">
+						<label for="name_worshipers" class="col-sm-12 control-label">Enter your name</label>
+						<div class="col-sm-12">
+							<input type="text" class="form-control" id="name_worshipers" name="name_worshipers" required maxlength="20">
+						</div>
+					</div>
+					<div id="alert_enter_name" 		class="alert alert-warning" role="alert" style="display:none">Please enter a name to join worship..</div>
+					<div id="alert_alphabet" 	class="alert alert-warning" role="alert" style="display:none">Please use alphabet or space for your name.</div>
+					<div id="multiple_username" 	class="alert alert-warning" role="alert" style="display:none">
+						We found multiple accounts with your email address.
+						Send us an Email to <a href="mailto:keehong.pang@northlandchurch.net">keehong.pang@northlandchurch.net</a> to fix this.
+					</div>
+
+					<div class="form-group">
+						<label for="num_worshipers1" class="col-sm-12 control-label">How many people are worshiping with you today?</label>
+						<div class="col-sm-12">
+							<input type="text" class="form-control" id="num_worshipers1" name="num_worshipers1" required maxlength="3">
+						</div>
+					</div>
+
+					<div id="welcomeNotLoggedIn_error" 	class="alert alert-danger" role="alert" style="display:none">
+						Message for immediate attention.
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-12">
+							<button type="submit" class="btn btn-primary btn-block" id="update_number_worshipers1">Join</button>
+						</div>
+					</div>
+				</form>
+			</div>
+
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info btn-block welcome-button">Back to Selection</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- ================================================================================== -->
+<!-- 								User Login Modal 									-->
+<!-- ================================================================================== -->
+<div data-swiftype-index="false" class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" data-backdrop="false" data-keyboard="false">
+	<div class="modal-dialog " role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="loginModalLabel">Sign In</h4>
+			</div>
+
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-sm-12">
+						<p>
+						Click <a href="#" class="clickRegisterLink" >here to create an account</a>, or log in to your account below.
+						</p>
+					</div>
+				</div>
+
+				{exp:member:login_form form_class="login_form" id="Login" return="<?php echo $_SERVER['HTTP_REFERER']; ?>"}
+					<div class="form-group row">
+						<label for="username" class="col-sm-2 control-label">Email</label>
+						<div class="col-sm-10">
+							<input type="email" class="form-control" id="username" name="username">
+						</div>
+					</div>
+					<div id="invalid_username" 	class="alert alert-warning" role="alert" style="display:none">
+						We need a valid email to proceed.
+					</div>
+					<div id="noregister_username" 	class="alert alert-warning" role="alert" style="display:none">
+						Your email address isn't in our system. 
+						<a href="#" class="clickRegisterLink" >Click here to create a new account.</a>
+					</div>
+					<div id="multiple_username" 	class="alert alert-warning" role="alert" style="display:none">
+						We found multiple accounts with your email address. 
+						Send us an Email to <a href="mailto:keehong.pang@northlandchurch.net">keehong.pang@northlandchurch.net</a> to fix this.
+					</div>
+
+					<div class="form-group row">
+						<label for="password" class="col-sm-2 control-label">Password</label>
+						<div class="col-sm-10">
+							<input type="password" class="form-control"  name="password" id="password">
+						</div>
+					</div>
+					<div id="incorrect_password" 	class="alert alert-warning" role="alert" style="display:none">
+						<strong>Incorrect Password Entered</strong><br>
+						<a href="#" id="reset_pw">Forgot your password? Click here to have your password emailed.</a>
+					</div>
+
+					{!-- AUTO-LOGIN--}
+					<div class="form-group row">
+						<div class="col-sm-10 offset-sm-2">
+							<input type="checkbox" class="form-check-input"  name="auto_login" id="auto_login" checked />
+							<label class="form-check-label" for="auto_login">Auto-login on future visit?</label>
+						</div>
+					</div>
+					
+					<div id="login_error" 	class="alert alert-danger" role="alert" style="display:none">
+						Message for immediate attention.
+					</div>
+
+					<div class="form-group row">
+						<div class="col">
+							<button type="submit" class="btn btn-primary btn-block">Login</button>
+						</div>
+					</div>
+				{/exp:member:login_form}
+
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info btn-block welcome-button">Back to Selection</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- ================================================================================== -->
+<!-- 								User Registration Modal 							-->
+<!-- ================================================================================== -->
+<div data-swiftype-index="false" class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" data-backdrop="false" data-keyboard="false">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="registerModalLabel">Create a New Account</h4>
+			</div>
+
+			<div class="modal-body">
+				<form id="Register" action="#" class="">
+					<div class="form-group row">
+						<label for="username" class="col-sm-3 control-label">Email</label>
+						<div class="col-sm-9">
+							<input type="email" class="form-control" id="regusername" name="regusername" required maxlength="60">
+						</div>
+					</div>
+					<div id="invalid_username" 		class="alert alert-warning" role="alert" style="display:none">We need a valid email to proceed.</div>
+					<div id="registered_username" 	class="alert alert-warning" role="alert" style="display:none">Your email address is already registered. <a href="#" class="clickLoginLink">Click here to login.</a></div>
+					<div id="multiple_username" 	class="alert alert-warning" role="alert" style="display:none">
+						We found multiple accounts with your email address. 
+						Send us an Email to <a href="mailto:keehong.pang@northlandchurch.net">keehong.pang@northlandchurch.net</a> to fix this.
+					</div>
+
+					<div class="form-group row">
+						<label for="firstname" class="col-sm-3 control-label">First Name</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control required" name="firstname" id="firstname" required maxlength="20">
+						</div>
+					</div>
+					<div id="required_firstname" class="alert alert-warning" role="alert" style="display:none">Please enter your first name.</div>
+
+					<div class="form-group row">
+						<label for="lastname" class="col-sm-3 control-label">Last Name</label>
+						<div class="col-sm-9">
+							<input type="text" class="form-control required" name="lastname" id="lastname" required maxlength="20">
+						</div>
+					</div>
+					<div id="required_lastname" class="alert alert-warning" role="alert" style="display:none">Please enter your last name.</div>
+
+					
+					<div class="form-group row">
+						<label for="password" class="col-sm-3 control-label">Password</label>
+						<div class="col-sm-9">
+							<input type="password" class="form-control required-password"  name="regpassword" id="regpassword" required maxlength="20">
+						</div>
+					</div>
+					<div id="errorlength_password" 	class="alert alert-warning" role="alert" style="display:none">Password must be at least 6 characters long.</div>
+					<div id="errorcomb_password" 	class="alert alert-warning" role="alert" style="display:none">Password must contain at least one number, one lowercase and one uppercase letter.</div>
+
+					<div class="form-group row">
+						<label for="confirmpw" class="col-sm-3 control-label" style="line-height:1.2">Confirm Password</label>
+						<div class="col-sm-9">
+							<input type="password" class="form-control required-confirmpw"  name="confirmpw" id="confirmpw" required maxlength="20">
+						</div>
+					</div>
+					<div id="error_confirmpw" class="alert alert-warning" role="alert" style="display:none">The Password does not match.</div>
+
+					<input type="hidden" name="accept_terms" 	id="accept_terms" value="y"  />
+					
+					<div id="register_error" 	class="alert alert-danger" role="alert" style="display:none">
+						Message for immediate attention.
+					</div>
+
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary btn-block">Register</button>
+					</div>
+				</form>	
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-info btn-block welcome-button">Back to Selection</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<div class="container-fluid" id="rootContainer">
+
+	{if !logged_in}
+	{!-- Used for profanity filter since filter can't update textbox directly --}
+	<div id="anonymous_name" style="display: none"></div>
+	{/if}
+	
+    <h1>Northland Worship Page!</h1>
+
+	{if service_live == "true"}
+		<div id="push-bar-empty"></div>
+	{if:else}
+		<div class="alert alert-secondary alert-dismissible fade show" role="alert">
+			Welcome to online worship at Northland! We currently aren't in live worship, but you can watch the latest worship service below.
+			<a href="https://www.northlandchurch.net/give" target="_blank" class="btn btn-primary">GIVE ONLINE</a>
+			
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		</div>
+	{/if}
+
+	<div class="row">
+		<div class="col header-small-right">
+		{if group_id == "1" || group_id == "19" || group_id == "13"}
+
+			<script type="text/javascript">
+
+			function AdminServiceLiveCheck() {
+//				console.log("Calling AdminUpdateServiceLiveCheck(): " + new Date());
+				AdminUpdateServiceLiveCheck();
+				setTimeout("AdminServiceLiveCheck()", 20000);
+			}
+
+			function AdminUpdateServiceLiveCheck() {
+				$.ajax({
+					url: "/_component/isservicelive",
+					success: function(data) {
+						if (data.indexOf("true") != -1) {
+							$("#service_live").replaceWith("<a id='service_live' href='#' onclick='confirm_turn_service_off()'>Service is currently LIVE</a>");
+						}
+						else {
+							$("#service_live").replaceWith("<a id='service_live' href='#' onclick='confirm_turn_service_on()'>Service is currently OFF</a>");
+						}
+					}
+				});
+			}
+
+			function confirm_turn_service_on() {
+				var r=confirm("Are you sure you want to turn service ON");
+				if (r==true) {
+					$.ajax({
+						url: "/_component/change_servicelive/on/"
+					}).done(function() { AdminUpdateServiceLiveCheck(); });
+				}
+			}
+
+			function confirm_turn_service_off() {
+				var r=confirm("Are you sure you want to turn service OFF");
+				if (r==true) {
+					$.ajax({
+						url: "/_component/change_servicelive/off/"
+					}).done(function() { AdminUpdateServiceLiveCheck(); });
+				}
+			}
+			
+			function reload_map() {
+				console.log("Reloading Map...");
+				initMap();
+			}
+
+			</script>
+			<span>
+				<b><a href="/admin" target="_blank">Admin Console</a> | <a id="service_live"></a> | <a id="reload_map" href='#' onclick='reload_map()'>Reload Map</a></b>
+			</span>
+		{if:else}
+			<div class="worship_clear"></div>
+		{/if}
+		</div>
+	</div>
+
+	
+	<div class="row">
+		<div class="col-lg-7">
+		{if service_live=="true"}
+			<div class="alert alert-info" role="alert">
+				Having video problems? <a href="#" onclick="LoadYoutube(); return false;">Click here to use our backup stream.</a><br>
+			<?php if (({current_time format="%G%i"} > 430) && ({current_time format="%G%i"} < 1000)) : ?>
+					<div id="translations" class="translations">
+						Translation: 
+						<button type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="btn btn-info btn-sm" disabled>English</button> 
+						<button type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="btn btn-info btn-sm" >Espanol</button> 
+						<button type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="btn btn-info btn-sm" disabled>Interpreted for the Deaf and Hard of Hearing</button>
+					</div>
+			<?php endif; ?>
+
+			<?php if (({current_time format="%G%i"} > 1020) && ({current_time format="%G%i"} < 1330)) : ?>
+					<div id="translations" class="translations">
+						Translation: 
+						<button type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="btn btn-info btn-sm" disabled>English</button> 
+						<button type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="btn btn-info btn-sm" >Espanol</button> 
+						<button type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="btn btn-info btn-sm" >Interpreted for the Deaf and Hard of Hearing</button>
+					</div>
+			<?php endif; ?>
+
+			<?php if (({current_time format="%G%i"} > 1630) && ({current_time format="%G%i"} < 2100)) : ?>
+					<div id="translations" class="translations">
+						Translation: 
+						<button type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="btn btn-info btn-sm" disabled>English</button> 
+						<button type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="btn btn-info btn-sm" disabled>Espanol</button> 
+						<button type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="btn btn-info btn-sm" disabled>Interpreted for the Deaf and Hard of Hearing</button>
+					</div>
+			<?php endif; ?>
+			</div>
+		
+		{if:else}
+			{exp:channel:entries channel="media" category="48" limit="1" dynamic="off"}
+				<div id="livevid-quality" class="below_videotab">
+					<strong>LIVE:</strong> {service_times_singleline}
+				</div>
+			{/exp:channel:entries}
+		{/if}
+
+			<div id="current-viewers" class="below_videotab">Current Viewers: </div>
+			<!-- Button trigger modal -->
+			<button id="btn1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#worshipModal" style="display:none">Launch Worship Modal</button>
+
+		</div>
+
+		<div class="col-lg-5" style="">
+			<a href="https://www.northlandchurch.net/give" target="_blank" class="btn btn-primary">GIVE ONLINE</a>
+		</div>
+	</div>
+
+	<div id="worshipDiv" class="row" >
+		<!--	worship video section	-->
+		<div class="col-lg-7" style="padding-right: 1px; padding-left: 1px;">
+			<div id="onlineworship-video" style="">
+                {!-- WORSHIP VIDEO --}
+                {if service_live=="true"}
+					<div class="smEmbed" style="padding: 0 0 56.25% 0;position: relative;height: 0;overflow: hidden;" id="media_iframe">
+						<iframe src="//player.streammonkey.com/iframe/REUQk4eV" width="100%" height="100%" frameborder="0" style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;" allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>
+					</div>
+			    {if:else}
+					<div class="responsive-video-player" style="position: relative;padding-bottom: 56.25%;height: 0;">
+						<iframe id="vimeo_player" width="640" height="360" frameborder="0" style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+					</div>
+				{/if}
+			</div>
+			
+		</div>
+		<div class="col-lg-5" style="">
+			<nav>
+				<div class="nav nav-tabs nav-pills nav-justified justify-content-center" id="myTab" role="tablist">
+					<a class="nav-item nav-link active" id="map-tab" data-toggle="tab" href="#map" role="tab" aria-controls="map" aria-selected="true">Map</a>
+<!--						<a class="nav-item nav-link" id="notes-tab" data-toggle="tab" href="#notes" role="tab" aria-controls="notes" aria-selected="false">Notes</a>	-->
+					<a class="nav-item nav-link" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="false">Chat</a>
+					<a class="nav-item nav-link" id="guide-tab" data-toggle="tab" href="#guide" role="tab" aria-controls="guide" aria-selected="false">Worship Guide</a>
+					<a class="nav-item nav-link" id="share-tab" data-toggle="tab" href="#share" role="tab" aria-controls="share" aria-selected="false">Share</a>
+				</div>
+			</nav>
+			
+			<div class="tab-content" id="myTabContent">
+				<div class="tab-pane fade show active" id="map" role="tabpanel" aria-labelledby="map-tab" style="height: 400px;">
+				</div>
+				
+				<div class="tab-pane fade" id="notes" role="tabpanel" aria-labelledby="notes-tab">
+					Notes
+				</div>
+				
+				<div class="tab-pane fade" id="chat" role="tabpanel" aria-labelledby="chat-tab">
+					<div class="row">
+						<!-- Left Chat Section -->
+						<div class="col">
+							<div id="chat-field-box">
+								<form name="chatform" id="group_chat_form">
+									<div class="form-row search-form">
+										<div class="form-group col-9">
+											<input type="text" id="groupchat_field" class="form-control" placeholder="Enter your message..." style="font-size: 0.8rem;">
+										</div>
+										<div class="form-group col-3">
+											<button type="submit" class="btn btn-info" style="font-size: 0.8rem;">Send</button>
+										</div>
+									</div>
+								</form>
+							</div>
+
+								<div id="chat-box-list"></div>
+
+						</div>
+						<!-- End of Left Chat Section -->
+						
+						<!-- Right Chat Section -->
+						<div class="col">
+							<!-- Section for Profile -->
+							<div id="profile-box">
+								{if logged_in}
+								<div id="profile-logout">
+									<button type="button" class="btn btn-dark btn-sm btn-block" onclick="logoutandreload(); return false;" >Log Out</button>
+								</div>
+								<div id="profile-update">
+									<div id="profile-avatar" style="float: left; margin-right: 10px">
+										<a href="/profile" target="_blank"><img id="profile-avatar-img" src="/images/member_photos/50x50/photo_{member_id}.jpg" onerror="this.src='/images/avatar.png'"></a>
+									</div>
+									<div id="profile-user">
+										<div id="profile-name" class="profile-header"><a href="/profile" target="_blank">{screen_name}</a></div>
+										<div id="profile-location">Longwood Oviedo Winter Springs, Florida</div>
+									</div>
+								</div>
+								{if:else}
+								<div id='profile-notsignedin-welcome' class='profile-header'>Welcome to Northland Online Worship</div>
+								<div id="profile-location" style="display:none"></div>
+
+								<div class="rostermessage">Please <a class="user-login" href="#login-register-box" style="text-decoration:underline" data-toggle="modal" data-target="#loginModal">login</a> to access additional features like, Request Prayer, Read the Bible and more.</div>
+								{/if}
+							</div>
+							
+							<!-- Section for Search bar -->
+							<div id="search-box">
+								<form name="search_people" id="search_people">
+									<div class="form-row search-form">
+										<div class="form-group col">
+											<input type="text" id="filter-search" class="form-control" placeholder="Enter name to Search people..." style="font-size: 0.8rem;">
+										</div>
+									</div>
+								</form>
+							</div>
+
+							<!-- Section for Roster Stack -->
+							<div>
+								<div id="chat-disconnected" class="rostermessage">Chat loading...<br>Refresh your browser if Chat does not load within a couple of minutes.</div>
+								<div id="chatroster" class="custom_scrollbar">
+									<div id="minister"></div>
+									<div id="host"></div>
+									<div id="tech-support"></div>
+									<div id="people"></div>
+								</div>
+								<br>
+							</div>	
+						</div>
+						<!-- End of Right Chat Section -->
+					</div>
+
+					<div class="row">
+						<div class="col">
+						{if group_id == "1" || group_id == "19" || group_id == "13"}
+							<div id="admin_panel">
+								<strong>Admin: </strong>
+								<div style="float: right">
+									<a class="btn btn-warning btn-sm" onclick="ClearGroupChat()">Clear Chat</a>
+								</div>
+							</div>
+						{/if}
+						</div>
+						<div class="col">
+						</div>
+					</div>
+				</div>
+				
+				<div class="tab-pane fade" id="guide" role="tabpanel" aria-labelledby="guide-tab" style="text-align: center"></div>
+				
+				<div class="tab-pane fade" id="share" role="tabpanel" aria-labelledby="share-tab">
+					<div id="online-invite">
+						<form id="share_form" style="padding: 10px">
+							<div class="form-group">
+								<label class="control-label">Sender Name: </label>
+								<input class="form-control" id="shareform_from_name" type="text" value='{if screen_name}{screen_name}{/if}'>
+							</div>
+							<div class="form-group">
+								<label class="control-label">Sender E-mail: </label>
+								<input class="form-control" id="shareform_from_email" type="text" value='{if email}{email}{/if}'>
+							</div>
+							<div class="form-group">
+								<label class="control-label">Recipient Name: </label>
+								<input class="form-control" id="shareform_to_name" type="text" value=''>
+							</div>
+							<div class="form-group">
+								<label>Recipient E-mail: </label>
+								<input class="form-control" id="shareform_to_email" type="text" value=''>
+							</div>
+							<div class="form-group">
+								<label>Personal Message: </label>
+								<textarea class="form-control" style="min-height: 100px; resize: none" id="shareform_message"></textarea>
+							</div>
+							<div class="form-group">
+								<input class="btn btn-primary" type='submit' value='Send Invite'>
+								<input class="btn btn-secondary" type='reset' value='Reset'>
+							</div>
+						</form>
+
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+
+	
+	<div id="alert-container">
+	</div>
+
+	<br><br>
+	
+	<div id="chat-bar" class="">
+			<div id="chat-slider-container">
+				<div id="chat-left" style="display:none; ">&lt;&lt;</div>
+				<div id="chat-right" style="display:none;">&gt;&gt;</div>
+
+				<div id="chat-tab-bar">
+					<ul id="chat-slider-ul"></ul>
+				</div>
+
+			</div>
+
+	</div>
+<!--
+	<nav class="navbar fixed-bottom navbar-dark bg-dark">
+		<a class="navbar-brand" href="#">Chat</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>		
+		<div id="chat-slider-ul"></div>
+	</nav>
+-->	
+</div>
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<!--    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>	-->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script src="/_assets/onlineworship/markerclusterer/markerclusterer.1.0.3.js"></script>
+<!--
+<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAENRWzgvgTgrR26OuYWTinEIbs8Ik1UDw&callback=initMap">
+</script>
+-->
+
+{!-- MaxMind to get user Geolocation --}
+<script src="//js.maxmind.com/js/apis/geoip2/v2.1/geoip2.js" type="text/javascript"></script>
+
+	
+{!-- Node Chat --}
+<script src="/_assets/onlineworship/socket.io.js"></script>
+<script src="/_assets/onlineworship/handlebars-v4.1.2.js"></script>
+<script src="/_assets/onlineworship/moment.2.24.0.min.js"></script>
+
+
+{!-- Adaptive textarea code --}
+<script type="text/javascript" src="/_assets/onlineworship/autosize.min.js"></script>
+<script type="text/javascript" src="/_js/jquery.profanityfilter.min.js"></script>
+
+
+
+<script>
+var map;
+var markerCluster;
+var markersArray = {};
+
+var infobox_options;
+var infoWindow;
+
+function initMap() 
+{
+	var mapOptions = {
+		zoom: 7,
+		minZoom: 1,
+		maxZoom: 15,
+		scrollwheel: false,
+		center: new google.maps.LatLng(28.684922, -81.336486),
+//		center: new google.maps.LatLng(-25.363, 131.044),
+		mapTypeId: google.maps.MapTypeId.HYBRID,
+		streetViewControl: false,
+		panControl: false,
+		overviewMapControl: false,
+		mapTypeControl: false
+	};
+	map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+	infoWindow = new google.maps.InfoWindow({
+	});
+	
+	
+	// Add a marker clusterer to manage the markers.
+	var clusterOptions = {
+		zoomOnClick: false,
+		minimumClusterSize: 1,
+		imagePath: '/_assets/onlineworship/markerclusterer/m'
+	};
+	markerCluster = new MarkerClusterer(map, [], clusterOptions);
+
+
+	google.maps.event.addListener(map, 'zoom_changed', function() { infoWindow.close(); });
+	google.maps.event.addListener(map, 'clusterclick', function(markercluster) { ClusterClicked(markercluster) });
+
+	setTimeout("StartMapUpdateCycle()", 15000);
+
+}
+
+
+function AddMarker(chatid, lat, lng) 
+{
+	if (lat && lng && lat != 0 && lng != 0) 
+	{
+		markersArray[chatid] = new google.maps.Marker({position: new google.maps.LatLng(lat,lng), title: chatid.toString()});
+	}
+}
+
+// Removes marker from map when user leaves
+function RemoveMarker(chatid) 
+{
+	delete markersArray[chatid];
+}
+
+
+function InfoWindowClose() 
+{
+	infoWindow.close();
+}
+
+
+////////////////////////////////////////////////////////////////////////
+// Event handler when clicks Marker Cluster
+// Opens an InfoWindow
+////////////////////////////////////////////////////////////////////////
+function ClusterClicked(markercluster) 
+{
+	var cluster_markers = [];
+	infoWindow.close();
+
+	cluster_markers = markercluster.getMarkers(); // Get markers managed by cluster
+	map.panTo(markercluster.getCenter());
+
+	var dom_id;
+
+	html_content = 	"<div id='infowindow'>";
+	for (var i = 0; i < cluster_markers.length; i++) 
+	{
+		var userinfo = usersArray[cluster_markers[i].getTitle()];
+
+		if (userinfo) 
+		{
+			if (userinfo.role) {
+				html_content += "<div class='infowindow_name'>" + 
+									"<img class='infowindow_profile_avatar' src='" + userinfo.photourl + "' onerror=\"this.src='/images/avatar.png'\"/>" +
+									"<a class='map_link' onclick=\"ShowInfoWindowProfile(" + userinfo.uid + ")\">" + userinfo.fullname + "</a>";
+			}
+			else {
+				html_content += "<div class='infowindow_name'>" + 
+									"<img class='infowindow_profile_avatar' src='/images/avatar.png' />" + 
+									"" + userinfo.fullname;
+			}
+
+			if (userinfo.uid != <?php echo $member_id_reference; ?> && userinfo.uid != 'anon_<?php echo $member_id_reference; ?>') {
+				dom_id = userinfo.uid + "_" + userinfo.fullname.split(' ').join('_');
+
+				html_content += " - <a class='map_link' onclick=\"StartPrivateChat('" + userinfo.uid + "', '" + userinfo.fullname + "')\">Chat</a>";
+			}
+			else {
+				html_content += " - You"; 
+			}
+
+			if (userinfo.groupsize > 1) {
+				html_content += " (" + userinfo.groupsize + " viewers)";
+			}
+			html_content += "</div><div class='infowindow_multiple_profile' id='infowindow_multiple_profile" + userinfo.uid +"'></div>";
+		
+		}
+	}
+
+	html_content += "</div>";
+	
+	infoWindow.setContent(html_content);
+	infoWindow.setPosition(markercluster.getCenter());
+	infoWindow.open(map);
+}
+
+
+////////////////////////////////////////////////////////////////////////
+// Event Handler when clicks Username in the Map
+////////////////////////////////////////////////////////////////////////
+function ShowInfoWindowProfile(uid) 
+{
+	var html_content =	"<div class='infowindow_profile_show'>" + 
+							"<div id='infowindow_profile" + uid + "'></div>" +
+							"<div class='infowindow_prayer_header'>Prayer Requests</div>" +
+							"<div id='infowindow_prayer_body" + uid + "'></div>" +
+						"</div>";
+
+	$("#infowindow_multiple_profile" + uid).empty().append(html_content);
+	
+	$.ajax({
+		url: '/_component/get-latestprayer/' + uid,
+		success: function(data) {
+			if (data != '') { $("#infowindow_prayer_body" + uid).empty().append(data); }
+			else { $("#infowindow_prayer_body" + uid).empty().append('No recent prayer requests'); }
+			}
+	});
+	
+	$.ajax({
+		url: '/_component/get-profilebio/' + uid,
+		success: function(data) {
+			if (data != '') { $("#infowindow_profile" + uid).empty().append(data); }
+			else { $("#infowindow_profile" + uid).empty().append('No user profile posted');	}
+			}
+	});
+
+	if ($("#infowindow_multiple_profile" + uid).hasClass("infowindow_visible")) {
+		$('.infowindow_multiple_profile').hide().removeClass("infowindow_visible");
+	}
+	else {
+		$('.infowindow_multiple_profile').hide().removeClass("infowindow_visible");
+		$("#infowindow_multiple_profile" + uid).addClass("infowindow_visible").show();
+	}
+}
+
+
+// Event handler, run when user pans/zooms Google Map
+function UpdateViewport()
+{
+	var i = 0;
+	var viewportusers_array = [];
+	var html_content = "";
+
+	for (key in markersArray) 
+	{
+		viewportusers_array.push(markersArray[key]);
+	}
+	markerCluster.clearMarkers(); // Update MarkerClusterer
+	markerCluster.addMarkers(viewportusers_array);
+}
+
+
+function StartMapUpdateCycle() 
+{
+	UpdateViewport();
+	setTimeout("StartMapUpdateCycle()", 30000);
+}
+
+
+
+function UpdateClientLocation() 
+{
+	console.log("UpdateClientLocation(): " + client_location + " - Lat: " + client_latitude + ", Lng: " + client_longitude);
+	$("#profile-location").html(client_location);
+
+	if (socket && socket.connected) {
+		{if logged_in}
+			socket.emit('update user', { latitude: client_latitude, longitude: client_longitude, location: client_location, groupsize: logged_in_groupsize });
+		{if:else}
+			socket.emit('update user', { latitude: client_latitude, longitude: client_longitude, location: client_location, groupsize: logged_in_groupsize });
+		{/if}
+	}
+
+	UpdateMyUserInfo();
+}
+
+
+</script>
+
+
+<script async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAENRWzgvgTgrR26OuYWTinEIbs8Ik1UDw&callback=initMap">
+</script>
+
+
+
+{!-- -------------------------------------------------------------- --}
+{!-- 				Template for Roster Stack						--}
+{!-- -------------------------------------------------------------- --}
+<script type="text/x-handlebars-template" id="rosteruser_html">
+<div id='worshiper{{chatid}}' class='person {{#ifCond usertype "minister"}}online-minister {{/ifCond}} {{#ifCond usertype "host"}}online-minister {{/ifCond}} notfriend {{#handlebars_if usertype}}signedin{{else}}notsignedin{{/handlebars_if}}'>
+	<div class="avatar-bg">
+		<img src="{{photourl}}" onerror="this.src='/images/avatar.png'">
+	</div>
+	
+	<div class="person-info">
+		<div class="fullname" id="fullname_{{chatid}}">
+			{{name}}{{#ifCond usertype "minister"}} - Minister{{/ifCond}}{{#ifCond usertype "host"}} - Host{{/ifCond}}{{#ifCond usertype "support"}} - Tech Support{{/ifCond}}
+		</div>
+		<div id="address{{chatid}}" class="notupdatedaddress rosteraddress">
+			{{#handlebars_if loc}}{{loc}}{{else}}&nbsp;{{/handlebars_if}}
+		</div>
+	</div>
+
+	<div class="button-options">
+		{if group_id == "1" || group_id == "19"}
+			{{#handlebars_if usertype}}<button type="button" class="person-link btn btn-sm btn-secondary" onclick="clickProfileExpand(this, 'profile{{chatid}}', {{chatid}})">Profile</button>{{/handlebars_if}} 
+		{/if}
+		<button type="button" class="person-link btn btn-sm btn-dark" onclick="StartPrivateChat('{{chatid}}', '{{name}}')">Chat</button>
+	</div>
+
+	{if group_id == "1" || group_id == "19"}
+	<div class="email-info">
+		{{#handlebars_if email}}<a href="mailto:{{this.email}}" target="_blank" style="background-color:#C1DBCE !important">{{this.email}}</a>{{else}}<br>{{/handlebars_if}}
+	</div>
+	{if:else}
+	<br>		
+	{/if}
+
+	{{#handlebars_if usertype}}
+	<div class="mini-profile profile{{chatid}}" style="display: none">
+		<div class="header">About {{name}}</div>
+		<div class="body" id="profile-text{{chatid}}"></div>
+		<div class="header">Prayer Requests</div>
+		<div class="body" id="prayer-text{{chatid}}"></div>
+	</div>
+	{{/handlebars_if}}
+</div>
+</script>
+
+
+{!-- -------------------------------------------------------------- --}
+{!-- 				Template for Group Chat							--}
+{!-- -------------------------------------------------------------- --}
+<script type="text/x-handlebars-template" id="groupmessage_html">
+<div class="groupchat" id="groupmessage_{{id}}">
+	<div class="groupchat_header">
+		<div class="avatar-bg">
+			<img src="{{photourl}}" width="30" height="30" onerror="this.src='/images/avatar.png'">
+		</div>
+		<div class="groupchat_link">
+			<button class="btn btn-sm btn-dark private_link_{{chatid}}" onclick="StartPrivateChat('{{chatid}}', '{{nickname}}')" {{#handlebars_if user_online}}{{else}}style="display:none"{{/handlebars_if}}>Chat</button>
+			{if group_id == "1" || group_id == "19" || group_id == "13"}
+				<button class="btn btn-sm btn-warning" onclick="RemoveGroupMessage('{{id}}')">Remove</button>
+			{/if}
+		</div>
+	</div>
+
+	<div class="groupchat_person">
+		<div class="name">{{nickname}}</div>
+		<div class="chat-time-stamp">{{dateFormat}}</div>
+	</div>
+	
+	<div class="group-chat-text">
+		{{{message}}}
+	</div>
+</div>
+</script>
+
+
+
+{!-- -------------------------------------------------------------- --}
+{!-- 		Template for Private Chat Container						--}
+{!-- -------------------------------------------------------------- --}
+<script type="text/x-handlebars-template" id="privatecontainer_html">
+<li id="privatecontainer_{{chatid}}" class="single-chat selected">
+	<div class="chat-tab tab-selected" id="tab{{chatid}}" style="display:block">{{tabnickname}}</div>
+
+	<div class="single-chat-window" id="div{{chatid}}" style="display: block;">
+		<div class="single-chat-header" id="chat-header{{chatid}}">
+			<h1>{{nickname}}</h1>
+			<a class="chat-close" href="javascript:ClosePrivateChat('{{chatid}}')">X</a>
+		</div>
+		
+		<div id="pchatbox">
+			<div  style="position: relative; overflow: hidden; width: 100%; height: 100%;">
+				<div id="privatemessages_{{chatid}}" class="chatbox" style="overflow-y: scroll; word-wrap: break-word; width: auto; height: 250px;"></div>
+			</div>
+		</div>
+
+		<form class="panel-footer private_form" id="private_form_{{chatid}}">
+			<textarea id="private_chatfield_{{chatid}}" class="pchatmsgbox" style="word-wrap: break-word;"></textarea>
+		</form>
+	</div>
+</li>
+
+</script>
+
+
+{!-- -------------------------------------------------------------- --}
+{!-- 			Template for Private Chat Message					--}
+{!-- -------------------------------------------------------------- --}
+<script type="text/x-handlebars-template" id="privatemessage_html">
+	{{#handlebars_if mine}}
+		<div class="pmsg pmsg_me_bg">
+			<div class="pmsg_body_container">
+				<p class="pmsg_body">{{{message}}}</p>
+			</div>
+			<div class='pmsg_avatar right_avatar'>
+				<img class='pmsg_right_avatar' height='40' width='40' src='{{photourl}}' onerror="this.src='/images/avatar.png'">
+				{{dateFormat}}
+			</div>
+		</div>
+	{{else}}
+		<div class="pmsg pmsg_you_bg">
+			<div class="pmsg_avatar left_avatar">
+				<img class="pmsg_left_avatar" height="40" width="40" src="{{photourl}}" onerror="this.src='/images/avatar.png'">
+				{{dateFormat}}
+			</div>
+			<div class="pmsg_body_container">
+				<p class="pmsg_body">{{{message}}}</p>
+			</div>
+		</div>
+	{{/handlebars_if}}
+</script>
+
+
+
+	
+	
+{if service_live == "true"}
+
+{if:else}	
+<script type="text/javascript">
+$(document).ready(function() {
+
+	$.ajax({
+	  url: '/_component/webflow_resources/'
+	}).done(function(data) {
+		var parts = data.split("/"),
+			last_part = parts[parts.length-1],
+			vimeo_id = "https://player.vimeo.com/video/" + last_part + "?title=true";
+	   $('#vimeo_player').attr('src', vimeo_id);
+	});
+
+});
+</script>
+{/if}					
+
+<script type="text/javascript">
+var socket = null;
+var client_location;
+var client_latitude;
+var client_longitude;
+var first_connection = true;		// Flag for first connection to get group messages
+var duplicate_connection = false;	// Disconnected because of new user joining
+var logged_in_groupsize = 1; 		// Groupsize for current user, if hasn't clicked modal yet is stored as 0
+var usersArray = {};
+var list_toggle = 'everyone';
+
+{if logged_in}
+	{exp:member:custom_profile_data}
+		{if city != ""}
+			{if countrycode != ""}
+				{if countrycode == "US"}
+					client_location = "{city}, {state}";
+				{if:else}
+					{if city != ""}
+						client_location = "{city}, {country}";
+					{if:else}
+						client_location = "{country}";
+					{/if}
+				{/if}
+			{if:else}
+				{if state != ""}
+					client_location = "{city}, {state}";
+				{if:else}
+					client_location = "{city}";
+				{/if}
+			{/if}
+		{if:else}
+			client_location = "{exp:low_replace find='/[^a-z^A-Z\,\s]/' regex='yes'}{location}{/exp:low_replace}";
+		{/if}
+	{/exp:member:custom_profile_data}
+{if:else}
+	client_location = "";
+{/if}
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		GEO Location Functions
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+function initiate_geolocation()
+{
+	if (navigator.geolocation)
+	{
+//		console.log("navigator.geolocation exists");
+		// Comment out due to the error from Google geolocation function
+//		navigator.geolocation.getCurrentPosition(handle_geolocation_query, handle_geolocation_error, {maximumAge: 600000, timeout:1000});
+		geoip2.city(onSuccess, onError);
+	}
+	else
+	{
+		console.log("Does not exist naviator.geolocation...");
+		geoip2.city(onSuccess, onError);
+	}
+
+//	console.log(client_location + " from initiate_geolocation");
+	$("#profile-location").html(client_location);
+}
+
+
+var onSuccess = function(location) {
+	client_latitude = location.location.latitude;
+	client_longitude = location.location.longitude;
+
+	if (location.country.iso_code == "US") 
+	{
+		if (location.city.names.en !== undefined) {
+			client_location = location.city.names.en + ", " + location.subdivisions[0].names.en;
+		} else {
+			client_location = location.subdivisions[0].names.en;
+		}
+	} 
+	else 
+	{
+		if (location.city.names.en !== undefined) {
+			client_location = location.city.names.en + ", " + location.country.names.en;
+		} else {
+			client_location = location.country.names.en;
+		}
+	}
+
+	console.log("MaxMind location: " + client_location + " - Lat: " + client_latitude + ", Lng: " + client_longitude);
+	UpdateClientLocation();
+};
+
+var onError = function(error){
+	console.log("Error getting MaxMind location");
+};
+
+/*
+function handle_geolocation_query(position)
+{
+    client_latitude = position.coords.latitude.toFixed(4);
+    client_longitude = position.coords.longitude.toFixed(4);
+
+    console.log("HTML5 Geolocation Info - Lat: " + client_latitude + ", Lng: " + client_longitude);
+
+	{if '{exp:member:custom_profile_data}{manual_city_state}{/exp:member:custom_profile_data}' != "Yes"}
+		client_location = "";
+		UpdateClientLocation();
+
+//		$.get("/scripts/getcityfromlatlng.php/?lat=" + client_latitude + "&lng=" + client_longitude, function(data) {
+//			client_location = data;
+//			console.log("getcityfromlatlng() location: " + client_location);
+//			UpdateClientLocation();
+//		});
+
+	{if:else}
+		var geocoder = new google.maps.Geocoder();
+		client_location	= '{location}';
+		console.log("Manual: " + client_location);
+		geocoder.geocode( { 'address': client_location}, function(results, status) {
+			var location 		= results[0].geometry.location;
+			client_latitude		= location.lat();
+			client_longitude	= location.lng();
+			console.log('LAT: ' + location.lat() + ' LANG: ' + location.lng());
+			UpdateClientLocation();
+		});
+	{/if}
+
+    if (map) {
+		map.panTo(new google.maps.LatLng(client_latitude, client_longitude));
+	}
+}
+
+function handle_geolocation_error(error)
+{
+	{if '{exp:member:custom_profile_data}{manual_city_state}{/exp:member:custom_profile_data}' != "Yes"}
+		switch(error.code) {
+			case error.PERMISSION_DENIED:
+				console.log("User denied the request for Geolocation.");
+				geoip2.city(onSuccess, onError);
+				break;
+			case error.POSITION_UNAVAILABLE:
+				console.log("Location information is unavailable.");
+				geoip2.city(onSuccess, onError);
+				break;
+			case error.TIMEOUT:
+				console.log("The request to get user location timed out.");
+				geoip2.city(onSuccess, onError);
+				break;
+			case error.UNKNOWN_ERROR:
+				console.log("An unknown error occurred.");
+				geoip2.city(onSuccess, onError);
+				break;
+			default:
+				console.log("Undefined error.");
+				break;
+		}
+	{if:else}
+		var geocoder = new google.maps.Geocoder();
+		client_location	= '{location}';
+		console.log("Manual: " + client_location);
+		geocoder.geocode( { 'address': client_location}, function(results, status) {
+			var location 		= results[0].geometry.location;
+			client_latitude		= location.lat();
+			client_longitude	= location.lng();
+			console.log('LAT: ' + location.lat() + ' LANG: ' + location.lng());
+			UpdateClientLocation();
+		});
+	{/if}
+}
+//function handle_geolocation_error(error) { }
+*/
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+// 		End for GEO Location Functions
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+{if logged_in}
+	var chat_nickname 	= "{screen_name}";
+	var photo_url		= "{site_url}/images/member_photos/50x50/photo_<?php echo $member_id_reference; ?>.jpg";
+
+{if:else}
+	var chat_nickname 	= "Worshiper <?php echo $member_id_reference; ?>";
+	var photo_url		= "{site_url}/images/avatar.png";
+{/if}
+
+
+var chat_tabs_open = 0; 	// Number of chat tabs currently open
+var chat_slider_index = 0;	// Current index/location of slider
+var chat_tabs_max = 8; 		// Max number of chat tabs viewable at once
+var chat_tab_bar_width = 0; // Width of tab bar
+var current_chat_uid = "";	// Current opened chat UID
+
+
+Handlebars.registerHelper('handlebars_if', function(conditional, options) {
+	if (typeof conditional === 'function' && toString.call(conditional) === '[object Function]') { conditional = conditional.call(this); }
+
+	if ((!options.hash.includeZero && !conditional)) { return options.inverse(this); }
+	else { return options.fn(this); }
+});
+
+Handlebars.registerHelper('ifCond', function(v1, v2, options) {
+	if(v1 === v2) { return options.fn(this); }
+	else { return options.inverse(this); }
+});
+
+Handlebars.registerHelper('dateFormat', function(context, options) {
+	return moment(this.date).format("h:mma");
+});
+
+
+
+$(document).ready(function() {
+	{if logged_in}
+		{exp:member:custom_profile_data}
+			{if manual_city_state == "Yes"}
+				$("#profile-location").html(client_location);
+			{/if}
+		{/exp:member:custom_profile_data}
+
+		$('#filter-search').val("");
+	{/if}
+
+	{if group_id == "1" || group_id == "19" || group_id == "13"}
+		AdminServiceLiveCheck();
+	{/if}
+
+
+	{if service_live != "true"}
+		CheckServiceLive();
+	{/if}
+
+	
+	$('#groupchat_field').val("");
+	
+	
+	$("#group_chat_form").submit(function(e) {
+		e.preventDefault();
+
+		var message = $("#groupchat_field").val().trim();
+		if (message.length) 
+		{
+			socket.emit('send group message', message);
+
+			$("#groupchat_field").val("");
+		}
+		else
+		{
+//			console.log("Nothing entered");
+		}
+	});
+	
+	$('#filter-search').keyup(function() {
+		var searchname = $('#filter-search').val();
+//		console.log("Searching for " + searchname);
+		FindPeople(searchname);
+	});
+
+	$('#guide-tab').click(function() {
+		LoadIssuu();
+	});
+
+
+	$(document).on('click', '.single-chat-header', function() {
+		ToggleChatWindow($(this).attr('id').replace("chat-header",""));
+	});
+
+	$(document).on('click', '.chat-tab', function() {
+		ToggleChatWindow($(this).attr('id').substring(3));
+	});
+
+
+
+	$groupchats = $("#chat-box-list");
+	$privatechats = $("#chat-slider-ul");
+	$users_count = $("#current-viewers");
+
+	$ministerroster = $("#minister");
+	$hostroster = $("#host");
+	$techsupportroster = $("#tech-support");
+	$peopleroster = $("#people");
+
+	groupmessage_template = Handlebars.compile($("#groupmessage_html").html());
+	rosteruser_template = Handlebars.compile($("#rosteruser_html").html());
+	privatecontainer_template = Handlebars.compile($("#privatecontainer_html").html());
+	privatemessage_template = Handlebars.compile($("#privatemessage_html").html());
+	
+
+	InitializeEventHandlers();
+
+	initiate_geolocation();
+
+
+	$('#worshipDiv').scroll(function() { 
+		console.log("scroll triggered");
+		$('#onlineworship-video').css('top', $(this).scrollTop());
+	});	
+});
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+// 	Event handlers for Modals
+//////////////////////////////////////////////////////////////////////////////////////
+$(document).ready(function() {
+
+/*
+	$('.modal-content').resizable({
+		minHeight: 360,
+		minWidth: 640
+	});
+*/
+	// Make modal draggable on modal-header section
+	$('.modal-dialog').draggable({
+		handle: ".modal-header"
+	});
+	
+	$('#btn1').click(function() {
+		var modalDiv = $('#worshipModal');
+		modalDiv.modal({backdrop: false, show: true});
+	});
+
+	// Handler for 'Back to Selection' button
+	$('.welcome-button').click(function(e) {
+		$('.modal').modal('hide');
+		$('#welcomeModal').modal('show');
+	});
+
+
+	// Handler for 'Click to Login with Northland' button
+	$('.login-button').click(function(e) {
+		$('.modal').modal('hide');
+		$('#loginModal').modal('show');
+	});
+
+	// Handler for 'Join Worship without Login' button
+	$(".login-button-anonymous").click(function(e) {
+		$('.modal').modal('hide');
+		$('#welcomeNotLoggedInModal').modal('show');
+	});
+
+
+	$(".clickRegisterLink").on('click', function(event) {
+		$('.modal').modal('hide');
+		$("#registerModal").modal('show');
+
+		// Pass email address to Register modal
+		var email = $("#loginModal #username").val();
+		$("#registerModal #username").val(email);
+
+		return false;
+	});
+	
+	$(".clickLoginLink").on('click', function(event) {
+		$('.modal').modal('hide');
+		$("#loginModal").modal('show');
+
+		// Pass email address to Login modal
+		var email = $("#registerModal #regusername").val();
+		$("#loginModal #regusername").val(email);
+
+		return false;
+	});
+	
+
+
+	// Trigger proper method based on the form clicked
+	$("form").submit(function(event) {
+		console.log("Target ID: " + event.target.id);
+		clearAllAlert();
+		
+		switch(event.target.id) {
+			case "Login":
+				event.preventDefault();
+				processLogin();
+				break;
+			case "Register":
+				event.preventDefault();
+				processRegister();
+				break;
+			default:
+				break;
+		}
+
+	});
+	
+	
+	// Required validation check when text field entered
+	$("input[type='text'].required").keyup(function() {
+		// Get the value of the text input and ID 
+		var value		= $(this).val().trim();
+		var valueid 	= $(this).attr('id');
+		
+		if (value == '')
+			$("#required_"+valueid).show();
+		else 
+			$("#required_"+valueid).hide();
+	}).keydown(function(event) {
+		if ( event.which == 13 ) {
+			event.preventDefault();
+		}
+	});
+
+	// Password validation check when text field entered
+	$("input[type='password'].required-password").keyup(function() {
+		// Get the value of the text input and ID 
+		var value		= $(this).val();
+		var valueid 	= $(this).attr('id');
+		
+		// Check if the password is sufficiently long (min 6 chars)
+		if (value.length < 6) {
+			$("#errorlength_"+valueid).show();
+			return false;
+		} else {
+			$("#errorlength_"+valueid).hide();
+		}
+			
+		// At least one number, one lowercase and one uppercase letter 
+		// At least six characters 
+		var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/; 
+		if (!re.test(value)) {
+			$("#errorcomb_"+valueid).show();
+			return false;
+		} else {
+			$("#errorcomb_"+valueid).hide();
+		}
+	}).keydown(function(event) {
+		if ( event.which == 13 ) {
+			event.preventDefault();
+		}
+	});
+
+	
+	// Password for Conformation validation check when text field entered
+	$("input[type='password'].required-confirmpw").keyup(function() {
+		// Get the value of the text input and ID 
+		var value		= $(this).val();
+		var valueid 	= $(this).attr('id');
+		var password	= $("#registerModal #regpassword").val();
+
+		// Check password and confirmation are the same
+		if (password != value) {
+			$("#error_"+valueid).show();
+		} else {
+			$("#error_"+valueid).hide();
+		}
+	}).keydown(function(event) {
+		if ( event.which == 13 ) {
+			event.preventDefault();
+		}
+	});
+
+	
+	// Email checking when email input loses focus
+    $('#loginModal #username').blur(function() {
+		clearAllAlert();
+
+		// Retrieve Username from Login modal
+		var email = $("#loginModal #username").val().trim();
+		
+		if (!validateEmail(email))
+		{
+			$("#loginModal #invalid_username").show();
+			return false;
+		}
+		
+		// Send a request to check if email exists
+		$.ajax({
+			url: '/scripts/check_email_unique_v2.php',
+			data: "email=" + email,
+			dataType: 'json',					
+			success: parseLoginEmailCheck, 
+			error: function() { 
+				console.log("Error in email duplicate checking..."); 
+				$("#login_error").html("Internal system error in email duplicate checking. Please contact Administrator with this message.");
+				$("#login_error").show();
+			}
+		});
+    });  
+
+	// Email checking when email input loses focus
+    $('#registerModal #regusername').blur(function() {
+		clearAllAlert();
+
+		// Retrieve Username from Login modal
+		var email = $("#registerModal #regusername").val().trim();
+		
+		if (!validateEmail(email))
+		{
+			$("#registerModal #invalid_username").show();
+			return false;
+		}
+		
+		// Send a request to check if email exists
+		$.ajax({
+			url: '/scripts/check_email_unique_v2.php',
+			data: "email=" + email,
+			dataType: 'json',					
+			success: parseRegisterEmailCheck, 
+			error: function() { 
+				console.log("Error in email duplicate checking..."); 
+				$("#register_error").html("Internal system error in email duplicate checking. Please contact Administrator with this message.");
+				$("#register_error").show();
+			}
+		});
+    });  
+
+	$("#reset_pw").click(function()
+	{
+		var email = $("#loginModal #username").val().trim();
+		
+		$.ajax({
+			url: '/scripts/password_reset.php?email=' + email,
+			success: function(data) {
+				$("#login_error").html(data);
+				$("#login_error").show();
+			}
+		});
+
+	});	
+	
+});
+//////////////////////////////////////////////////////////////////////////////////////
+// 	End of Event handlers for Modals
+//////////////////////////////////////////////////////////////////////////////////////
+
+
+
+var issuu_loaded = 0;
+function LoadIssuu() 
+{
+	if (issuu_loaded == 0) 
+	{
+		$('#guide').load("/Webflow/worshipguide.txt");
+
+		issuu_loaded = 1;
+	}
+}
+
+
+
+function InitializeEventHandlers()
+{
+	{if logged_in}
+		$('#welcomeLoggedInModal').modal('show');
+
+		$('#update_number_worshipers').click(function(e) 
+		{
+			ChatConnect();
+
+			var temp_groupsize = $('#num_worshipers').val();
+
+			if ($.isNumeric(temp_groupsize) && temp_groupsize > 0 && temp_groupsize < 100) {
+				logged_in_groupsize = temp_groupsize;
+				UpdateGroupSize(logged_in_groupsize);
+				UpdateMyUserInfo();
+				setTimeout("UpdateStats(1, logged_in_groupsize)", 120000); // Add to stats after 120 seconds
+			}
+			else
+			{
+				UpdateGroupSize(logged_in_groupsize);
+				UpdateMyUserInfo();
+				setTimeout("UpdateStats(1, 1)", 120000); // Add to stats after 120 seconds
+			}
+
+			$('#welcomeLoggedInModal').modal('hide');
+			return false;
+		});
+	{if:else}
+		$('#welcomeModal').modal('show');
+
+		$('#update_number_worshipers1').click(function(e) 
+		{
+			var temp_groupsize = $('#num_worshipers1').val();
+
+			if ($.trim($("#name_worshipers").val()).length > 2) 
+			{
+				$("#anonymous_name").text($.trim($("#name_worshipers").val()));
+				$("#anonymous_name").profanityFilter({
+					externalSwears: '/_js/swearWords.json'
+				});
+
+				chat_nickname = $.trim($("#anonymous_name").text());
+
+				ChatConnect();
+
+				if ($.isNumeric(temp_groupsize) && temp_groupsize > 0 && temp_groupsize < 100) {
+					logged_in_groupsize = temp_groupsize;
+					UpdateGroupSize(logged_in_groupsize);
+					UpdateMyUserInfo();
+					setTimeout("UpdateStats(1, logged_in_groupsize)", 120000); // Add to stats after 120 seconds
+				}
+				else
+				{
+					UpdateGroupSize(logged_in_groupsize);
+					UpdateMyUserInfo();
+					setTimeout("UpdateStats(1, 1)", 120000); // Add to stats after 120 seconds
+				}
+
+				$('#welcomeNotLoggedInModal').modal('hide');
+
+
+			}
+			else
+			{
+				if ($("#alert_enter_name").is(":visible")) {
+					$("#alert_enter_name").fadeOut(function() {
+						$("#alert_enter_name").fadeIn();
+					});
+				}
+				else {
+					$("#alert_enter_name").slideDown();
+				}
+			}
+
+			return false;
+		});
+		
+		$("#name_worshipers").keyup(function(event) 
+		{
+			var w_name = $.trim($("#name_worshipers").val());
+			var regexp = /[^a-z A-Z]/g;			
+			
+			if (w_name.length < 3) {
+				$("#alert_enter_name").slideDown();
+			}
+			else {
+				$("#alert_enter_name").slideUp();
+			}
+			
+			if (w_name.match(regexp))
+			{
+//				console.log("Match: " + w_name);
+				$("#alert_alphabet").slideDown();
+			}
+			else
+			{
+//				console.log("Un-Match: " + w_name);
+				$("#alert_alphabet").slideUp();
+			}			
+			
+		});		
+	{/if}
+
+
+
+	$('#chat-right').click(function() { ModifyChatTabIndex(1); });
+	$('#chat-left').click(function() { ModifyChatTabIndex(-1); });
+
+
+	$(window).bind('beforeunload', function() {
+		UpdateStats(0, 0);
+	});
+
+
+	$("#share_form").submit(function() {
+		console.log("Submit share form...");
+		if ($('#shareform_from_name').val().trim() == "")
+		{
+			alert("Please enter your name.");
+			return false;
+		}
+		if ($('#shareform_from_email').val().trim() == "")
+		{
+			alert("Please enter your email.");
+			return false;
+		}
+		if ($('#shareform_to_name').val().trim() == "")
+		{
+			alert("Please enter recipient's name.");
+			return false;
+		}
+		if ($('#shareform_to_email').val().trim() == "")
+		{
+			alert("Please enter recipient's email.");
+			return false;
+		}
+
+		$.post("/scripts/share-worship-email.php", { from_name: $('#shareform_from_name').val(), from_email: $('#shareform_from_email').val(), to_name: $('#shareform_to_name').val(), to_email: $('#shareform_to_email').val(), message: $('#shareform_message').val() }, function(data) {
+//			console.log("Data: " + data);
+			alert(data);
+/*
+			if (data == 1) { alert("Thanks! Your email was successfully sent."); }
+			else { alert("There was an error sending your email. Please contact an admin.<br>(Error: " + data + ")"); }
+*/
+		});
+
+		return false;
+	});
+
+
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+// 	Event handlers for Chat Node Server
+//////////////////////////////////////////////////////////////////////////////////////
+function ChatConnect() 
+{
+	socket = io.connect('https://newdevchat.northlandchurch.net:3000', {
+		'reconnect': true,
+		'reconnectionDelay': 2000,
+		'max reconnection attempts': 10000,
+		'forceNew': true
+	});
+
+	
+	socket.on('connect', function() {
+		ChatLogin();
+		
+		if (first_connection) 
+		{
+			socket.emit("get recent messages");
+			first_connection = false;
+		}
+	});
+
+	
+	socket.on('duplicate connection', function() {
+		duplicate_connection = true;
+	});
+
+	
+	socket.on('disconnect', function() {
+		$("#disconnected_label").fadeIn();
+		$('#chatroster').addClass('chatrosterdisconnected');
+		$('.youdisconnected').remove();
+		$('.pchatmsgbox').attr("disabled","disabled").css("background-color","#BBB");
+		$('.chatbox').append('<div class="pmsg_notification youdisconnected">You have been disconnected.</div> <div id="clear"></div>');
+
+		if (duplicate_connection) {
+			$("#chat-disconnected").html('Disconnected from chat...<br>Another browser connected with your account').show();
+			console.log("Disconnected from chat...<br>Another browser connected with your account");
+		}
+		else {
+			$("#chat-disconnected").html('Disconnected from chat...<br>Attempting to reconnect').show();
+			console.log("Disconnected from chat...<br>Attempting to reconnect");
+		}
+
+	});
+
+
+	socket.on('chat users', function(data) {
+		ClearChatUsers();
+
+		if (data) 
+		{
+			for (i = 0; i < data.length; i++) 
+			{
+//				console.log(data[i]);
+				AddChatUser(data[i]);
+			}
+		}
+
+	   StartChatUsersUpdateCycle();
+	});
+
+	
+	socket.on('new chat user', function(data) {
+		AddChatUser(data);
+
+		$(".private_link_" + data.chatid).show();
+	});
+
+	
+	socket.on('remove chat user', function(data) {
+		RemoveChatUser(data);
+	});
+
+	
+	socket.on('group message', function(data) {
+		data.user_online = true;
+
+		if (data.message == "command: open card tab")
+		{
+			$('.tabs').tabs({active: 2 });
+		}
+		else
+		{
+			$groupchats.prepend(groupmessage_template(data));
+		}
+	});
+
+	
+	socket.on('remove group message', function(data) {
+	   $("#groupmessage_" + data).remove();
+	});
+
+	
+	socket.on('clear group chat', function() {
+	   $("#chat-box-list").html("");
+	});
+
+	
+	socket.on('recent messages', function(data) {
+		for(i = 0; i < data.length; i++) {
+			if (data[i].message != "command: open card tab") 
+			{
+				$groupchats.append(groupmessage_template(data[i]));
+			}
+		}
+	});
+
+	
+	socket.on('private message', function(data) {
+		if(data.chatid && data.nickname) 
+		{
+			if ($("#privatecontainer_" + data.chatid).length == 0) 
+			{
+				StartPrivateChat(data.chatid, data.nickname);
+			}
+			else 
+			{
+				if (!$("#div" + data.chatid).is(":visible")) 
+				{
+					$("#tab" + data.chatid).addClass('new-message');
+					
+					var alert_html = '<div class="alert alert-info alert-dismissible fade show alert_' + data.chatid + '" role="alert">' 
+								+ 'Message received from <a class="alert-link" style="cursor: pointer;" onclick="ToggleChatWindow(\'' + data.chatid + '\'); $(\'.alert_' + data.chatid + '\').alert(\'close\');">' + data.nickname + '</a>'
+								+ '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+								+ '</div>';
+					$("#alert-container").prepend(alert_html);
+				}
+			}
+
+			if (data.mine && $("#privatemessages_" + data.chatid + " > div:last").hasClass("pmsg_me_bg")) {
+				$("#privatemessages_" + data.chatid + " > .pmsg > .pmsg_body_container:last").append("<p class='pmsg_body'>" + data.message + "</p>");
+			}
+			else if (data.mine == null && $("#privatemessages_" + data.chatid + " > div:last").hasClass("pmsg_you_bg")) {
+				$("#privatemessages_" + data.chatid + " > .pmsg > .pmsg_body_container:last").append("<p class='pmsg_body'>" + data.message + "</p>");
+			}
+			else {
+			   $("#privatemessages_" + data.chatid).append(privatemessage_template(data));
+			}
+
+			var elem = document.getElementById("privatemessages_" + data.chatid);
+			elem.scrollTop = elem.scrollHeight;
+		}
+	});
+
+	
+	socket.on('updated user', function(data) {
+		console.log("received updated user command from chat server");
+		if (data.chatid) {
+			if (data.latitude && data.longitude) {
+				usersArray[data.chatid].SetLatLng(data.latitude, data.longitude);
+				//RemoveMarker(data.chatid);
+				AddMarker(data.chatid, data.latitude, data.longitude);
+			}
+
+			if (data.location) {
+				usersArray[data.chatid].location = data.location;
+				$("#address" + data.chatid).text(data.location);
+			}
+
+			if (data.groupsize) {
+				usersArray[data.chatid].groupsize = data.groupsize;
+			}
+
+			if (data.nickname) {
+				usersArray[data.chatid].fullname = data.nickname;
+				$("#fullname_" + data.chatid).text(data.nickname);
+				$("#personchat" + data.chatid).attr("href", "javascript:StartPrivateChat('" + data.chatid + "', '" + data.nickname + "');");
+			}
+		}
+	});
+}
+//////////////////////////////////////////////////////////////////////////////////////
+// 	End of Event handlers for Chat Node Server
+//////////////////////////////////////////////////////////////////////////////////////
+
+
+
+var myGroupSize = 1;
+function UpdateGroupSize(num) 
+{
+	myGroupSize = num;
+	if (socket && socket.connected) 
+	{
+		socket.emit('update user', { groupsize: logged_in_groupsize, nickname: chat_nickname});
+	}
+}
+
+
+function UpdateStats(action_login, groupsize) 
+{
+	{if logged_in}
+		// Store that user logged in
+		if (action_login == 1) {
+			$.post("/scripts/update-stats.php", { member_id: {member_id}, anon: '0', action_login: '1', group_size: groupsize, lat: client_latitude, lng: client_longitude, location: client_location});
+		}
+		// Store that user logged out
+		else if (action_login == 0) {
+			$.post("/scripts/update-stats.php", { member_id: {member_id}, anon: '0', action_login: '0', group_size: '0', lat: client_latitude, lng: client_longitude, location: client_location});
+		}
+		else {
+			$.post("/scripts/update-stats.php", { member_id: {member_id}, anon: '0', action_login: action_login, group_size: '0', lat: client_latitude, lng: client_longitude, location: client_location}, function() { location.reload(); });
+		}
+	{if:else}
+		// Store that user logged in
+		if (action_login == 1) {
+			$.post("/scripts/update-stats.php", { member_id: '<?php echo $member_id_reference; ?>', anon: '1', action_login: '1', group_size: groupsize, lat: client_latitude, lng: client_longitude, location: client_location});
+		}
+		// Store that user logged out
+		else if (action_login == 0) {
+			$.post("/scripts/update-stats.php", { member_id: '<?php echo $member_id_reference; ?>', anon: '1', action_login: '0', group_size: '0', lat: client_latitude, lng: client_longitude, location: client_location});
+		}
+		else {
+			$.post("/scripts/update-stats.php", { member_id: '<?php echo $member_id_reference; ?>', anon: '1', action_login: action_login, group_size: '0', lat: client_latitude, lng: client_longitude, location: client_location}, function() { location.reload(); });
+		}
+	{/if}
+}
+
+
+{if logged_in}
+	function ChatLogin() 
+	{
+		socket.emit('connect user', { nickname: chat_nickname, 
+									chatid: '<?php echo $member_id_reference; ?>', 
+									usertype: '{exp:member:custom_profile_data}{if online_worship_role}{online_worship_role}{if:else}Worshiper{/if}{/exp:member:custom_profile_data}', 
+									email: '{if email}{email}{/if}', 
+									latitude: client_latitude, 
+									longitude: client_longitude, 
+									location: client_location, 
+									groupsize: logged_in_groupsize, 
+									photourl: photo_url
+		});
+
+		$("#chat-disconnected").hide();
+		$('.pchatmsgbox').removeAttr("disabled").css("background-color","#FFF");
+		$('#chatroster').removeClass('chatrosterdisconnected');
+		$('.youdisconnected').remove();
+	}
+{if:else}
+	function ChatLogin() 
+	{
+		socket.emit('connect user', { nickname: chat_nickname , chatid: 'anon_<?php echo $member_id_reference; ?>', latitude: client_latitude, longitude: client_longitude, location: client_location, groupsize: logged_in_groupsize, photourl: photo_url });
+
+		$("#chat-disconnected").hide();
+		$('.pchatmsgbox').removeAttr("disabled").css("background-color","#FFF");
+		$('#chatroster').removeClass('chatrosterdisconnected');
+		$('.youdisconnected').remove();
+	}
+{/if}
+
+
+
+function SendPrivateMessage(id, message) 
+{
+	if (id && message) {
+		socket.emit('send private message', { receiverid: id, msg: message });
+	}
+}
+
+
+// Special Functions for Administator
+{if group_id == "1" || group_id == "19" || group_id == "13"}
+	function RemoveGroupMessage(messageid) 
+	{
+		var confirmation = confirm("Are you sure you want to delete this chat message?");
+		if (confirmation == true) 
+		{
+			socket.emit('remove group message s3cretc0de', messageid);
+		}
+	}
+
+	function ClearGroupChat() 
+	{
+		var confirmation = confirm("Are you sure you want to clear chat?");
+		if (confirmation == true) 
+		{
+			socket.emit('clear group chat s3cretc0de');
+		}
+	}
+{/if}
+
+
+function ClearChatUsers() 
+{
+	markersArray = {};
+	usersArray = {};
+
+	UpdateMyUserInfo();	// Add my location/chat info back to the list
+
+	$ministerroster.html("");
+	$hostroster.html("");
+	$techsupportroster.html("");
+	$peopleroster.html("");
+
+}
+
+function UpdateMyUserInfo() 
+{
+//	console.log("{screen_name} at " + client_location + "(" + client_latitude + "/" + client_longitude + ") from UpdateMyUserInfo");
+	AddUser(<?php echo $member_id_reference; ?>, client_latitude, client_longitude, client_location, "{screen_name}", logged_in_groupsize, true, photo_url);
+	AddMarker(<?php echo $member_id_reference; ?>, client_latitude, client_longitude);
+}
+
+
+// User info container to store latitude, longitude, and UID. Has functions for returning Google Marker and LatLng objects
+function UserInfo(uid) 
+{
+	this.uid = uid;
+	this.latlng = new google.maps.LatLng();
+	this.location = "";
+	this.fullname = "";
+	this.role = null;
+	this.avatarurl 	= "";
+	this.photourl 	= "";
+	this.marker 	= new google.maps.Marker();
+	this.groupsize 	= 1;
+
+	this.SetLatLng = function(lat, lng) {
+		this.latlng = new google.maps.LatLng(lat,lng);
+		this.marker = new google.maps.Marker({position: this.latlng, title: uid.toString()});
+	}
+	this.SetLocation = function (loc) { this.location = loc; }
+	this.SetFullName = function(name) { if (name) { this.fullname = name; } }
+	this.SetGroupSize = function(size) { this.groupsize = size; }
+	this.SetSignedIn = function() { this.signedin = true; }
+	this.GetUID = function() { return this.uid; }
+	this.GetMarker = function() { return this.marker; }
+	this.GetLatLng = function() { return this.latlng; }
+	this.GetLocation = function() { return this.location; }
+	this.GetFullName = function() {
+		if (this.fullname) { return this.fullname; }
+		else { return ""; }
+	}
+	this.GetGroupSize = function() { return this.groupsize; }
+	//this.toString = function() { return "UID: " + this.uid + ", Name: " + this.fullname + ", LatLng: " + this.latlng + ", Location: " + this.location; }
+
+	this.SetPhotoUrl = function (url) { this.photourl = url; }
+	this.GetPhotoUrl = function() { return this.photourl; }
+}
+
+
+function AddChatUser(data) 
+{
+	if (data.usertype == "minister") { $ministerroster.prepend(rosteruser_template(data)); }
+	else if (data.usertype == "host") { $hostroster.prepend(rosteruser_template(data)); }
+	else if (data.usertype == "support") { $techsupportroster.prepend(rosteruser_template(data)); }
+	else {
+		$peopleroster.prepend($(rosteruser_template(data)).hide().fadeIn(3000));
+	}
+
+	AddUser(data.chatid, data.lat, data.lon, data.loc, data.name, data.groupsize, data.usertype, data.photourl);
+	AddMarker(data.chatid, data.lat, data.lon);
+
+
+	// Add private chat onto the slider bar so that worship admin group can chat easily
+	{if group_id == "19"}		// Worship Admin Group
+		// for existing user
+		if (document.getElementById("privatemessages_" + data.chatid)) 
+		{
+			$("#privatemessages_" + data.chatid + " .user_disconnected").remove();
+			$("#private_chatfield_" + data.chatid).removeAttr("disabled").css("background-color","#FFF");
+			$("#tab" + data.chatid).removeClass('tab-loggedoff');
+		}
+		// for a new chat user
+		else
+		{
+			var tab_nickname = "";
+			var chatid = data.chatid;
+			
+			if (data.name.length > 10) { tab_nickname = data.name.substr(0,10) + "...";	}
+			else { tab_nickname = data.name; }
+
+			$privatechats.append(privatecontainer_template({chatid : chatid, tabnickname: tab_nickname, nickname: data.name}));
+//			$("#private_chatfield_" + chatid).autosize();
+			autosize($("private_chatfield_" + chatid));
+
+			$("#private_chatfield_" + chatid).keypress(function(e) {
+				if (e.keyCode == 13) {
+					e.preventDefault();
+					SendPrivateMessage(chatid, $("#private_chatfield_" + chatid).val());
+					$("#private_chatfield_" + chatid).val("");
+					$("#private_chatfield_" + chatid).resize();
+				}
+			});
+
+			// Reposition tabs if it's outside the max in the tab slider
+			var chatid_tab_index = $('#privatecontainer_' + chatid).index('.single-chat');
+
+			if (chatid_tab_index > chat_tabs_max + chat_slider_index - 1) {
+				SetChatTabIndex(chatid_tab_index - chat_tabs_max + 1);
+			}
+			UpdateChatTabs();
+
+			$("#private_chatfield_" + chatid).val(data.name);
+
+			$("#privatecontainer_" + chatid).removeClass('selected');
+			$("#tab" + chatid).removeClass('tab-selected');
+			$("#div" + chatid).hide();
+		}
+	{if:else}		// General
+		// Change the color priavate chat element when someone joins worship again
+		if (document.getElementById("privatemessages_" + data.chatid)) 
+		{
+			$("#privatemessages_" + data.chatid + " .user_disconnected").remove();
+			$("#private_chatfield_" + data.chatid).removeAttr("disabled").css("background-color","#FFF");
+			$("#tab" + data.chatid).removeClass('tab-loggedoff');
+		}
+	{/if}
+}
+
+
+
+function AddUser(chatid, lat, lng, loc, fullname, groupsize, role, photourl) 
+{
+	var userInfo = new UserInfo(chatid);
+	userInfo.SetLatLng(lat, lng);
+	userInfo.location = loc;
+	userInfo.fullname = fullname;
+	userInfo.groupsize = groupsize;
+	userInfo.role = role;
+	userInfo.photourl = photourl;
+
+	usersArray[chatid] = userInfo;
+
+	//console.log(usersArray.toString());
+}
+
+function RemoveChatUser(chatid) 
+{
+	$("#worshiper" + chatid).remove();
+
+   if (document.getElementById("privatemessages_" + chatid)) 
+   {
+		$("#privatemessages_" + chatid).append('<div class="pmsg_notification user_disconnected">This person has logged off.</div><div class="clear"></div>');
+		$("#private_chatfield_" + chatid).attr("disabled","disabled").css("background-color","#BBB");
+		$("#tab" + chatid).addClass('tab-loggedoff');
+   }
+
+   $(".private_link_" + chatid).hide();
+
+   RemoveUser(chatid);
+   RemoveMarker(chatid);
+}
+
+
+function RemoveUser(chatid) 
+{
+	delete usersArray[chatid];
+}
+	
+
+
+function StartPrivateChat(chatid, nickname) 
+{
+	if ($("#privatecontainer_" + chatid).length == 0) 
+	{
+		HideChatWindows();
+		var tab_nickname = "";
+
+		if (nickname.indexOf("Worshiper ") != -1) {
+			tab_nickname = nickname.replace("Worshiper ", "");
+		}
+		else if (nickname.length > 10) { tab_nickname = nickname.substr(0,10) + "...";	}
+		else { tab_nickname = nickname; }
+
+		$privatechats.append(privatecontainer_template({chatid : chatid, tabnickname: tab_nickname, nickname: nickname}));
+//		$("#private_chatfield_" + chatid).autosize();
+		autosize($("private_chatfield_" + chatid));
+
+		 $("#private_chatfield_" + chatid).keypress(function(e) {
+			 if (e.keyCode == 13) {
+				 e.preventDefault();
+				 SendPrivateMessage(chatid, $("#private_chatfield_" + chatid).val());
+				 $("#private_chatfield_" + chatid).val("");
+				 $("#private_chatfield_" + chatid).resize();
+			 }
+		 });
+
+//		 $("#privatemessages_" +  chatid).slimScroll({ height: '100%', size: '5px', start: 'bottom', railVisible: true, railOpacity: 0.5 });
+
+		// Reposition tabs if it's outside the max in the tab slider
+		var chatid_tab_index = $('#privatecontainer_' + chatid).index('.single-chat');
+
+		if (chatid_tab_index > chat_tabs_max + chat_slider_index - 1) 
+		{
+			SetChatTabIndex(chatid_tab_index - chat_tabs_max + 1);
+		}
+	}
+	else 
+	{
+		ToggleChatWindow(chatid);
+	}
+
+	$("#private_chatfield_" + chatid).focus();
+
+	UpdateChatTabs();
+}
+
+	
+function ClosePrivateChat(chatid) 
+{
+	$("#privatecontainer_" + chatid).remove();
+	if(chat_slider_index > 0) { ModifyChatTabIndex(-1); }
+	UpdateChatTabs();
+}
+
+function HideChatWindows() 
+{
+	$('.single-chat-window').hide();
+	$('.chat-tab').removeClass("tab-selected");
+}
+
+
+function ModifyChatTabIndex(val) 
+{
+	chat_slider_index += val;
+	SetChatTabIndex(chat_slider_index);
+}
+
+function SetChatTabIndex(val) 
+{
+	chat_slider_index = val;
+	UpdateChatTabs();
+}
+
+
+function ToggleChatWindow(chatid) 
+{
+	var $div = $("#div" + chatid);
+	var $tab = $("#tab" + chatid);
+
+	if ($div.is(":visible")) {
+		$div.hide();
+		$tab.removeClass('tab-selected');
+	}
+	else 
+	{
+		$(".single-chat.selected > .single-chat-window").hide();
+		$(".single-chat.selected > .chat-tab").removeClass("tab-selected");
+		$(".single-chat.selected").removeClass("selected");
+
+		$div.show();
+		$("#privatecontainer_" + chatid).addClass('selected');
+		$("#private_chatfield_" + chatid).focus();
+		$tab.removeClass('new-message').addClass('tab-selected');
+
+		// Reposition tabs if it's outside the max in the tab slider
+		var chatid_tab_index = $('#privatecontainer_' + chatid).index('.single-chat');
+
+		if (chatid_tab_index > chat_tabs_max + chat_slider_index - 1) {
+			SetChatTabIndex(chatid_tab_index - chat_tabs_max + 1);
+		}
+		else if (chatid_tab_index < chat_slider_index) {
+			SetChatTabIndex(chatid_tab_index);
+		}
+
+		/*var uid_tab_index; // Index # of chat tab in list
+
+		// Are there more tabs than allowed to be displayed at once?
+		if (chat_tabs_open > chat_tabs_max) {
+			uid_tab_index = $('#privatecontainer_' + uid).index('.single-chat');
+
+			if (uid_tab_index != -1) {
+				// Tab is off the screen to the left
+				if (uid_tab_index < chat_slider_index) {
+					SetChatTabIndex(uid_tab_index);
+				}
+				// Tab is off the screen to the right
+				else if (uid_tab_index > chat_slider_index + chat_tabs_max - 1) {
+					var set_chat_tab_index = chat_slider_index + chat_tabs_max - 1;
+					console.log("Set Chat tab index: " + set_chat_tab_index);
+					if(chat_tabs_open - set_chat_tab_index < chat_tabs_max) {
+					SetChatTabIndex(chat_tabs_open - chat_tabs_max); } // Don't let gaps appear after chat tabs if near the end of tabs
+					else { SetChatTabIndex(set_chat_tab_index); }
+				}
+			}
+		}*/
+
+		$("#privatemessages_" + chatid).scrollTop($("#privatemessages_" + chatid)[0].scrollHeight);
+	}
+}
+
+
+function UpdateChatTabs() 
+{
+	chat_tabs_open = $('.single-chat').length;
+	
+	if (chat_tabs_open > chat_tabs_max) 
+	{
+		chat_tab_bar_width = chat_tabs_max * 102; // 102 pixels wide per chat tab
+
+		if(chat_slider_index >= 0 && (chat_tabs_max + chat_slider_index) < chat_tabs_open) { $('#chat-right').show(); }
+		else { $('#chat-right').hide(); }
+
+		if(chat_slider_index <= 0) { $('#chat-left').hide(); }
+		else { $('#chat-left').show();	}
+	}
+	else 
+	{
+		chat_tab_bar_width = chat_tabs_open * 102; // 102 pixels wide per chat tab
+		$('#chat-left').hide();
+		$('#chat-right').hide();
+	}
+
+	// Hide some chat tabs
+	$('.single-chat').each(function(index) 
+	{
+		if (index < chat_slider_index || index > chat_slider_index + chat_tabs_max - 1) { $('#' + this.id).hide(); }
+		else { $('#' + this.id).show();	}
+	});
+
+	// Repositions chat windows to be above chat tab
+	$('.single-chat-window').each(function() 
+	{
+		var temp_divid = this.id.substring(3);
+		$('#div' + temp_divid).css({'left': $('#privatecontainer_' + temp_divid).position().left});
+	});
+
+}
+
+	
+
+var ChatUserUpdateStartedFlag = false;
+function StartChatUsersUpdateCycle() 
+{
+	if (!ChatUserUpdateStartedFlag) 
+	{
+		ChatUsersUpdateCycle();
+	}
+}
+
+function ChatUsersUpdateCycle() 
+{
+//	UpdateChatList();
+	UpdateChatCount();
+	setTimeout("ChatUsersUpdateCycle()", 10000);
+}
+
+
+function UpdateChatCount() {
+	var worshipers = 0;
+	var sites = 0;
+
+	for (var key in usersArray) 
+	{
+/*
+		if (!isNaN(usersArray[key].groupsize)) { worshipers += parseInt(usersArray[key].groupsize);}
+		else { worshipers++; }
+*/
+		if (!isNaN(usersArray[key].groupsize)) 
+		{
+			var tmp_groupsize = parseInt(usersArray[key].groupsize);
+			if (!isNaN(tmp_groupsize)) { worshipers += tmp_groupsize; }
+			else { worshipers++; }
+		}
+		else { worshipers++; }
+
+		sites++;
+	}
+
+	var n_viewers = worshipers + " worshipers at " + sites + " sites";
+
+	if ("{service_live}" == "true") 
+	{
+		$users_count.html("LIVE - " + n_viewers);
+	} 
+	else 
+	{
+		$users_count.html(n_viewers);
+	}
+}
+
+
+
+function FindPeople(name) 
+{
+	if (name.length > 0) {
+		$('.person').removeClass('person-found');
+
+		$(".person > .person-info > .fullname").each(function() {
+			if ($(this).text().toLowerCase().indexOf(name.toLowerCase()) != -1) {
+				$(this).parents().eq(1).addClass("person-found");
+			}
+		});
+
+		list_toggle = 'findpeople';
+		FilterChatList();
+	}
+	else {
+		list_toggle = 'everyone';
+		FilterChatList();
+	}
+}
+
+function FilterChatList() 
+{
+	if (list_toggle == 'everyone') {
+		$('#friends_hide').html("");
+	}
+	else if (list_toggle == 'findpeople') {
+		$('#friends_hide').html("<style>.person { display: none !important; } .person-found{ display: block !important; }</style>");
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////
+// Event Handler when clicks 'Profile' button in the Worship Roster
+////////////////////////////////////////////////////////////////////////
+function clickProfileExpand(el, profilename, userid) 
+{
+	if (!$("."+profilename).is(':visible')) 
+	{
+		$("#prayer-text" + userid).empty();
+		$("#prayer-text" + userid).append("Loading prayers");
+		$("#profile-text" + userid).empty();
+		$("#profile-text" + userid).append("Loading profile");
+		
+		$.ajax({
+			url: '/_component/get-latestprayer/' + userid,
+			success: function(data) {
+				$("#prayer-text" + userid).empty();
+				if (data != '') {
+					$("#prayer-text" + userid).append(data);
+				}
+				else {
+					$("#prayer-text" + userid).append('No recent prayer requests');
+				}
+			}
+		});
+
+		$.ajax({
+			url: '/_component/get-profilebio/' + userid,
+			success: function(data) {
+				$("#profile-text" + userid).empty();
+				if (data != '') {
+					$("#profile-text" + userid).append(data);
+				}
+				else {
+					$("#profile-text" + userid).append('No user profile posted');
+				}
+			}
+		});
+
+		$(".mini-profile").hide();
+	}
+
+	$("."+profilename).toggle("fast");
+}
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+// 		Functions for Login/Register
+/////////////////////////////////////////////////////////////////////////////////////
+function processLogin()
+{
+	// Retrieve Username from Login modal to check email validation
+	var email = $("#loginModal #username").val().trim();
+	if (!validateEmail(email))
+	{
+		$("#loginModal #invalid_username").show();
+		return false;
+	}
+
+	// Send an request to check if email exists
+	$.ajax({
+		url: '/scripts/check_email_unique_v2.php',
+		data: "email=" + email,
+		dataType: 'json',					
+		success: parseLoginEmailCheckAndLogin, 
+		error: function() { 
+			console.log("Error in email duplicate checking..."); 
+		}
+	});
+
+}			
+
+function processRegister()
+{
+	var goodToGo 	= true;
+
+	// Retrieve values in the form at Register modal to check validation
+	var email 		= $("#registerModal #regusername").val().trim();
+	var	firstname 	= $("#registerModal #firstname").val().trim();
+	var	lastname 	= $("#registerModal #lastname").val().trim();
+	var	password 	= $("#registerModal #regpassword").val();
+	var	confirmpw 	= $("#registerModal #confirmpw").val();
+	var	accept 		= $("#registerModal #accept_terms").val();
+
+	//////////////////////////////////////////////////////////////////////
+	// 					Validation Checking								//
+	//////////////////////////////////////////////////////////////////////
+	if (isEmpty(firstname))
+	{
+		$("#registerModal #required_firstname").show();
+		goodToGo	= false;
+	}
+	if (isEmpty(lastname))
+	{
+		$("#registerModal #required_lastname").show();
+		goodToGo	= false;
+	}
+	if (!isEmpty(password))
+	{
+		// Check if the password is sufficiently long (min 6 chars)
+		if (password.length < 6) 
+		{
+			$("#registerModal #errorlength_password").show();
+			goodToGo	= false;
+		}
+			
+		// At least one number, one lowercase and one uppercase letter and At least six characters 
+		var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/; 
+		if (!re.test(password)) 
+		{
+			$("#registerModal #errorcomb_password").show();
+			goodToGo	= false;
+		}
+	}
+	if (password != confirmpw)
+	{
+		$("#registerModal #error_confirmpw").show();
+		goodToGo	= false;
+	}
+
+	// Email validation check
+	if (!validateEmail(email))
+	{
+		$("#registerModal #invalid_username").show();
+		goodToGo	= false;
+	}
+
+	// Proceed when everything is okay!
+	if (goodToGo)
+	{
+		// Send an request to check if email exists
+		$.ajax({
+			url: '/scripts/check_email_unique_v2.php',
+			data: "email=" + email,
+			dataType: 'json',					
+			success: parseRegisterEmailCheckAndRegister, 
+			error: function() { 
+				console.log("Error in email duplicate checking..."); 
+			}
+		});
+	}
+	else
+	{
+		console.log("There are some items to fix to register youself!");
+	}
+}
+
+function parseLoginEmailCheck(data) 
+{ 
+	var jsonObj = $.parseJSON(data);
+
+	// No email found! STOP and show message!
+	if(jsonObj.result == "unique") 
+	{
+		$("#loginModal #noregister_username").show();
+	} 
+	else if (jsonObj.result == "duplicate") 
+	{
+		// Only One email found, GOOD TO GO!
+		if (jsonObj.count == 1) 
+		{
+		}
+		// Multiple emails found, STOP and show message!
+		else if (jsonObj.count > 1) 
+		{
+			$("#loginModal #multiple_username").show();
+			console.log(jsonObj.count + " email addresses exist.");
+		} 
+		else 
+		{
+			console.log("Undefined number of email accounts.");
+			$("#login_error").html("Internal system error on parseLoginEmailCheck. Please contact Administrator with this message.");
+			$("#login_error").show();
+		}
+	} 
+	else 
+	{
+		console.log("No result returned.");
+		$("#login_error").html("Internal system error on parseLoginEmailCheck. Please contact Administrator with this message.");
+		$("#login_error").show();
+	}	
+}
+
+function parseLoginEmailCheckAndLogin(data) 
+{ 
+	var jsonObj = $.parseJSON(data);
+	
+	// No email found! STOP and show message!
+	if(jsonObj.result == "unique") 
+	{
+		$("#loginModal #noregister_username").show();
+	} 
+	else if (jsonObj.result == "duplicate") 
+	{
+		// Only One email found, then try LOGGING IN
+		if (jsonObj.count == 1) 
+		{
+			// Serialize values in the form (Encode a set of form elements as a string for submission)
+			var values = $("#Login").serialize();
+			
+			// Send a request to login
+			$.ajax({
+				url: '/index.php',
+				type: 'POST',
+				data: values,
+				success: function(data) {	
+					var pos 		= data.indexOf("<title>Error");
+					var titlePos 	= data.indexOf("<title>");
+
+					// Logging in Error
+					if (pos == titlePos)
+					{
+						$("#incorrect_password").show();
+						return false;
+					}
+					else
+					{	
+						{if screen_name=="Anonymous Member"}
+							UpdateStats(2, 0); // Updates and then reloads after
+						{if:else}
+							var form_loader = $('.login_form [name=RET]').val();
+							form_loader = form_loader.charAt(0);
+							if (form_loader=="!")
+							{
+								window.location.href = location.href+$('.login_form [name=RET]').val();
+							}
+							else
+							{
+								location.reload();
+							}
+						{/if}
+					}
+				}
+			});
+		} 
+		// Multiple email found, STOP and show message
+		else if (jsonObj.count > 1) 
+		{
+			$("#loginModal #multiple_username").show();
+			console.log(jsonObj.count + " email addresses exist.");
+		} 
+		else 
+		{
+			console.log("Undefined number of email accounts.");
+			$("#login_error").html("Internal system error on parseLoginEmailCheckAndLogin. Please contact Administrator with this message.");
+			$("#login_error").show();
+		}
+	} 
+	else 
+	{
+		console.log("No result returned.");
+		$("#login_error").html("Internal system error on parseLoginEmailCheckAndLogin. Please contact Administrator with this message.");
+		$("#login_error").show();
+	}	
+}
+
+function parseRegisterEmailCheck(data) 
+{ 
+	var jsonObj = $.parseJSON(data);
+
+	// No email found, GOOD TO GO!
+	if(jsonObj.result == "unique") 
+	{
+	} 
+	// Email already exists! STOP and Show message!
+	else if (jsonObj.result == "duplicate") 
+	{
+		// One email found
+		if (jsonObj.count == 1) 
+		{
+			$("#registerModal #registered_username").show();
+		} 
+		// Multiple emails found
+		else if (jsonObj.count > 1) 
+		{
+			$("#registerModal #multiple_username").show();
+			console.log(jsonObj.count + " email addresses exist.");
+		} 
+		else 
+		{
+			console.log("Undefined number of email accounts.");
+			$("#register_error").html("Internal system error on parseRegisterEmailCheck. Please contact Administrator with this message.");
+			$("#register_error").show();
+		}
+	} 
+	else 
+	{
+		console.log("No result returned.");
+		$("#register_error").html("Internal system error on parseRegisterEmailCheck. Please contact Administrator with this message.");
+		$("#register_error").show();
+	}	
+}
+
+function parseRegisterEmailCheckAndRegister(data) 
+{ 
+	var jsonObj = $.parseJSON(data);
+
+	// No email found, GOOD TO GO!
+	if(jsonObj.result == "unique") 
+	{
+		// Create an Account in EE
+		createEEAccount();
+	} 
+	// Email already exists! STOP and Show message!
+	else if (jsonObj.result == "duplicate") 
+	{
+		// One email found
+		if (jsonObj.count == 1) 
+		{
+			$("#registerModal #registered_username").show();
+		} 
+		// Multiple emails found
+		else if (jsonObj.count > 1) 
+		{
+			$("#registerModal #multiple_username").show();
+			console.log(jsonObj.count + " email addresses exist.");
+		} 
+		else 
+		{
+			console.log("Undefined number of email accounts.");
+			$("#register_error").html("Internal system error on parseRegisterEmailCheckAndRegister. Please contact Administrator with this message.");
+			$("#register_error").show();
+		}
+	} 
+	else 
+	{
+		console.log("No result returned.");
+		$("#register_error").html("Internal system error on parseRegisterEmailCheckAndRegister. Please contact Administrator with this message.");
+		$("#register_error").show();
+
+	}	
+}
+
+
+function createEEAccount() 
+{
+	// Retrieve values in the form at Register modal
+	var email 		= $("#registerModal #regusername").val().trim();
+	var	firstname 	= $("#registerModal #firstname").val().trim();
+	var	lastname 	= $("#registerModal #lastname").val().trim();
+	var	password 	= $("#registerModal #regpassword").val();
+	var	accept 		= $("#registerModal #accept_terms").val();
+
+	var username 	= email.replace("@", "_");
+
+	// Create a new account in the DB directly
+	$.ajax({
+		url: '/scripts/password_init_set.php?email=' + email + '&password=' + password + '&username=' + username + '&firstname=' + firstname + '&lastname=' + lastname, 
+		async: false,
+		success: function(data) {
+			var csrftoken	= $("input[name=csrf_token]").val();
+
+			// EE auto-login
+			$.ajax({
+				type: "POST",
+				url: '{site_url}/index.php',
+				data: "username="+email+"&password="+password+"&ACT=9"+"&RET='{site_url}/index.php/prelaunchmain/register_success"+"&site_id=1",
+				async: false,
+				success: function() { 
+					console.log("Auto-logged in.");
+					location.reload();
+				},
+				error: function() { 
+					console.log("Internal system error on Auto-logging in");
+					$("#register_error").html("Internal system error on Auto-logging in. Please contact Administrator with this message.");
+					$("#register_error").show();
+				}
+			});
+
+		},
+		error: function(data) { 
+			console.log("Internal system error on createEEAccount");
+			$("#register_error").html("Internal system error on createEEAccount. Please contact Administrator with this message.");
+			$("#register_error").show();
+		}
+	});
+
+}
+
+
+function clearAllAlert()
+{
+	$(".alert").hide();
+	$(".alert-secondary").show();
+	$(".alert-info").show();
+}
+
+
+
+
+/////////////////////////////////////////////////////////////////////
+// 		Check validation of Email 
+/////////////////////////////////////////////////////////////////////
+function validateEmail(email) {
+	var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+
+	return re.test(email);
+}
+
+function isEmpty(val) {
+    return val == "";
+}
+
+
+function logoutandreload() 
+{
+//	$.post("/scripts/update_worship_heartbeat.php", { member_id: "<?php echo $member_id_reference; ?>", disconnect: "1" });
+
+//	$.cookies.del('ee_screenname');
+
+	$.ajax({
+		url: "/?ACT=10&csrf_token={csrf_token}",
+	  	complete: function() {
+			location.reload();
+		}
+	});
+}
+
+/////////////////////////////////////////////////////////////////////////////////////
+// 		End of Functions for Login/Register
+/////////////////////////////////////////////////////////////////////////////////////
+
+
+{if service_live != "true"}
+	var service_live_prompted = 0; 	// Have we already asked the user if they want to join live service?
+
+	function CheckServiceLive() {
+		if (service_live_prompted == 0) {
+//			console.log("Calling UpdateCheckServiceLive(): " + new Date());
+			UpdateCheckServiceLive();
+			setTimeout("CheckServiceLive()", 30000);
+		}
+	}
+
+	function UpdateCheckServiceLive() {
+		$.ajax({
+			url: "/_component/isservicelive",
+			success: function(data) {
+				if (data.indexOf("true") != -1) {
+					if (service_live_prompted == 0) {
+						var r = confirm("You are currently watching last week's service. This weeks' service is now live. Would you like to join live online worship?");
+						if (r == true) { location.reload(); }
+						service_live_prompted = 1;
+					}
+				}
+			}
+		});
+	}
+{/if}
+
+
+function LoadSpanish() 
+{
+	$("#media_iframe").html("<iframe src='https://www.streammonkey.com/iframe/2678' width='100%' height='350px' frameborder='0' allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>");
+
+	generate_translation_message("Spanish");
+}
+
+function LoadDeaf() 
+{
+	$("#media_iframe").html("<iframe src='https://www.streammonkey.com/iframe/3377' width='100%' height='350px' frameborder='0' allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>");
+
+	generate_translation_message("Deaf");
+}
+
+function LoadEnglish() 
+{
+	$("#media_iframe").html("<iframe src='//player.streammonkey.com/iframe/REUQk4eV' width='100%' height='100%' frameborder='0' style='position: absolute;top: 0;left: 0;width: 100%;height: 100%;' allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>");
+//		$("#media_iframe").html("<iframe src='//player.streammonkey.com/iframe/vlmouwbw' width='100%' height='100%' frameborder='0' style='position: absolute;top: 0;left: 0;width: 100%;height: 100%;' allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>");
+
+	generate_translation_message("English");
+}
+
+function LoadYoutube() 
+{
+	$("#media_iframe").html("<iframe width='100%' height='350' src='https://www.youtube.com/embed/live_stream?channel=UCqV9iVqSzr5odrCDdkEmogw&autoplay=1' frameborder='0' allowfullscreen></iframe>");
+
+	generate_translation_message("YouTube");
+}
+
+
+function generate_translation_message(source)
+{
+	var cur_time = {current_time format="%G%i"};
+	console.log("Current Time: " + cur_time + " from " + source);
+
+
+	if ((cur_time > 430) && (cur_time < 1000))
+	{
+		console.log("430 <  < 1000");
+		switch (source) {
+			case "English":
+				$("#translation_english").prop("disabled", true);
+				$("#translation_spanish").prop("disabled", false);
+				$("#translation_deaf").prop("disabled", true);
+				break;
+			case "Spanish":
+				$("#translation_english").prop("disabled", false);
+				$("#translation_spanish").prop("disabled", true);
+				$("#translation_deaf").prop("disabled", true);
+				break;
+			case "YouTube":
+				$("#translation_english").prop("disabled", false);
+				$("#translation_spanish").prop("disabled", false);
+				$("#translation_deaf").prop("disabled", true);
+				break;
+			default:
+				
+		}
+	}
+	else if ((cur_time > 1020) && (cur_time < 1330))
+	{
+		console.log("1020 <  < 1330");
+		switch (source) {
+			case "English":
+				$("#translation_english").prop("disabled", true);
+				$("#translation_spanish").prop("disabled", false);
+				$("#translation_deaf").prop("disabled", false);
+				break;
+			case "Spanish":
+				$("#translation_english").prop("disabled", false);
+				$("#translation_spanish").prop("disabled", true);
+				$("#translation_deaf").prop("disabled", false);
+				break;
+			case "Deaf":
+				$("#translation_english").prop("disabled", false);
+				$("#translation_spanish").prop("disabled", false);
+				$("#translation_deaf").prop("disabled", true);
+				break;
+			case "YouTube":
+				$("#translation_english").prop("disabled", false);
+				$("#translation_spanish").prop("disabled", false);
+				$("#translation_deaf").prop("disabled", false);
+				break;
+			default:
+		}
+	}
+	else if ((cur_time > 1630) && (cur_time < 2100))
+	{
+		console.log("1630 <  < 2100");
+		switch (source) {
+			case "English":
+				$("#translation_english").prop("disabled", true);
+				$("#translation_spanish").prop("disabled", true);
+				$("#translation_deaf").prop("disabled", true);
+				break;
+			case "YouTube":
+				$("#translation_english").prop("disabled", false);
+				$("#translation_spanish").prop("disabled", true);
+				$("#translation_deaf").prop("disabled", true);
+				break;
+			default:
+		}
+	}
+	else
+	{
+		console.log("Else");
+		$("#translation_english").prop("disabled", true);
+		$("#translation_spanish").prop("disabled", true);
+		$("#translation_deaf").prop("disabled", true);
+	}
+
+}
+
+</script>
+
+</body>
+</html>

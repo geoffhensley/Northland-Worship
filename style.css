@@ -1,6 +1,8 @@
 @import url("/_assets/css/fonts.css");
+
+/* General Resets */
 body {
-	font-family: "FormaDJRText", sans-serif;
+	font-family: "Roboto Condensed", sans-serif;
 	background: #f0f0f0;
 }
 
@@ -9,9 +11,18 @@ h2,
 h3,
 h4,
 h5 {
+	font-family: "FormaDJRText", sans-serif;
 }
 
-/* General Resets */
+a {
+	color: #4a4a4a;
+	text-decoration: none;
+}
+a:hover {
+	color: #e16e4c;
+	text-decoration: underline;
+}
+
 textarea,
 input {
 	border: none;
@@ -29,6 +40,7 @@ button,
 .btn {
 	border-radius: 0;
 }
+
 .form-control,
 .alert {
 	border-radius: 0;
@@ -56,6 +68,27 @@ button,
 	cursor: pointer;
 }
 
+/* Color Fixes */
+.nav-tabs .nav-link:focus,
+.nav-tabs .nav-link:hover {
+	color: #4a4a4a;
+}
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+	background-color: #4a4a4a;
+	color: #fff;
+}
+.btn-primary {
+	background-color: #4a4a4a;
+	border: none;
+}
+.btn-primary:hover,
+.btn-primary:active {
+	background-color: #333;
+	color: #fff;
+	border: none;
+}
+
 /* Always set the map height explicitly to define the size of the div
 	* element that contains the map. */
 #map {
@@ -79,17 +112,15 @@ button,
 }
 
 #worship-contain {
-	margin: 50px auto;
+	margin: 15px auto 50px;
 }
 
 /* Tabs */
 .tab-nav {
-	margin-top: -42px; /* height of nav tabs */
 	background: #fff;
 }
 .tab-content {
 	background: #fff;
-	height: 100%;
 	overflow: hidden;
 	overflow-y: auto;
 }
@@ -115,8 +146,14 @@ button,
 	height: 35px;
 }
 
+/* Below Video */
+.onlineworship-info {
+	background: #fff;
+	padding: 15px;
+}
+
 /* Social Sharing */
-.post-social {
+.onlineworship-social {
 	display: flex;
 	-webkit-box-pack: center;
 	-webkit-justify-content: center;
@@ -127,24 +164,25 @@ button,
 	-ms-flex-align: center;
 	align-items: center;
 	padding: 25px;
-	background-color: #fff;
+	background-color: #efedea;
+	max-width: 300px;
 }
-.post-social h3 {
+.onlineworship-social h3 {
 	display: inline-block;
 	margin-top: 0;
 	margin-right: 20px;
 	margin-bottom: 0;
 	font-size: 20px;
 }
-.post-social .share-button {
+.onlineworship-social .share-button {
 	position: relative;
 	border: #c4baa8 1px solid;
 	border-radius: 99px;
 }
-.post-social .facebook {
+.onlineworship-social .facebook {
 	margin-right: 20px;
 }
-.post-social .email {
+.onlineworship-social .email {
 	margin-right: 0;
 	margin-left: 20px;
 }
@@ -348,7 +386,8 @@ button,
 }
 
 .tab-selected {
-	background-color: #f0f0f0;
+	background-color: #4a4a4a;
+	color: #fff;
 }
 
 .new-message {
@@ -364,7 +403,7 @@ button,
 	bottom: 56px;
 	left: 0px;
 	width: auto;
-	background: #f0f0f0;
+	background: #4a4a4a;
 	z-index: 59;
 }
 

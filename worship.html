@@ -462,62 +462,6 @@
         </div>
     </div>
 
-	{if service_live == "true"}
-		<div id="push-bar-empty"></div>
-	{if:else}
-		<div class="alert alert-secondary alert-dismissible fade show" role="alert">
-			Welcome to online worship at Northland! We currently aren't in live worship, but you can watch the latest worship service below.
-
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		</div>
-    {/if}
-
-	<div class="row">
-		<div class="col-lg-7">
-            {if service_live == "true"}
-                <div class="alert alert-info" role="alert">
-                    Having video problems? <a href="#" onclick="LoadYoutube(); return false;">Click here to use our backup stream.</a><br>
-                <?php if (({current_time format="%G%i"} > 430) && ({current_time format="%G%i"} < 1000)) : ?>
-                        <div id="translations" class="translations">
-                            Translation: 
-                            <button type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="btn btn-info btn-sm" disabled>English</button> 
-                            <button type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="btn btn-info btn-sm" >Espanol</button> 
-                            <button type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="btn btn-info btn-sm" disabled>Interpreted for the Deaf and Hard of Hearing</button>
-                        </div>
-                <?php endif; ?>
-
-                <?php if (({current_time format="%G%i"} > 1020) && ({current_time format="%G%i"} < 1330)) : ?>
-                        <div id="translations" class="translations">
-                            Translation: 
-                            <button type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="btn btn-info btn-sm" disabled>English</button> 
-                            <button type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="btn btn-info btn-sm" >Espanol</button> 
-                            <button type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="btn btn-info btn-sm" >Interpreted for the Deaf and Hard of Hearing</button>
-                        </div>
-                <?php endif; ?>
-
-                <?php if (({current_time format="%G%i"} > 1630) && ({current_time format="%G%i"} < 2100)) : ?>
-                        <div id="translations" class="translations">
-                            Translation: 
-                            <button type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="btn btn-info btn-sm" disabled>English</button> 
-                            <button type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="btn btn-info btn-sm" disabled>Espanol</button> 
-                            <button type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="btn btn-info btn-sm" disabled>Interpreted for the Deaf and Hard of Hearing</button>
-                        </div>
-                <?php endif; ?>
-                </div>
-            {if:else}
-                {exp:channel:entries channel="media" category="48" limit="1" dynamic="off"}
-                    <div id="livevid-quality" class="below_videotab">
-                        <strong>LIVE:</strong> {service_times_singleline}
-                    </div>
-                {/exp:channel:entries}
-            {/if}
-
-			<div id="current-viewers" class="below_videotab">Current Viewers: </div>
-			{!-- Button trigger modal --}
-			<button id="btn1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#worshipModal" style="display:none">Launch Worship Modal</button>
-		</div>
-	</div>
-
 	<div id="worship-contain" class="d-lg-flex flex-row align-items-stretch">
 		{!-- Worship video section	--}
 		<div class="col-lg-7 worship-contain--col">
@@ -534,7 +478,62 @@
 				{/if}
             </div>
 
-            <div class="post-social">
+            <div class="onlineworship-info">
+                {if service_live == "true"}
+                    <div id="push-bar-empty"></div>
+                {if:else}
+                    <div class="alert alert-secondary alert-dismissible fade show" role="alert">
+                        Welcome to online worship at Northland! We currently aren't in live worship, but you can watch the latest worship service below.
+
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                {/if}
+
+                <div class="float-left">
+                    {if service_live == "true"}
+                        <div class="alert alert-info" role="alert">
+                            Having video problems? <a href="#" onclick="LoadYoutube(); return false;">Click here to use our backup stream.</a><br>
+                        <?php if (({current_time format="%G%i"} > 430) && ({current_time format="%G%i"} < 1000)) : ?>
+                                <div id="translations" class="translations">
+                                    Translation: 
+                                    <button type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="btn btn-info btn-sm" disabled>English</button> 
+                                    <button type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="btn btn-info btn-sm" >Espanol</button> 
+                                    <button type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="btn btn-info btn-sm" disabled>Interpreted for the Deaf and Hard of Hearing</button>
+                                </div>
+                        <?php endif; ?>
+
+                        <?php if (({current_time format="%G%i"} > 1020) && ({current_time format="%G%i"} < 1330)) : ?>
+                                <div id="translations" class="translations">
+                                    Translation: 
+                                    <button type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="btn btn-info btn-sm" disabled>English</button> 
+                                    <button type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="btn btn-info btn-sm" >Espanol</button> 
+                                    <button type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="btn btn-info btn-sm" >Interpreted for the Deaf and Hard of Hearing</button>
+                                </div>
+                        <?php endif; ?>
+
+                        <?php if (({current_time format="%G%i"} > 1630) && ({current_time format="%G%i"} < 2100)) : ?>
+                                <div id="translations" class="translations">
+                                    Translation: 
+                                    <button type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="btn btn-info btn-sm" disabled>English</button> 
+                                    <button type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="btn btn-info btn-sm" disabled>Espanol</button> 
+                                    <button type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="btn btn-info btn-sm" disabled>Interpreted for the Deaf and Hard of Hearing</button>
+                                </div>
+                        <?php endif; ?>
+                        </div>
+                    {if:else}
+                        {exp:channel:entries channel="media" category="48" limit="1" dynamic="off"}
+                            <div id="livevid-quality" class="below_videotab">
+                                <strong>LIVE:</strong> {service_times_singleline}
+                            </div>
+                        {/exp:channel:entries}
+                    {/if}
+
+                    <div id="current-viewers" class="below_videotab">Current Viewers: </div>
+                    {!-- Button trigger modal --}
+                    <button id="btn1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#worshipModal" style="display:none">Launch Worship Modal</button>
+                </div>
+
+                <div class="onlineworship-social float-right">
                     <h3 class="sidebar-heading-h3">Share</h3>
                     <div class="share-button facebook w-embed">
                         <a onclick="window.open(this.href, 'twitter-share','width=580,height=296');return false;" href="http://www.facebook.com/sharer/sharer.php?u=https://www.northlandchurch.church/worship">
@@ -558,6 +557,9 @@
                         </a>
                     </div>
                 </div>
+
+                <div class="clear"></div>
+            </div>
 		</div>
 		<div class="col-lg-5 worship-contain--col">
 			<nav class="tab-nav">
@@ -575,9 +577,9 @@
 				<div class="tab-pane fade show active" id="map" role="tabpanel" aria-labelledby="map-tab"></div>
 
                 {!-- TAB: Notes --}
-				<div class="tab-pane fade" id="notes" role="tabpanel" aria-labelledby="notes-tab">
+				{!-- <div class="tab-pane fade" id="notes" role="tabpanel" aria-labelledby="notes-tab">
 					Notes
-				</div>
+				</div> --}
 
                 {!-- TAB: Chat --}
 				<div class="tab-pane fade" id="chat" role="tabpanel" aria-labelledby="chat-tab">
@@ -1454,6 +1456,7 @@ function UpdateClientLocation()
 
         // Make column heights same size
         var min_height = -1;  
+        var nav_tab_height = $(".nav-tabs").height();
 
         $(".worship-contain--col").each(function() {
             if ($(this).height() < min_height || min_height == -1) {
@@ -1465,6 +1468,7 @@ function UpdateClientLocation()
         $(".worship-contain--col").each(function() {
             $(this).height(min_height);
         });
+        $(".tab-content").height(min_height - nav_tab_height);
 
         // Giving Form
         $("#giving-form").submit(function(event) {

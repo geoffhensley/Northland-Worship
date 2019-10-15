@@ -68,6 +68,7 @@ nav .nav-link {
 /* Tabs */
 .tab-nav {
 	margin-top: -35px;
+	background: #fff;
 }
 .tab-content {
 	background: #fff;
@@ -129,6 +130,11 @@ nav .nav-link {
 .post-social .email {
 	margin-right: 0;
 	margin-left: 20px;
+}
+
+/* Giving */
+.giving-form {
+	padding: 15px;
 }
 
 /* Chat */

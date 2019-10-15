@@ -498,7 +498,7 @@
                         </a>
                     </div>
                     <div class="share-button twitter w-embed">
-                        <a onclick="window.open(this.href, 'twitter-share','width=580,height=296');return false;" href="http://twitter.com/share?url=https://www.northlandchurch.church/worship&amp;text=Worship Online with me at Northland. @northlandchurch">
+                        <a onclick="window.open(this.href, 'twitter-share','width=580,height=296');return false;" href="http://twitter.com/share?url=https://www.northlandchurch.church/worship&amp;text=Worship with me at Northland Church online. @northlandchurch">
                             <div>
                                 <img src="https://assets-global.website-files.com/5a941dc804115100018caf6f/5b3aa027fa3b00444b6fad46_Twitter-icon.svg">
                             </div>
@@ -519,7 +519,8 @@
 					<a class="nav-item nav-link active" id="map-tab" data-toggle="tab" href="#map" role="tab" aria-controls="map" aria-selected="true">Map</a>
                     {!-- <a class="nav-item nav-link" id="notes-tab" data-toggle="tab" href="#notes" role="tab" aria-controls="notes" aria-selected="false">Notes</a>	--}
 					<a class="nav-item nav-link" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="false">Chat</a>
-					<a class="nav-item nav-link" id="guide-tab" data-toggle="tab" href="#guide" role="tab" aria-controls="guide" aria-selected="false">Worship Guide</a>
+                    <a class="nav-item nav-link" id="guide-tab" data-toggle="tab" href="#guide" role="tab" aria-controls="guide" aria-selected="false">Worship Guide</a>
+                    <a class="nav-item nav-link" id="give-tab" data-toggle="tab" href="#give" role="tab" aria-controls="give" aria-selected="false">Give</a>
 				</div>
 			</nav>
 
@@ -622,7 +623,31 @@
                 </div>
 
                 {!-- TAB: Worship Guide --}
-				<div class="tab-pane fade" id="guide" role="tabpanel" aria-labelledby="guide-tab" style="text-align: center"></div>
+                <div class="tab-pane fade" id="guide" role="tabpanel" aria-labelledby="guide-tab" style="text-align: center"></div>
+
+                {!-- TAB: Give --}
+				<div class="tab-pane fade" id="give" role="tabpanel" aria-labelledby="give-tab">
+                    <div class="giving-form">
+                        <form id="giving-form">
+                            <div id="amount" role="group" class="form-group">
+                                <h5>Amount:</h5>
+                                <div>
+                                    <input name="amount" type="number" required="required" aria-required="true" class="form-control">
+                                </div>
+                            </div>
+                            <div role="group" class="form-group">
+                                <h5>Fund:</h5>
+                                <select class="form-control" name="fund">
+                                    <option value="0">General Fund</option>
+                                    <option value="1">Missions</option>
+                                    <option value="2">Disaster Response</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary mt-3">Continue</button>
+                        </form>
+                    </div>
+                </div>
 			</div>
 		</div>
 	</div>
@@ -1242,6 +1267,35 @@ function UpdateClientLocation()
             $(this).height(min_height);
         });
 
+        // Giving Form
+        $("#giving-form").submit(function(event) {
+            event.preventDefault();
+
+            var values = {};
+            var data = $(this).serializeArray();
+            $.each(data, function(i, field){
+                values[field.name] = field.value;
+            });
+
+            //Value Retrieval Function
+            var getValue = function (valueName) {
+                return values[valueName];
+            };
+
+            //Retrieve the Values
+            var amount = getValue("amount");
+            var fund = getValue("fund");
+
+            if(fund == 0) {
+                window.open('https://pushpay.com/g/northlandchurch?a=' + amount, '_blank');
+            } else if (fund == 1) {
+                window.open('https://pushpay.com/g/northlandmissions?r=no&a=' + amount, '_blank');
+            } else if (fund == 2) {
+                window.open('https://pushpay.com/g/northlandmissions?r=no&f%5B0%5D=Support%20Disaster%20Relief&a=' + amount, '_blank');
+            }
+        });
+
+        // Chat
         $('#groupchat_field').val("");
 
         $("#group_chat_form").submit(function(e) {
@@ -1737,19 +1791,16 @@ function UpdateClientLocation()
         StartChatUsersUpdateCycle();
         });
 
-        
         socket.on('new chat user', function(data) {
             AddChatUser(data);
 
             $(".private_link_" + data.chatid).show();
         });
 
-        
         socket.on('remove chat user', function(data) {
             RemoveChatUser(data);
         });
 
-        
         socket.on('group message', function(data) {
             data.user_online = true;
 
@@ -1763,17 +1814,14 @@ function UpdateClientLocation()
             }
         });
 
-        
         socket.on('remove group message', function(data) {
         $("#groupmessage_" + data).remove();
         });
 
-        
         socket.on('clear group chat', function() {
         $("#chat-box-list").html("");
         });
 
-        
         socket.on('recent messages', function(data) {
             for(i = 0; i < data.length; i++) {
                 if (data[i].message != "command: open card tab") 
@@ -1783,7 +1831,6 @@ function UpdateClientLocation()
             }
         });
 
-        
         socket.on('private message', function(data) {
             if(data.chatid && data.nickname) 
             {
@@ -1796,7 +1843,7 @@ function UpdateClientLocation()
                     if (!$("#div" + data.chatid).is(":visible")) 
                     {
                         $("#tab" + data.chatid).addClass('new-message');
-                        
+
                         var alert_html = '<div class="alert alert-info alert-dismissible fade show alert_' + data.chatid + '" role="alert">' 
                                     + 'Message received from <a class="alert-link" style="cursor: pointer;" onclick="ToggleChatWindow(\'' + data.chatid + '\'); $(\'.alert_' + data.chatid + '\').alert(\'close\');">' + data.nickname + '</a>'
                                     + '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
@@ -2267,7 +2314,7 @@ function UpdateClientLocation()
             if(chat_slider_index <= 0) { $('#chat-left').hide(); }
             else { $('#chat-left').show();	}
         }
-        else 
+        else
         {
             chat_tab_bar_width = chat_tabs_open * 102; // 102 pixels wide per chat tab
             $('#chat-left').hide();
@@ -2275,14 +2322,14 @@ function UpdateClientLocation()
         }
 
         // Hide some chat tabs
-        $('.single-chat').each(function(index) 
+        $('.single-chat').each(function(index)
         {
             if (index < chat_slider_index || index > chat_slider_index + chat_tabs_max - 1) { $('#' + this.id).hide(); }
             else { $('#' + this.id).show();	}
         });
 
         // Repositions chat windows to be above chat tab
-        $('.single-chat-window').each(function() 
+        $('.single-chat-window').each(function()
         {
             var temp_divid = this.id.substring(3);
             $('#div' + temp_divid).css({'left': $('#privatecontainer_' + temp_divid).position().left});
@@ -2290,36 +2337,33 @@ function UpdateClientLocation()
 
     }
 
-        
-
     var ChatUserUpdateStartedFlag = false;
-    function StartChatUsersUpdateCycle() 
+    function StartChatUsersUpdateCycle()
     {
-        if (!ChatUserUpdateStartedFlag) 
+        if (!ChatUserUpdateStartedFlag)
         {
             ChatUsersUpdateCycle();
         }
     }
 
-    function ChatUsersUpdateCycle() 
+    function ChatUsersUpdateCycle()
     {
     //	UpdateChatList();
         UpdateChatCount();
         setTimeout("ChatUsersUpdateCycle()", 10000);
     }
 
-
     function UpdateChatCount() {
         var worshipers = 0;
         var sites = 0;
 
-        for (var key in usersArray) 
+        for (var key in usersArray)
         {
     /*
             if (!isNaN(usersArray[key].groupsize)) { worshipers += parseInt(usersArray[key].groupsize);}
             else { worshipers++; }
     */
-            if (!isNaN(usersArray[key].groupsize)) 
+            if (!isNaN(usersArray[key].groupsize))
             {
                 var tmp_groupsize = parseInt(usersArray[key].groupsize);
                 if (!isNaN(tmp_groupsize)) { worshipers += tmp_groupsize; }
@@ -2332,19 +2376,17 @@ function UpdateClientLocation()
 
         var n_viewers = worshipers + " worshipers at " + sites + " sites";
 
-        if ("{service_live}" == "true") 
+        if ("{service_live}" == "true")
         {
             $users_count.html("LIVE - " + n_viewers);
-        } 
-        else 
+        }
+        else
         {
             $users_count.html(n_viewers);
         }
     }
 
-
-
-    function FindPeople(name) 
+    function FindPeople(name)
     {
         if (name.length > 0) {
             $('.person').removeClass('person-found');
@@ -2364,7 +2406,7 @@ function UpdateClientLocation()
         }
     }
 
-    function FilterChatList() 
+    function FilterChatList()
     {
         if (list_toggle == 'everyone') {
             $('#friends_hide').html("");
@@ -2373,7 +2415,6 @@ function UpdateClientLocation()
             $('#friends_hide').html("<style>.person { display: none !important; } .person-found{ display: block !important; }</style>");
         }
     }
-
 
     ////////////////////////////////////////////////////////////////////////
     // Event Handler when clicks 'Profile' button in the Worship Roster
@@ -2386,7 +2427,7 @@ function UpdateClientLocation()
             $("#prayer-text" + userid).append("Loading prayers");
             $("#profile-text" + userid).empty();
             $("#profile-text" + userid).append("Loading profile");
-            
+
             $.ajax({
                 url: '/_component/get-latestprayer/' + userid,
                 success: function(data) {
@@ -2418,11 +2459,6 @@ function UpdateClientLocation()
 
         $("."+profilename).toggle("fast");
     }
-
-
-
-
-
 
     /////////////////////////////////////////////////////////////////////////////////////
     // 		Functions for Login/Register
@@ -2483,7 +2519,7 @@ function UpdateClientLocation()
                 $("#registerModal #errorlength_password").show();
                 goodToGo	= false;
             }
-                
+
             // At least one number, one lowercase and one uppercase letter and At least six characters 
             var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/; 
             if (!re.test(password)) 
@@ -2534,25 +2570,25 @@ function UpdateClientLocation()
         {
             $("#loginModal #noregister_username").show();
         } 
-        else if (jsonObj.result == "duplicate") 
+        else if (jsonObj.result == "duplicate")
         {
             // Only One email found, GOOD TO GO!
-            if (jsonObj.count == 1) 
+            if (jsonObj.count == 1)
             {
             }
             // Multiple emails found, STOP and show message!
-            else if (jsonObj.count > 1) 
+            else if (jsonObj.count > 1)
             {
                 $("#loginModal #multiple_username").show();
                 console.warning(jsonObj.count + " email addresses exist.");
             }
-            else 
+            else
             {
                 console.error("Undefined number of email accounts.");
                 $("#login_error").html("Internal system error on parseLoginEmailCheck. Please contact Administrator with this message.");
                 $("#login_error").show();
             }
-        } 
+        }
         else
         {
             $("#login_error").html("Internal system error on parseLoginEmailCheck. Please contact Administrator with this message.");
@@ -2565,14 +2601,14 @@ function UpdateClientLocation()
         var jsonObj = $.parseJSON(data);
 
         // No email found! STOP and show message!
-        if(jsonObj.result == "unique") 
+        if(jsonObj.result == "unique")
         {
             $("#loginModal #noregister_username").show();
-        } 
-        else if (jsonObj.result == "duplicate") 
+        }
+        else if (jsonObj.result == "duplicate")
         {
             // Only One email found, then try LOGGING IN
-            if (jsonObj.count == 1) 
+            if (jsonObj.count == 1)
             {
                 // Serialize values in the form (Encode a set of form elements as a string for submission)
                 var values = $("#Login").serialize();
@@ -2582,7 +2618,7 @@ function UpdateClientLocation()
                     url: '/index.php',
                     type: 'POST',
                     data: values,
-                    success: function(data) {	
+                    success: function(data) {
                         var pos 		= data.indexOf("<title>Error");
                         var titlePos 	= data.indexOf("<title>");
 
@@ -2593,7 +2629,7 @@ function UpdateClientLocation()
                             return false;
                         }
                         else
-                        {	
+                        {
                             {if screen_name=="Anonymous Member"}
                                 UpdateStats(2, 0); // Updates and then reloads after
                             {if:else}
@@ -2703,7 +2739,6 @@ function UpdateClientLocation()
         }
     }
 
-
     function createEEAccount()
     {
         // Retrieve values in the form at Register modal
@@ -2743,9 +2778,7 @@ function UpdateClientLocation()
                 $("#register_error").show();
             }
         });
-
     }
-
 
     function clearAllAlert()
     {
@@ -2753,9 +2786,6 @@ function UpdateClientLocation()
         $(".alert-secondary").show();
         $(".alert-info").show();
     }
-
-
-
 
     /////////////////////////////////////////////////////////////////////
     // 		Check validation of Email 
@@ -2770,8 +2800,7 @@ function UpdateClientLocation()
         return val == "";
     }
 
-
-    function logoutandreload() 
+    function logoutandreload()
     {
     //	$.post("/scripts/update_worship_heartbeat.php", { member_id: "<?php echo $member_id_reference; ?>", disconnect: "1" });
 
@@ -2788,7 +2817,6 @@ function UpdateClientLocation()
     /////////////////////////////////////////////////////////////////////////////////////
     // 		End of Functions for Login/Register
     /////////////////////////////////////////////////////////////////////////////////////
-
 
     {if service_live != "true"}
         var service_live_prompted = 0; 	// Have we already asked the user if they want to join live service?
@@ -2817,21 +2845,21 @@ function UpdateClientLocation()
     {/if}
 
 
-    function LoadSpanish() 
+    function LoadSpanish()
     {
         $("#media_iframe").html("<iframe src='https://www.streammonkey.com/iframe/2678' width='100%' height='350px' frameborder='0' allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>");
 
         generate_translation_message("Spanish");
     }
 
-    function LoadDeaf() 
+    function LoadDeaf()
     {
         $("#media_iframe").html("<iframe src='https://www.streammonkey.com/iframe/3377' width='100%' height='350px' frameborder='0' allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>");
 
         generate_translation_message("Deaf");
     }
 
-    function LoadEnglish() 
+    function LoadEnglish()
     {
         $("#media_iframe").html("<iframe src='//player.streammonkey.com/iframe/REUQk4eV' width='100%' height='100%' frameborder='0' style='position: absolute;top: 0;left: 0;width: 100%;height: 100%;' allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>");
     //		$("#media_iframe").html("<iframe src='//player.streammonkey.com/iframe/vlmouwbw' width='100%' height='100%' frameborder='0' style='position: absolute;top: 0;left: 0;width: 100%;height: 100%;' allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>");
@@ -2839,7 +2867,7 @@ function UpdateClientLocation()
         generate_translation_message("English");
     }
 
-    function LoadYoutube() 
+    function LoadYoutube()
     {
         $("#media_iframe").html("<iframe width='100%' height='350' src='https://www.youtube.com/embed/live_stream?channel=UCqV9iVqSzr5odrCDdkEmogw&autoplay=1' frameborder='0' allowfullscreen></iframe>");
 
@@ -2920,7 +2948,6 @@ function UpdateClientLocation()
             $("#translation_spanish").prop("disabled", true);
             $("#translation_deaf").prop("disabled", true);
         }
-
     }
 </script>
 </body>

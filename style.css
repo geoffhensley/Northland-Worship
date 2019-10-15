@@ -65,6 +65,10 @@ nav .nav-link {
 	height: 45px;
 }
 
+#worship-contain {
+	margin-bottom: 50px;
+}
+
 /* Tabs */
 .tab-nav {
 	margin-top: -35px;

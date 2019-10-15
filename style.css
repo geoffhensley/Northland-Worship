@@ -1,3 +1,39 @@
+@import url("/_assets/css/fonts.css");
+body {
+	font-family: "FormaDJRText", sans-serif;
+	background: #f0f0f0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+}
+
+/* General Resets */
+textarea,
+input {
+	border: none;
+	overflow: auto;
+	outline: none;
+
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+
+	resize: none; /*remove the resize handle on the bottom right*/
+}
+
+.clear {
+	clear: both;
+}
+
+.logo {
+	background-color: #000;
+	margin: 15px 0;
+}
+
 nav .nav-link {
 	line-height: 1;
 }
@@ -17,15 +53,6 @@ nav .nav-link {
 	width: 300px;
 }
 
-.infowindow_name {
-	/*	    white-space: nowrap; */
-}
-
-.gm-style-iw-d {
-	overflow-x: hidden !important;
-	overflow-y: scroll !important;
-}
-
 .infowindow_profile_avatar {
 	border: none;
 	height: 40px;
@@ -33,6 +60,23 @@ nav .nav-link {
 	margin-right: 10px;
 }
 
+.search-form {
+	padding: 5px 0px;
+	height: 45px;
+}
+
+/* Tabs */
+.tab-nav {
+	margin-top: -35px;
+}
+.tab-content {
+	background: #fff;
+	height: 100%;
+	overflow: hidden;
+	overflow-y: auto;
+}
+
+/* Map */
 .map_link {
 	cursor: pointer;
 }
@@ -49,28 +93,51 @@ nav .nav-link {
 	margin-top: 5px;
 }
 
-.search-form {
-	padding: 5px 0px;
-	height: 45px;
-}
-
 #admin_panel {
 	height: 35px;
 }
 
+/* Social Sharing */
+.post-social {
+	display: flex;
+	-webkit-box-pack: center;
+	-webkit-justify-content: center;
+	-ms-flex-pack: center;
+	justify-content: center;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	-ms-flex-align: center;
+	align-items: center;
+	padding: 25px;
+	background-color: #fff;
+}
+.post-social h3 {
+	display: inline-block;
+	margin-top: 0;
+	margin-right: 20px;
+	margin-bottom: 0;
+	font-size: 20px;
+}
+.post-social .share-button {
+	position: relative;
+	border: #c4baa8 1px solid;
+	border-radius: 99px;
+}
+.post-social .facebook {
+	margin-right: 20px;
+}
+.post-social .email {
+	margin-right: 0;
+	margin-left: 20px;
+}
+
+/* Chat */
 #chat-box-list {
 	overflow: auto;
-	/*		overflow-y: scroll;	*/
-	height: 440px;
-	/*		border-style: solid;	*/
 }
 
 #chatroster {
-	height: 329px;
 	overflow: auto;
-	/*		height: 100%; 		*/
-	/*		overflow: hidden;	*/
-	/*		border-style: solid;	*/
 }
 
 .groupchat {
@@ -114,10 +181,6 @@ nav .nav-link {
 	line-height: 1;
 	font-size: 0.9rem;
 	/*		overflow-wrap: break-word;		*/
-}
-
-#profile-box {
-	height: 110px;
 }
 
 #profile-logout {
@@ -173,7 +236,6 @@ nav .nav-link {
 
 .button-options {
 	float: right;
-	height: 35px;
 }
 
 .fullname {
@@ -182,7 +244,6 @@ nav .nav-link {
 
 .person-info {
 	font-size: 0.9rem;
-	height: 50px;
 }
 
 .email-info {
@@ -205,10 +266,10 @@ nav .nav-link {
 }
 
 #chat-bar {
-	background-color: #333333;
+	background-color: #fff;
 	height: 40px;
-	bottom: 1px;
-	z-index: 99999;
+	bottom: 0;
+	z-index: 60;
 	width: 98%;
 	position: fixed;
 }
@@ -217,14 +278,14 @@ nav .nav-link {
 	float: left;
 	padding: 10px;
 	cursor: pointer;
-	color: white;
+	color: #333;
 }
 
 #chat-right {
 	float: right;
 	padding: 10px;
 	cursor: pointer;
-	color: white;
+	color: #333;
 }
 
 .bx-prev,
@@ -233,7 +294,7 @@ nav .nav-link {
 }
 
 .chat-tab {
-	color: white;
+	color: #333;
 	padding: 7px;
 	text-align: center;
 	-moz-user-select: none;
@@ -264,31 +325,31 @@ nav .nav-link {
 }
 
 .tab-selected {
-	background-color: #979797;
+	background-color: #f0f0f0;
 }
 
 .new-message {
-	background-color: #547727;
+	background-color: #7cc475;
 }
 
 .tab-loggedoff {
-	background-color: #eab00d;
+	background-color: #979797;
 }
 
 .single-chat-window {
-	width: auto;
-	background-color: #111111;
-	bottom: 58px;
-	left: 0px;
 	position: absolute;
-	z-index: 1000;
+	bottom: 56px;
+	left: 0px;
+	width: auto;
+	background: #f0f0f0;
+	z-index: 59;
 }
 
 .single-chat-window textarea {
 	width: 240px;
+	background: #fff;
+	border: #c4baa8 1px solid;
 	margin: 10px 10px 8px 10px;
-	/*		height: 25px; 	*/
-	border: 0 none;
 	display: block;
 	overflow-x: hidden;
 	overflow-y: hidden;
@@ -301,40 +362,41 @@ nav .nav-link {
 
 .single-chat-header {
 	cursor: pointer;
-	background-color: #333333;
-	height: 40px;
-	padding: 4px 10px;
+	background-color: #fff;
+	padding: 10px 15px;
 	max-width: 260px;
 }
 
 .single-chat-header h1 {
 	font-size: 1rem;
-	/*		letter-spacing: 0.5px;	*/
-	line-height: 1;
-	color: #fff;
 	-moz-user-select: none;
 	-khtml-user-select: none;
 	user-select: none;
 	float: left;
 	max-width: 90%;
 	overflow: hidden;
+	margin: 0;
+}
+
+.pchatbox-inside {
+	position: relative;
+	overflow: hidden;
+	width: 100%;
 	height: 100%;
-	/* margin: 0 0 18px; */
+	border: #c4baa8 1px solid;
 }
 
 .chat-close {
-	/* height: 30px;
-		width: 30px; */
 	float: right;
-	/* background: url(/_assets/img/v2/onlineworship/chatclose.png); */
 	cursor: pointer;
-	color: #ffffff;
-	font-size: 22px;
+	color: #000;
 	font-weight: 700;
 }
 
 .chat-close:hover {
 	background-position: 0 30px;
+	color: #de716f;
+	text-decoration: none;
 }
 
 #pchatbox {
@@ -395,20 +457,9 @@ nav .nav-link {
 	margin-bottom: 6px;
 }
 
-.pmsg_me_bg .pmsg_body {
-}
-
-.pmsg_you_bg .pmsg_body {
-}
-
 .pmsg_avatar {
 	width: 40px;
 	font-size: 0.6rem;
-	/*		line-height: 1;	*/
-}
-
-.pmsg_avatar img {
-	/*		width: 25px;	*/
 }
 
 .pmsg_right_avatar {
@@ -439,10 +490,10 @@ nav .nav-link {
 }
 
 #chat-slider-container li {
-	background-color: #3d424a;
+	background-color: #fff;
 	width: 100px;
-	border-left: 1px solid #282a30;
-	border-right: 1px solid #4f535a;
+	border-left: 1px solid #eee;
+	border-right: 1px solid #eee;
 	height: 40px;
 	padding-left: 1px;
 	padding-right: 1px;
@@ -450,17 +501,12 @@ nav .nav-link {
 	overflow: hidden;
 }
 
-#chat-slider-container li a {
-	color: #f0f0ee;
-	font-weight: bold;
-}
-
 #chat-slider-container li:hover {
-	background-color: #4b515a;
+	background-color: #f2f1ef;
 }
 
 #chat-slider-container li:active {
-	background-color: #939393;
+	background-color: #efedea;
 }
 
 #chat-tab-bar {
@@ -470,9 +516,28 @@ nav .nav-link {
 
 #chat-slider-ul {
 	overflow: hidden;
-	width: 900px;
 }
 
 .modal-header {
 	cursor: pointer;
+}
+
+/* Video player mods */
+.responsive-video-player {
+	padding: 0 0 56.25% 0;
+	position: relative;
+	height: 0;
+	overflow: hidden;
+}
+.responsive-video-player iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+/* DARK THEME */
+.dark {
+	background-color: #333;
 }

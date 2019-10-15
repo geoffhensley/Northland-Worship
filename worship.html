@@ -61,7 +61,6 @@
 	</div>
 </div>
 
-
 {!-- Welcome Modal for Logged In user --}
 <div data-swiftype-index="false" class="modal fade" id="welcomeLoggedInModal" tabindex="-1" role="dialog" aria-labelledby="welcomeLoggedInModalLabel" data-backdrop="false" data-keyboard="false">
 	<div class="modal-dialog" role="document">
@@ -90,7 +89,6 @@
 	</div>
 </div>
 
-
 {!-- Welcome Modal --}
 <div data-swiftype-index="false" class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="welcomeModal" data-backdrop="false" data-keyboard="false">
 	<div class="modal-dialog" role="document">
@@ -115,7 +113,6 @@
 		</div>
 	</div>
 </div>
-
 
 {!-- Welcome Modal for Not Logged In user --}
 <div data-swiftype-index="false" class="modal fade" id="welcomeNotLoggedInModal" tabindex="-1" role="dialog" aria-labelledby="welcomeNotLoggedInModalLabel" data-backdrop="false" data-keyboard="false">
@@ -159,14 +156,12 @@
 				</form>
 			</div>
 
-
 			<div class="modal-footer">
 				<button type="button" class="btn btn-info btn-block welcome-button">Back to Selection</button>
 			</div>
 		</div>
 	</div>
 </div>
-
 
 {!-- User Login Modal --}
 <div data-swiftype-index="false" class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" data-backdrop="false" data-keyboard="false">
@@ -242,7 +237,6 @@
 	</div>
 </div>
 
-
 {!-- User Registration Modal --}
 <div data-swiftype-index="false" class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" data-backdrop="false" data-keyboard="false">
 	<div class="modal-dialog" role="document">
@@ -317,14 +311,57 @@
 		</div>
 	</div>
 </div>
+
+{!-- Share Email modal --}
+<div data-swiftype-index="false" class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="inviteModal" data-backdrop="true" data-keyboard="false">
+    <div class="modal-dialog" role="document">
+        <div id="online-invite" class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Invite someone to worship online</h4>
+            </div>
+
+            <form id="share_form">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label">Sender Name: </label>
+                        <input class="form-control" id="shareform_from_name" type="text" value='{if screen_name}{screen_name}{/if}'>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Sender E-mail: </label>
+                        <input class="form-control" id="shareform_from_email" type="text" value='{if email}{email}{/if}'>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Recipient Name: </label>
+                        <input class="form-control" id="shareform_to_name" type="text" value=''>
+                    </div>
+                    <div class="form-group">
+                        <label>Recipient E-mail: </label>
+                        <input class="form-control" id="shareform_to_email" type="text" value=''>
+                    </div>
+                    <div class="form-group">
+                        <label>Personal Message: </label>
+                        <textarea class="form-control" style="min-height: 100px; resize: none" id="shareform_message"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Nevermind</button>
+                    <input class="btn btn-primary" class="btn btn-primary" type="submit" value="Send Invite">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{!-- Main Container --}
 <div class="container-fluid" id="rootContainer">
 	{if !logged_in}
         {!-- Used for profanity filter since filter can't update textbox directly --}
         <div id="anonymous_name" style="display: none"></div>
 	{/if}
 
-    <a href="https://www.northlandchurch.net">
-		<img src="https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1.png" alt="Northland Church" id="logo" srcset="https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1-p-500.png 500w, https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1-p-800.png 800w, https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1-p-1080.png 1080w, https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1.png 1230w" sizes="(max-width: 479px) 45vw, (max-width: 767px) 199.99998474121094px, 239.99998474121094px" data-w-id="d5887f25-8dbf-8252-bc25-ac42e920eef8" class="northland_logo northland_logo_black">
+    <a href="https://www.northlandchurch.net" target="_blank">
+		<img class="logo" src="https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1.png" alt="Northland Church" id="logo" srcset="https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1-p-500.png 500w, https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1-p-800.png 800w, https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1-p-1080.png 1080w, https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1.png 1230w" sizes="(max-width: 479px) 45vw, (max-width: 767px) 199.99998474121094px, 239.99998474121094px" data-w-id="d5887f25-8dbf-8252-bc25-ac42e920eef8" class="northland_logo northland_logo_black">
 	</a>
 
 	{if service_live == "true"}
@@ -332,15 +369,14 @@
 	{if:else}
 		<div class="alert alert-secondary alert-dismissible fade show" role="alert">
 			Welcome to online worship at Northland! We currently aren't in live worship, but you can watch the latest worship service below.
-			<a href="https://www.northlandchurch.net/give" target="_blank" class="btn btn-primary">GIVE ONLINE</a>
 
 			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		</div>
-	{/if}
+    {/if}
 
-	<div class="row">
-		<div class="col header-small-right">
-            {if group_id == "1" || group_id == "19" || group_id == "13"}
+    {if group_id == "1" || group_id == "19" || group_id == "13"}
+        <div class="row">
+            <div class="col header-small-right">
                 <script type="text/javascript">
                     function AdminServiceLiveCheck() {
                         AdminUpdateServiceLiveCheck();
@@ -386,93 +422,110 @@
                 <span>
                     <b><a href="/admin" target="_blank">Admin Console</a> | <a id="service_live"></a> | <a id="reload_map" href='#' onclick='reload_map()'>Reload Map</a></b>
                 </span>
-            {if:else}
-                <div class="worship_clear"></div>
-            {/if}
-		</div>
-	</div>
+            </div>
+        </div>
+    {/if}
 
 	<div class="row">
 		<div class="col-lg-7">
-		{if service_live == "true"}
-			<div class="alert alert-info" role="alert">
-				Having video problems? <a href="#" onclick="LoadYoutube(); return false;">Click here to use our backup stream.</a><br>
-			<?php if (({current_time format="%G%i"} > 430) && ({current_time format="%G%i"} < 1000)) : ?>
-					<div id="translations" class="translations">
-						Translation: 
-						<button type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="btn btn-info btn-sm" disabled>English</button> 
-						<button type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="btn btn-info btn-sm" >Espanol</button> 
-						<button type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="btn btn-info btn-sm" disabled>Interpreted for the Deaf and Hard of Hearing</button>
-					</div>
-			<?php endif; ?>
+            {if service_live == "true"}
+                <div class="alert alert-info" role="alert">
+                    Having video problems? <a href="#" onclick="LoadYoutube(); return false;">Click here to use our backup stream.</a><br>
+                <?php if (({current_time format="%G%i"} > 430) && ({current_time format="%G%i"} < 1000)) : ?>
+                        <div id="translations" class="translations">
+                            Translation: 
+                            <button type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="btn btn-info btn-sm" disabled>English</button> 
+                            <button type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="btn btn-info btn-sm" >Espanol</button> 
+                            <button type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="btn btn-info btn-sm" disabled>Interpreted for the Deaf and Hard of Hearing</button>
+                        </div>
+                <?php endif; ?>
 
-			<?php if (({current_time format="%G%i"} > 1020) && ({current_time format="%G%i"} < 1330)) : ?>
-					<div id="translations" class="translations">
-						Translation: 
-						<button type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="btn btn-info btn-sm" disabled>English</button> 
-						<button type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="btn btn-info btn-sm" >Espanol</button> 
-						<button type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="btn btn-info btn-sm" >Interpreted for the Deaf and Hard of Hearing</button>
-					</div>
-			<?php endif; ?>
+                <?php if (({current_time format="%G%i"} > 1020) && ({current_time format="%G%i"} < 1330)) : ?>
+                        <div id="translations" class="translations">
+                            Translation: 
+                            <button type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="btn btn-info btn-sm" disabled>English</button> 
+                            <button type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="btn btn-info btn-sm" >Espanol</button> 
+                            <button type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="btn btn-info btn-sm" >Interpreted for the Deaf and Hard of Hearing</button>
+                        </div>
+                <?php endif; ?>
 
-			<?php if (({current_time format="%G%i"} > 1630) && ({current_time format="%G%i"} < 2100)) : ?>
-					<div id="translations" class="translations">
-						Translation: 
-						<button type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="btn btn-info btn-sm" disabled>English</button> 
-						<button type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="btn btn-info btn-sm" disabled>Espanol</button> 
-						<button type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="btn btn-info btn-sm" disabled>Interpreted for the Deaf and Hard of Hearing</button>
-					</div>
-			<?php endif; ?>
-			</div>
-		{if:else}
-			{exp:channel:entries channel="media" category="48" limit="1" dynamic="off"}
-				<div id="livevid-quality" class="below_videotab">
-					<strong>LIVE:</strong> {service_times_singleline}
-				</div>
-			{/exp:channel:entries}
-		{/if}
+                <?php if (({current_time format="%G%i"} > 1630) && ({current_time format="%G%i"} < 2100)) : ?>
+                        <div id="translations" class="translations">
+                            Translation: 
+                            <button type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="btn btn-info btn-sm" disabled>English</button> 
+                            <button type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="btn btn-info btn-sm" disabled>Espanol</button> 
+                            <button type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="btn btn-info btn-sm" disabled>Interpreted for the Deaf and Hard of Hearing</button>
+                        </div>
+                <?php endif; ?>
+                </div>
+            {if:else}
+                {exp:channel:entries channel="media" category="48" limit="1" dynamic="off"}
+                    <div id="livevid-quality" class="below_videotab">
+                        <strong>LIVE:</strong> {service_times_singleline}
+                    </div>
+                {/exp:channel:entries}
+            {/if}
 
 			<div id="current-viewers" class="below_videotab">Current Viewers: </div>
 			{!-- Button trigger modal --}
 			<button id="btn1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#worshipModal" style="display:none">Launch Worship Modal</button>
-
-		</div>
-
-		<div class="col-lg-5" style="">
-			<a href="https://www.northlandchurch.net/give" target="_blank" class="btn btn-primary">GIVE ONLINE</a>
 		</div>
 	</div>
 
-	<div id="worshipDiv" class="row" >
+	<div id="worship-contain" class="d-lg-flex flex-row align-items-stretch">
 		{!-- Worship video section	--}
-		<div class="col-lg-7" style="padding-right: 1px; padding-left: 1px;">
-			<div id="onlineworship-video" style="">
+		<div class="col-lg-7 worship-contain--col">
+			<div id="onlineworship-video">
                 {!-- WORSHIP VIDEO --}
                 {if service_live=="true"}
-					<div class="smEmbed" style="padding: 0 0 56.25% 0;position: relative;height: 0;overflow: hidden;" id="media_iframe">
-						<iframe src="//player.streammonkey.com/iframe/REUQk4eV" width="100%" height="100%" frameborder="0" style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;" allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>
+					<div class="responsive-video-player" id="media_iframe">
+						<iframe src="//player.streammonkey.com/iframe/REUQk4eV" width="100%" height="100%" frameborder="0" allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>
 					</div>
 			    {if:else}
-					<div class="responsive-video-player" style="position: relative;padding-bottom: 56.25%;height: 0;">
-						<iframe id="vimeo_player" width="640" height="360" frameborder="0" style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+					<div class="responsive-video-player">
+						<iframe id="vimeo_player" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 					</div>
 				{/if}
-			</div>
+            </div>
+
+            <div class="post-social">
+                    <h3 class="sidebar-heading-h3">Share</h3>
+                    <div class="share-button facebook w-embed">
+                        <a onclick="window.open(this.href, 'twitter-share','width=580,height=296');return false;" href="http://www.facebook.com/sharer/sharer.php?u=https://www.northlandchurch.church/worship">
+                            <div>
+                                <img src="https://assets-global.website-files.com/5a941dc804115100018caf6f/5b3aa0277b1e3f30e2956237_Facebook-icon.svg">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="share-button twitter w-embed">
+                        <a onclick="window.open(this.href, 'twitter-share','width=580,height=296');return false;" href="http://twitter.com/share?url=https://www.northlandchurch.church/worship&amp;text=Worship Online with me at Northland. @northlandchurch">
+                            <div>
+                                <img src="https://assets-global.website-files.com/5a941dc804115100018caf6f/5b3aa027fa3b00444b6fad46_Twitter-icon.svg">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="share-button email w-embed">
+                        <a href="#" data-toggle="modal" data-target="#inviteModal">
+                            <div>
+                                <img src="https://assets-global.website-files.com/5a941dc804115100018caf6f/5b989285c0576809e458a7c8_email.svg">
+                            </div>
+                        </a>
+                    </div>
+                </div>
 		</div>
-		<div class="col-lg-5" style="">
-			<nav>
-				<div class="nav nav-tabs nav-pills nav-justified justify-content-center" id="myTab" role="tablist">
+		<div class="col-lg-5 worship-contain--col">
+			<nav class="tab-nav">
+				<div class="nav nav-tabs nav-pills nav-justified justify-content-center" role="tablist">
 					<a class="nav-item nav-link active" id="map-tab" data-toggle="tab" href="#map" role="tab" aria-controls="map" aria-selected="true">Map</a>
                     {!-- <a class="nav-item nav-link" id="notes-tab" data-toggle="tab" href="#notes" role="tab" aria-controls="notes" aria-selected="false">Notes</a>	--}
 					<a class="nav-item nav-link" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="false">Chat</a>
 					<a class="nav-item nav-link" id="guide-tab" data-toggle="tab" href="#guide" role="tab" aria-controls="guide" aria-selected="false">Worship Guide</a>
-					<a class="nav-item nav-link" id="share-tab" data-toggle="tab" href="#share" role="tab" aria-controls="share" aria-selected="false">Share</a>
 				</div>
 			</nav>
 
-			<div class="tab-content" id="myTabContent">
+			<div class="tab-content">
                 {!-- TAB: Map --}
-				<div class="tab-pane fade show active" id="map" role="tabpanel" aria-labelledby="map-tab" style="height: 400px;"></div>
+				<div class="tab-pane fade show active" id="map" role="tabpanel" aria-labelledby="map-tab"></div>
 
                 {!-- TAB: Notes --}
 				<div class="tab-pane fade" id="notes" role="tabpanel" aria-labelledby="notes-tab">
@@ -570,45 +623,13 @@
 
                 {!-- TAB: Worship Guide --}
 				<div class="tab-pane fade" id="guide" role="tabpanel" aria-labelledby="guide-tab" style="text-align: center"></div>
-
-                {!-- TAB: Share --}
-				<div class="tab-pane fade" id="share" role="tabpanel" aria-labelledby="share-tab">
-					<div id="online-invite">
-						<form id="share_form" style="padding: 10px">
-							<div class="form-group">
-								<label class="control-label">Sender Name: </label>
-								<input class="form-control" id="shareform_from_name" type="text" value='{if screen_name}{screen_name}{/if}'>
-							</div>
-							<div class="form-group">
-								<label class="control-label">Sender E-mail: </label>
-								<input class="form-control" id="shareform_from_email" type="text" value='{if email}{email}{/if}'>
-							</div>
-							<div class="form-group">
-								<label class="control-label">Recipient Name: </label>
-								<input class="form-control" id="shareform_to_name" type="text" value=''>
-							</div>
-							<div class="form-group">
-								<label>Recipient E-mail: </label>
-								<input class="form-control" id="shareform_to_email" type="text" value=''>
-							</div>
-							<div class="form-group">
-								<label>Personal Message: </label>
-								<textarea class="form-control" style="min-height: 100px; resize: none" id="shareform_message"></textarea>
-							</div>
-							<div class="form-group">
-								<input class="btn btn-primary" type='submit' value='Send Invite'>
-								<input class="btn btn-secondary" type='reset' value='Reset'>
-							</div>
-						</form>
-					</div>
-				</div>
 			</div>
 		</div>
 	</div>
 
 	<div id="alert-container"></div>
 
-	<div id="chat-bar" class="">
+	<div id="chat-bar">
         <div id="chat-slider-container">
             <div id="chat-left" style="display:none; ">&lt;&lt;</div>
             <div id="chat-right" style="display:none;">&gt;&gt;</div>
@@ -618,15 +639,6 @@
             </div>
         </div>
 	</div>
-    {!--
-        <nav class="navbar fixed-bottom navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Chat</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>		
-            <div id="chat-slider-ul"></div>
-        </nav>
-    --}
 </div>
 
 {!-- Optional JavaScript --}
@@ -942,10 +954,11 @@ function UpdateClientLocation()
             <div class="single-chat-header" id="chat-header{{chatid}}">
                 <h1>{{nickname}}</h1>
                 <a class="chat-close" href="javascript:ClosePrivateChat('{{chatid}}')">X</a>
+                <div class="clear"></div>
             </div>
 
             <div id="pchatbox">
-                <div  style="position: relative; overflow: hidden; width: 100%; height: 100%;">
+                <div class="pchatbox-inside">
                     <div id="privatemessages_{{chatid}}" class="chatbox" style="overflow-y: scroll; word-wrap: break-word; width: auto; height: 250px;"></div>
                 </div>
             </div>
@@ -1215,6 +1228,20 @@ function UpdateClientLocation()
             CheckServiceLive();
         {/if}
 
+        // Make column heights same size
+        var min_height = -1;  
+
+        $(".worship-contain--col").each(function() {
+            if ($(this).height() < min_height || min_height == -1) {
+                min_height = $(this).height();
+            }
+            $('.worship-contain').height(min_height);
+        })
+
+        $(".worship-contain--col").each(function() {
+            $(this).height(min_height);
+        });
+
         $('#groupchat_field').val("");
 
         $("#group_chat_form").submit(function(e) {
@@ -1268,7 +1295,7 @@ function UpdateClientLocation()
         initiate_geolocation();
 
 
-        $('#worshipDiv').scroll(function() {
+        $('#worship-contain').scroll(function() {
             $('#onlineworship-video').css('top', $(this).scrollTop());
         });
     });
@@ -1510,7 +1537,7 @@ function UpdateClientLocation()
         {if logged_in}
             $('#welcomeLoggedInModal').modal('show');
 
-            $('#update_number_worshipers').click(function(e) 
+            $('#update_number_worshipers').click(function(e)
             {
                 ChatConnect();
 
@@ -1665,10 +1692,9 @@ function UpdateClientLocation()
             'forceNew': true
         });
 
-        
         socket.on('connect', function() {
             ChatLogin();
-            
+
             if (first_connection) 
             {
                 socket.emit("get recent messages");
@@ -2230,7 +2256,7 @@ function UpdateClientLocation()
     function UpdateChatTabs() 
     {
         chat_tabs_open = $('.single-chat').length;
-        
+
         if (chat_tabs_open > chat_tabs_max) 
         {
             chat_tab_bar_width = chat_tabs_max * 102; // 102 pixels wide per chat tab

@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
-    <script type="text/javascript">WebFont.load({  google: {    families: ["Roboto Condensed:300,regular,700","Roboto Mono:regular"]  }});</script>
+    <script type="text/javascript">WebFont.load({ google: {families: ["Roboto Condensed:300,regular,700","Roboto Mono:regular"]}});</script>
 
     <link rel="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     {!-- Relative stylesheet inside EE template group --}
 	<link rel="stylesheet" href="style">
@@ -323,7 +323,7 @@
 </div>
 
 {!-- Share Email modal --}
-<div data-swiftype-index="false" class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="inviteModal" data-backdrop="true" data-keyboard="false">
+<div data-swiftype-index="false" class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="inviteModal" data-backdrop="false" data-keyboard="false">
     <div class="modal-dialog" role="document">
         <div id="online-invite" class="modal-content">
             <div class="modal-header">
@@ -370,23 +370,14 @@
         <div id="anonymous_name" style="display: none"></div>
 	{/if}
 
-    <a href="https://www.northlandchurch.net" target="_blank">
-		<img class="logo" src="https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1.png" alt="Northland Church" id="logo" srcset="https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1-p-500.png 500w, https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1-p-800.png 800w, https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1-p-1080.png 1080w, https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1.png 1230w" sizes="(max-width: 479px) 45vw, (max-width: 767px) 199.99998474121094px, 239.99998474121094px" data-w-id="d5887f25-8dbf-8252-bc25-ac42e920eef8" class="northland_logo northland_logo_black">
-	</a>
-
-	{if service_live == "true"}
-		<div id="push-bar-empty"></div>
-	{if:else}
-		<div class="alert alert-secondary alert-dismissible fade show" role="alert">
-			Welcome to online worship at Northland! We currently aren't in live worship, but you can watch the latest worship service below.
-
-			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		</div>
-    {/if}
-
-    {if group_id == "1" || group_id == "19" || group_id == "13"}
-        <div class="row">
-            <div class="col header-small-right">
+    <div class="row align-items-center">
+        <div class="col-md-4">
+            <a href="https://www.northlandchurch.net" target="_blank">
+                <img class="logo" src="https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1.png" alt="Northland Church" id="logo" srcset="https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1-p-500.png 500w, https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1-p-800.png 800w, https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1-p-1080.png 1080w, https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1.png 1230w" sizes="(max-width: 479px) 45vw, (max-width: 767px) 199.99998474121094px, 239.99998474121094px" data-w-id="d5887f25-8dbf-8252-bc25-ac42e920eef8" class="northland_logo northland_logo_black">
+            </a>
+        </div>
+        {if group_id == "1" || group_id == "19" || group_id == "13"}
+            <div class="col-md-4">
                 <script type="text/javascript">
                     function AdminServiceLiveCheck() {
                         AdminUpdateServiceLiveCheck();
@@ -398,10 +389,10 @@
                             url: "/_component/isservicelive",
                             success: function(data) {
                                 if (data.indexOf("true") != -1) {
-                                    $("#service_live").replaceWith("<a id='service_live' href='#' onclick='confirm_turn_service_off()'>Service is currently LIVE</a>");
+                                    $("#service_live").replaceWith("<a id='service_live' href='#' class='btn btn-secondary' onclick='confirm_turn_service_off()'>Service is currently LIVE</a>");
                                 }
                                 else {
-                                    $("#service_live").replaceWith("<a id='service_live' href='#' onclick='confirm_turn_service_on()'>Service is currently OFF</a>");
+                                    $("#service_live").replaceWith("<a id='service_live' class='btn btn-secondary' href='#' onclick='confirm_turn_service_on()'>Service is currently OFF</a>");
                                 }
                             }
                         });
@@ -429,11 +420,56 @@
                         initMap();
                     }
                 </script>
-                <span>
-                    <b><a href="/admin" target="_blank">Admin Console</a> | <a id="service_live"></a> | <a id="reload_map" href='#' onclick='reload_map()'>Reload Map</a></b>
-                </span>
+
+                <div class="btn-group float-md-right" role="group">
+                    <a href="/admin" target="_blank" class="btn btn-secondary">Admin Console</a>
+                    <a id="service_live" type="button" class="btn btn-secondary"></a>
+                    <a id="reload_map" href='#' onclick='reload_map()' class="btn btn-secondary">Reload Map</a>
+                </div>
             </div>
+        {/if}
+        <div class="{if group_id == '1' || group_id == '19' || group_id == '13'}col-md-4{if:else}col-md-8{/if}">
+            {!-- Section for Profile --}
+            {if logged_in}
+                <ul class="navbar-nav ml-auto nav-flex-icons text-md-right profile-wrapper">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="profile-info" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <img id="profile-avatar-img" src="/images/member_photos/50x50/photo_{member_id}.jpg" onerror="this.src='/images/avatar.png'" class="z-depth-0 mr-2" alt="Avatar" height="50">
+                            <span><strong>{screen_name}</strong></span>
+                            {!-- <span id="profile-location">Longwood Oviedo Winter Springs, Florida</span> --}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="profile-info">
+                            <a class="dropdown-item" href="/profile" target="_blank">My Profile</a>
+                            <a class="dropdown-item" href="#" onclick="logoutandreload(); return false;">Log Out</a>
+                        </div>
+                    </li>
+                </ul>
+            {if:else}
+                <ul class="navbar-nav ml-auto nav-flex-icons text-md-right profile-wrapper">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" id="profile-info" href="#login-register-box" data-toggle="modal" data-target="#loginModal">
+                            <img id="profile-avatar-img" src="/images/avatar.png" class="z-depth-0" alt="Avatar" height="50">
+                            <span><strong>Log In</strong></span>
+                        </a>
+                    </li>
+                </ul>
+                {!-- <div id='profile-notsignedin-welcome' class='profile-header'>Welcome to Northland Online Worship</div>
+                <div id="profile-location" style="display:none"></div>
+
+                <div class="rostermessage">Please <a class="user-login" href="#login-register-box" style="text-decoration:underline" data-toggle="modal" data-target="#loginModal">login</a> to access additional features like, Request Prayer, Read the Bible and more.</div> --}
+            {/if}
         </div>
+    </div>
+
+	{if service_live == "true"}
+		<div id="push-bar-empty"></div>
+	{if:else}
+		<div class="alert alert-secondary alert-dismissible fade show" role="alert">
+			Welcome to online worship at Northland! We currently aren't in live worship, but you can watch the latest worship service below.
+
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		</div>
     {/if}
 
 	<div class="row">
@@ -568,29 +604,6 @@
 
 						{!-- Right Chat Section --}
 						<div class="col">
-							{!-- Section for Profile --}
-							<div id="profile-box">
-								{if logged_in}
-								<div id="profile-logout">
-									<button type="button" class="btn btn-dark btn-sm btn-block" onclick="logoutandreload(); return false;" >Log Out</button>
-								</div>
-								<div id="profile-update">
-									<div id="profile-avatar" style="float: left; margin-right: 10px">
-										<a href="/profile" target="_blank"><img id="profile-avatar-img" src="/images/member_photos/50x50/photo_{member_id}.jpg" onerror="this.src='/images/avatar.png'"></a>
-									</div>
-									<div id="profile-user">
-										<div id="profile-name" class="profile-header"><a href="/profile" target="_blank">{screen_name}</a></div>
-										<div id="profile-location">Longwood Oviedo Winter Springs, Florida</div>
-									</div>
-								</div>
-								{if:else}
-								<div id='profile-notsignedin-welcome' class='profile-header'>Welcome to Northland Online Worship</div>
-								<div id="profile-location" style="display:none"></div>
-
-								<div class="rostermessage">Please <a class="user-login" href="#login-register-box" style="text-decoration:underline" data-toggle="modal" data-target="#loginModal">login</a> to access additional features like, Request Prayer, Read the Bible and more.</div>
-								{/if}
-							</div>
-
 							{!-- Section for Search bar --}
 							<div id="search-box">
 								<form name="search_people" id="search_people">
@@ -725,7 +738,183 @@ function initMap()
 		streetViewControl: false,
 		panControl: false,
 		overviewMapControl: false,
-		mapTypeControl: false
+        mapTypeControl: false,
+        styles: [
+            {
+                "featureType": "water",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#f0f0f0"
+                    },
+                    {
+                        "lightness": 0
+                    }
+                ]
+            },
+            {
+                "featureType": "landscape",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#f5f5f5"
+                    },
+                    {
+                        "lightness": 20
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "geometry.fill",
+                "stylers": [
+                    {
+                        "color": "#ffffff"
+                    },
+                    {
+                        "lightness": 17
+                    }
+                ]
+            },
+            {
+                "featureType": "road.highway",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                    {
+                        "color": "#ffffff"
+                    },
+                    {
+                        "lightness": 29
+                    },
+                    {
+                        "weight": 0.2
+                    }
+                ]
+            },
+            {
+                "featureType": "road.arterial",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#ffffff"
+                    },
+                    {
+                        "lightness": 18
+                    }
+                ]
+            },
+            {
+                "featureType": "road.local",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#ffffff"
+                    },
+                    {
+                        "lightness": 16
+                    }
+                ]
+            },
+            {
+                "featureType": "poi",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#f5f5f5"
+                    },
+                    {
+                        "lightness": 21
+                    }
+                ]
+            },
+            {
+                "featureType": "poi.park",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#dedede"
+                    },
+                    {
+                        "lightness": 21
+                    }
+                ]
+            },
+            {
+                "elementType": "labels.text.stroke",
+                "stylers": [
+                    {
+                        "visibility": "on"
+                    },
+                    {
+                        "color": "#ffffff"
+                    },
+                    {
+                        "lightness": 16
+                    }
+                ]
+            },
+            {
+                "elementType": "labels.text.fill",
+                "stylers": [
+                    {
+                        "saturation": 36
+                    },
+                    {
+                        "color": "#333333"
+                    },
+                    {
+                        "lightness": 40
+                    }
+                ]
+            },
+            {
+                "elementType": "labels.icon",
+                "stylers": [
+                    {
+                        "visibility": "off"
+                    }
+                ]
+            },
+            {
+                "featureType": "transit",
+                "elementType": "geometry",
+                "stylers": [
+                    {
+                        "color": "#f2f2f2"
+                    },
+                    {
+                        "lightness": 19
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative",
+                "elementType": "geometry.fill",
+                "stylers": [
+                    {
+                        "color": "#fefefe"
+                    },
+                    {
+                        "lightness": 20
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative",
+                "elementType": "geometry.stroke",
+                "stylers": [
+                    {
+                        "color": "#fefefe"
+                    },
+                    {
+                        "lightness": 17
+                    },
+                    {
+                        "weight": 1.2
+                    }
+                ]
+            }
+        ]
 	};
 	map = new google.maps.Map(document.getElementById('map'), mapOptions);
 

@@ -15,6 +15,7 @@ h5 {
 textarea,
 input {
 	border: none;
+	border-radius: none;
 	overflow: auto;
 	outline: none;
 
@@ -23,6 +24,14 @@ input {
 	box-shadow: none;
 
 	resize: none; /*remove the resize handle on the bottom right*/
+}
+button,
+.btn {
+	border-radius: 0;
+}
+.form-control,
+.alert {
+	border-radius: 0;
 }
 
 .clear {
@@ -33,14 +42,18 @@ input {
 	background-color: #000;
 	margin: 15px 0;
 }
-
-nav .nav-link {
-	line-height: 1;
+.admin-tools {
+	margin: 15px 0;
+	text-align: right;
 }
 
 .header-small-right {
 	text-align: center;
 	font-size: 0.9rem;
+}
+
+.profile-wrapper {
+	cursor: pointer;
 }
 
 /* Always set the map height explicitly to define the size of the div
@@ -66,12 +79,12 @@ nav .nav-link {
 }
 
 #worship-contain {
-	margin-bottom: 50px;
+	margin: 50px auto;
 }
 
 /* Tabs */
 .tab-nav {
-	margin-top: -35px;
+	margin-top: -42px; /* height of nav tabs */
 	background: #fff;
 }
 .tab-content {
@@ -530,6 +543,15 @@ nav .nav-link {
 
 .modal-header {
 	cursor: pointer;
+}
+
+.nav-link,
+.nav-pills .nav-link {
+	border-radius: none !important;
+	border-top-left-radius: 0 !important;
+	border-top-right-radius: 0 !important;
+	border-bottom-left-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
 }
 
 /* Video player mods */

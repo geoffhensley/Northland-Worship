@@ -743,134 +743,65 @@ function initMap()
         mapTypeControl: false,
         styles: [
             {
-                "featureType": "water",
-                "elementType": "geometry",
+                "featureType": "all",
+                "elementType": "all",
                 "stylers": [
                     {
-                        "color": "#f0f0f0"
+                        "saturation": "32"
                     },
                     {
-                        "lightness": 0
+                        "lightness": "-3"
+                    },
+                    {
+                        "visibility": "on"
+                    },
+                    {
+                        "weight": "1.18"
+                    }
+                ]
+            },
+            {
+                "featureType": "administrative",
+                "elementType": "labels",
+                "stylers": [
+                    {
+                        "visibility": "off"
                     }
                 ]
             },
             {
                 "featureType": "landscape",
-                "elementType": "geometry",
+                "elementType": "labels",
                 "stylers": [
                     {
-                        "color": "#f5f5f5"
-                    },
-                    {
-                        "lightness": 20
+                        "visibility": "off"
                     }
                 ]
             },
             {
-                "featureType": "road.highway",
-                "elementType": "geometry.fill",
+                "featureType": "landscape.man_made",
+                "elementType": "all",
                 "stylers": [
                     {
-                        "color": "#ffffff"
+                        "saturation": "-70"
                     },
                     {
-                        "lightness": 17
-                    }
-                ]
-            },
-            {
-                "featureType": "road.highway",
-                "elementType": "geometry.stroke",
-                "stylers": [
-                    {
-                        "color": "#ffffff"
-                    },
-                    {
-                        "lightness": 29
-                    },
-                    {
-                        "weight": 0.2
-                    }
-                ]
-            },
-            {
-                "featureType": "road.arterial",
-                "elementType": "geometry",
-                "stylers": [
-                    {
-                        "color": "#ffffff"
-                    },
-                    {
-                        "lightness": 18
-                    }
-                ]
-            },
-            {
-                "featureType": "road.local",
-                "elementType": "geometry",
-                "stylers": [
-                    {
-                        "color": "#ffffff"
-                    },
-                    {
-                        "lightness": 16
+                        "lightness": "14"
                     }
                 ]
             },
             {
                 "featureType": "poi",
-                "elementType": "geometry",
+                "elementType": "labels",
                 "stylers": [
                     {
-                        "color": "#f5f5f5"
-                    },
-                    {
-                        "lightness": 21
+                        "visibility": "off"
                     }
                 ]
             },
             {
-                "featureType": "poi.park",
-                "elementType": "geometry",
-                "stylers": [
-                    {
-                        "color": "#dedede"
-                    },
-                    {
-                        "lightness": 21
-                    }
-                ]
-            },
-            {
-                "elementType": "labels.text.stroke",
-                "stylers": [
-                    {
-                        "visibility": "on"
-                    },
-                    {
-                        "color": "#ffffff"
-                    },
-                    {
-                        "lightness": 16
-                    }
-                ]
-            },
-            {
-                "elementType": "labels.text.fill",
-                "stylers": [
-                    {
-                        "saturation": 36
-                    },
-                    {
-                        "color": "#333333"
-                    },
-                    {
-                        "lightness": 40
-                    }
-                ]
-            },
-            {
-                "elementType": "labels.icon",
+                "featureType": "road",
+                "elementType": "labels",
                 "stylers": [
                     {
                         "visibility": "off"
@@ -879,40 +810,34 @@ function initMap()
             },
             {
                 "featureType": "transit",
-                "elementType": "geometry",
+                "elementType": "labels",
                 "stylers": [
                     {
-                        "color": "#f2f2f2"
-                    },
-                    {
-                        "lightness": 19
+                        "visibility": "off"
                     }
                 ]
             },
             {
-                "featureType": "administrative",
-                "elementType": "geometry.fill",
+                "featureType": "water",
+                "elementType": "all",
                 "stylers": [
                     {
-                        "color": "#fefefe"
+                        "saturation": "100"
                     },
                     {
-                        "lightness": 20
+                        "lightness": "-14"
                     }
                 ]
             },
             {
-                "featureType": "administrative",
-                "elementType": "geometry.stroke",
+                "featureType": "water",
+                "elementType": "labels",
                 "stylers": [
                     {
-                        "color": "#fefefe"
+                        "visibility": "off"
                     },
                     {
-                        "lightness": 17
-                    },
-                    {
-                        "weight": 1.2
+                        "lightness": "12"
                     }
                 ]
             }

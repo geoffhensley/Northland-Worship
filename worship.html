@@ -376,62 +376,65 @@
                 <img class="logo" src="https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1.png" alt="Northland Church" id="logo" srcset="https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1-p-500.png 500w, https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1-p-800.png 800w, https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1-p-1080.png 1080w, https://global-uploads.webflow.com/5a941dc804115100018caf6f/5b8ee9894180d57aa9ecd072_NACD_logo_primary1.png 1230w" sizes="(max-width: 479px) 45vw, (max-width: 767px) 199.99998474121094px, 239.99998474121094px" data-w-id="d5887f25-8dbf-8252-bc25-ac42e920eef8" class="northland_logo northland_logo_black">
             </a>
         </div>
-        {if group_id == "1" || group_id == "19" || group_id == "13"}
-            <div class="col-md-4">
-                <script type="text/javascript">
-                    function AdminServiceLiveCheck() {
-                        AdminUpdateServiceLiveCheck();
-                        setTimeout("AdminServiceLiveCheck()", 20000);
-                    }
+        <div class="col-md-8">
+            <ul class="nav nav-flex-icons float-md-right profile-wrapper">
+                {if group_id == "1" || group_id == "19" || group_id == "13"}
+                    <script type="text/javascript">
+                        function AdminServiceLiveCheck() {
+                            AdminUpdateServiceLiveCheck();
+                            setTimeout("AdminServiceLiveCheck()", 20000);
+                        }
 
-                    function AdminUpdateServiceLiveCheck() {
-                        $.ajax({
-                            url: "/_component/isservicelive",
-                            success: function(data) {
-                                if (data.indexOf("true") != -1) {
-                                    $("#service_live").replaceWith("<a id='service_live' href='#' class='btn btn-secondary' onclick='confirm_turn_service_off()'>Service is currently LIVE</a>");
+                        function AdminUpdateServiceLiveCheck() {
+                            $.ajax({
+                                url: "/_component/isservicelive",
+                                success: function(data) {
+                                    if (data.indexOf("true") != -1) {
+                                        $("#service_live").replaceWith("<a id='service_live' href='#' class='nav-link' onclick='confirm_turn_service_off()'>Service is currently LIVE</a>");
+                                    }
+                                    else {
+                                        $("#service_live").replaceWith("<a id='service_live' href='#' class='nav-link' onclick='confirm_turn_service_on()'>Service is currently OFF</a>");
+                                    }
                                 }
-                                else {
-                                    $("#service_live").replaceWith("<a id='service_live' class='btn btn-secondary' href='#' onclick='confirm_turn_service_on()'>Service is currently OFF</a>");
-                                }
+                            });
+                        }
+
+                        function confirm_turn_service_on() {
+                            var r=confirm("Are you sure you want to turn service ON");
+                            if (r==true) {
+                                $.ajax({
+                                    url: "/_component/change_servicelive/on/"
+                                }).done(function() { AdminUpdateServiceLiveCheck(); });
                             }
-                        });
-                    }
-
-                    function confirm_turn_service_on() {
-                        var r=confirm("Are you sure you want to turn service ON");
-                        if (r==true) {
-                            $.ajax({
-                                url: "/_component/change_servicelive/on/"
-                            }).done(function() { AdminUpdateServiceLiveCheck(); });
                         }
-                    }
 
-                    function confirm_turn_service_off() {
-                        var r=confirm("Are you sure you want to turn service OFF");
-                        if (r==true) {
-                            $.ajax({
-                                url: "/_component/change_servicelive/off/"
-                            }).done(function() { AdminUpdateServiceLiveCheck(); });
+                        function confirm_turn_service_off() {
+                            var r=confirm("Are you sure you want to turn service OFF");
+                            if (r==true) {
+                                $.ajax({
+                                    url: "/_component/change_servicelive/off/"
+                                }).done(function() { AdminUpdateServiceLiveCheck(); });
+                            }
                         }
-                    }
 
-                    function reload_map() {
-                        initMap();
-                    }
-                </script>
+                        function reload_map() {
+                            initMap();
+                        }
+                    </script>
 
-                <div class="btn-group float-md-right" role="group">
-                    <a href="/admin" target="_blank" class="btn btn-secondary">Admin Console</a>
-                    <a id="service_live" type="button" class="btn btn-secondary"></a>
-                    <a id="reload_map" href='#' onclick='reload_map()' class="btn btn-secondary">Reload Map</a>
-                </div>
-            </div>
-        {/if}
-        <div class="{if group_id == '1' || group_id == '19' || group_id == '13'}col-md-4{if:else}col-md-8{/if}">
-            {!-- Section for Profile --}
-            {if logged_in}
-                <ul class="navbar-nav ml-auto nav-flex-icons text-md-right profile-wrapper">
+                    <li class="nav-item">
+                        <a href="/admin" class="nav-link" target="_blank">Admin Console</a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="service_live" class="nav-link" type="button"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a id="reload_map" class="nav-link" href='#' onclick='reload_map()'>Reload Map</a>
+                    </li>
+                {/if}
+
+                {!-- Section for Profile --}
+                {if logged_in}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="profile-info" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
@@ -444,27 +447,26 @@
                             <a class="dropdown-item" href="#" onclick="logoutandreload(); return false;">Log Out</a>
                         </div>
                     </li>
-                </ul>
-            {if:else}
-                <ul class="navbar-nav ml-auto nav-flex-icons text-md-right profile-wrapper">
+                {if:else}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" id="profile-info" href="#login-register-box" data-toggle="modal" data-target="#loginModal">
                             <img id="profile-avatar-img" src="/images/avatar.png" class="z-depth-0" alt="Avatar" height="50">
                             <span><strong>Log In</strong></span>
                         </a>
                     </li>
-                </ul>
-                {!-- <div id='profile-notsignedin-welcome' class='profile-header'>Welcome to Northland Online Worship</div>
-                <div id="profile-location" style="display:none"></div>
 
-                <div class="rostermessage">Please <a class="user-login" href="#login-register-box" style="text-decoration:underline" data-toggle="modal" data-target="#loginModal">login</a> to access additional features like, Request Prayer, Read the Bible and more.</div> --}
-            {/if}
+                    {!-- <div id='profile-notsignedin-welcome' class='profile-header'>Welcome to Northland Online Worship</div>
+                    <div id="profile-location" style="display:none"></div>
+
+                    <div class="rostermessage">Please <a class="user-login" href="#login-register-box" style="text-decoration:underline" data-toggle="modal" data-target="#loginModal">login</a> to access additional features like, Request Prayer, Read the Bible and more.</div> --}
+                {/if}
+            </ul>
         </div>
     </div>
 
 	<div id="worship-contain" class="d-lg-flex flex-row align-items-stretch">
 		{!-- Worship video section	--}
-		<div class="col-lg-7 worship-contain--col">
+		<div class="col-lg-7 alpha worship-contain--col">
 			<div id="onlineworship-video">
                 {!-- WORSHIP VIDEO --}
                 {if service_live=="true"}
@@ -479,17 +481,21 @@
             </div>
 
             <div class="onlineworship-info">
-                {if service_live == "true"}
-                    <div id="push-bar-empty"></div>
-                {if:else}
-                    <div class="alert alert-secondary alert-dismissible fade show" role="alert">
-                        Welcome to online worship at Northland! We currently aren't in live worship, but you can watch the latest worship service below.
-
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                {/if}
-
                 <div class="float-left">
+                    {if service_live != "true"}
+                        <h3 class="pt-3">
+                            Welcome to online worship at Northland!
+                        </h3>
+                        <p>
+                            We currently aren't in live worship, but you can watch the latest worship service here.
+                        </p>
+                        {exp:channel:entries channel="media" category="48" limit="1" dynamic="off"}
+                        <p class="pb-3">
+                            <strong>JOIN US LIVE:</strong> {service_times_singleline}
+                        </p>
+                        {/exp:channel:entries}
+                    {/if}
+
                     {if service_live == "true"}
                         <div class="alert alert-info" role="alert">
                             Having video problems? <a href="#" onclick="LoadYoutube(); return false;">Click here to use our backup stream.</a><br>
@@ -520,17 +526,11 @@
                                 </div>
                         <?php endif; ?>
                         </div>
-                    {if:else}
-                        {exp:channel:entries channel="media" category="48" limit="1" dynamic="off"}
-                            <div id="livevid-quality" class="below_videotab">
-                                <strong>LIVE:</strong> {service_times_singleline}
-                            </div>
-                        {/exp:channel:entries}
-                    {/if}
 
-                    <div id="current-viewers" class="below_videotab">Current Viewers: </div>
-                    {!-- Button trigger modal --}
-                    <button id="btn1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#worshipModal" style="display:none">Launch Worship Modal</button>
+                        <div id="current-viewers" class="below_videotab">Current Viewers: </div>
+                        {!-- Button trigger modal --}
+                        <button id="btn1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#worshipModal" style="display:none">Launch Worship Modal</button>
+                    {/if}
                 </div>
 
                 <div class="onlineworship-social float-right">
@@ -561,7 +561,7 @@
                 <div class="clear"></div>
             </div>
 		</div>
-		<div class="col-lg-5 worship-contain--col">
+		<div class="col-lg-5 omega worship-contain--col">
 			<nav class="tab-nav">
 				<div class="nav nav-tabs nav-pills nav-justified justify-content-center" role="tablist">
 					<a class="nav-item nav-link active" id="map-tab" data-toggle="tab" href="#map" role="tab" aria-controls="map" aria-selected="true">Map</a>
@@ -1147,20 +1147,22 @@ function UpdateClientLocation()
 <script type="text/x-handlebars-template" id="groupmessage_html">
     <div class="groupchat" id="groupmessage_{{id}}">
         <div class="groupchat_header">
-            <div class="avatar-bg">
-                <img src="{{photourl}}" width="30" height="30" onerror="this.src='/images/avatar.png'">
+            <div class="groupchat_person">
+                <div class="avatar-bg mr-2">
+                    <img src="{{photourl}}" width="30" height="30" onerror="this.src='/images/avatar.png'">
+                </div>
+                <div class="name">{{nickname}}</div>
+                <div class="chat-time-stamp">{{dateFormat}}</div>
+                <div class="clear"></div>
             </div>
+
             <div class="groupchat_link">
-                <button class="btn btn-sm btn-dark private_link_{{chatid}}" onclick="StartPrivateChat('{{chatid}}', '{{nickname}}')" {{#handlebars_if user_online}}{{else}}style="display:none"{{/handlebars_if}}>Chat</button>
+                <a class="chat-action btn btn-info btn-sm private_link_{{chatid}}" onclick="StartPrivateChat('{{chatid}}', '{{nickname}}')" {{#handlebars_if user_online}}{{else}}style="display:none"{{/handlebars_if}}>Chat</button>
                 {if group_id == "1" || group_id == "19" || group_id == "13"}
-                    <button class="btn btn-sm btn-warning" onclick="RemoveGroupMessage('{{id}}')">Remove</button>
+                    <a href="#" class="chat-action btn btn-info btn-sm" onclick="RemoveGroupMessage('{{id}}')">Remove</a>
                 {/if}
             </div>
-        </div>
-
-        <div class="groupchat_person">
-            <div class="name">{{nickname}}</div>
-            <div class="chat-time-stamp">{{dateFormat}}</div>
+            <div class="clear"></div>
         </div>
 
         <div class="group-chat-text">

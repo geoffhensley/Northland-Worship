@@ -6,6 +6,13 @@ body {
 	background: #f0f0f0;
 }
 
+.alpha {
+	padding-left: 0;
+}
+.omega {
+	padding-right: 0;
+}
+
 h1,
 h2,
 h3,
@@ -71,15 +78,15 @@ button,
 /* Color Fixes */
 .nav-tabs .nav-link:focus,
 .nav-tabs .nav-link:hover {
-	color: #4a4a4a;
+	color: #e16e4c;
 }
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
-	background-color: #4a4a4a;
+	background-color: #e16e4c;
 	color: #fff;
 }
 .btn-primary {
-	background-color: #4a4a4a;
+	background-color: #e16e4c;
 	border: none;
 }
 .btn-primary:hover,
@@ -176,8 +183,6 @@ button,
 }
 .onlineworship-social .share-button {
 	position: relative;
-	border: #c4baa8 1px solid;
-	border-radius: 99px;
 }
 .onlineworship-social .facebook {
 	margin-right: 20px;
@@ -206,42 +211,37 @@ button,
 	padding: 10px 0px;
 }
 
-.groupchat_header {
-	height: 35px;
-}
-
 .groupchat .avatar-bg {
 	float: left;
 	margin-right: 10px;
 }
 
 .groupchat .groupchat_link {
-	float: right;
-}
-
-.groupchat_person {
-	height: 20px;
+	width: 100%;
 }
 
 .groupchat_person .name {
 	float: left;
 	padding-right: 20px;
-	line-height: 1;
-	font-size: 0.9rem;
+	font-size: 1rem;
+	line-height: 1.2;
+	word-wrap: break-word;
 	font-weight: 600;
 	color: #6c9231;
 }
 
 .groupchat_person .chat-time-stamp {
-	font-size: 0.8rem;
+	font-size: 0.875rem;
+	line-height: 1.2;
+	word-wrap: break-word;
 	color: #7e7e7e;
 	float: right;
 }
 
 .group-chat-text {
-	line-height: 1;
-	font-size: 0.9rem;
-	/*		overflow-wrap: break-word;		*/
+	font-size: 0.875rem;
+	line-height: 1.2;
+	word-wrap: break-word;
 }
 
 #profile-logout {
@@ -292,7 +292,6 @@ button,
 
 .person .avatar-bg {
 	float: left;
-	margin-right: 10px;
 }
 
 .button-options {
@@ -386,8 +385,7 @@ button,
 }
 
 .tab-selected {
-	background-color: #4a4a4a;
-	color: #fff;
+	background-color: #efedea;
 }
 
 .new-message {
@@ -403,7 +401,7 @@ button,
 	bottom: 56px;
 	left: 0px;
 	width: auto;
-	background: #4a4a4a;
+	background: #efedea;
 	z-index: 59;
 }
 

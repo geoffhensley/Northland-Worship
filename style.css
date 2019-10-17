@@ -85,15 +85,44 @@ button,
 	background-color: #e16e4c;
 	color: #fff;
 }
+.nav-tabs .nav-link:focus,
+.nav-tabs .nav-link:hover {
+	border-top: none;
+	border-bottom: none;
+}
+.nav-pills .nav-link {
+	border-top: none;
+	border-right: 1px solid #efedea;
+}
+.nav-pills .nav-link:last-of-type {
+	border-right: none;
+}
 .btn-primary {
 	background-color: #e16e4c;
 	border: none;
 }
 .btn-primary:hover,
-.btn-primary:active {
+.btn-primary:active,
+.btn-primary:focus,
+.btn-primary:not(:disabled):not(.disabled).active,
+.btn-primary:not(:disabled):not(.disabled):active,
+.show > .btn-primary.dropdown-toggle {
 	background-color: #333;
 	color: #fff;
 	border: none;
+}
+.btn-give {
+	padding: 13px 35px;
+	background-color: #e1b525;
+	max-height: 50px; /* Match avatar photo hieght */
+}
+.btn-give:hover {
+	background-color: #ae8200;
+}
+.dropdown-item:focus,
+.dropdown-item:active {
+	background-color: #333;
+	color: #fff;
 }
 
 /* Always set the map height explicitly to define the size of the div
@@ -111,11 +140,6 @@ button,
 	height: 40px;
 	width: 40px;
 	margin-right: 10px;
-}
-
-.search-form {
-	padding: 5px 0px;
-	height: 45px;
 }
 
 #worship-contain {
@@ -206,42 +230,66 @@ button,
 	overflow: auto;
 }
 
+.private-chat--btn {
+	min-height: 40px;
+}
+
+#group_chat_form {
+	padding: 0 0.5rem;
+}
+
 .groupchat {
 	border-top: 1px solid #cccccc;
 	padding: 10px 0px;
 }
 
-.groupchat .avatar-bg {
+.groupchat-main {
+	padding: 0 0.5rem;
+	min-height: 55px;
+}
+.groupchat-avatar {
+	display: inline;
+	width: 45px;
 	float: left;
-	margin-right: 10px;
 }
 
-.groupchat .groupchat_link {
-	width: 100%;
+.groupchat-avatar--bg {
+	margin: 0;
+	padding: 0;
+	width: 45px;
+	height: 45px;
 }
-
-.groupchat_person .name {
+.groupchat-message--contain {
+	display: block;
+	margin-left: 54px;
+}
+.groupchat-message--info {
+	display: block;
+}
+.groupchat-message--name {
 	float: left;
-	padding-right: 20px;
+	font-family: "FormaDJRText", sans-serif;
 	font-size: 1rem;
 	line-height: 1.2;
-	word-wrap: break-word;
 	font-weight: 600;
-	color: #6c9231;
+	word-wrap: break-word;
+	color: #4a4a4a;
 }
-
-.groupchat_person .chat-time-stamp {
+.groupchat-message--time {
+	float: right;
 	font-size: 0.875rem;
-	line-height: 1.2;
 	word-wrap: break-word;
 	color: #7e7e7e;
-	float: right;
 }
-
-.group-chat-text {
+.groupchat-message--content {
 	font-size: 0.875rem;
 	line-height: 1.2;
 	word-wrap: break-word;
+	margin: 0;
+	margin-top: -3px;
+	padding: 0;
+}
+.groupchat-message--controls {
 }
 
 #profile-logout {
@@ -304,6 +352,10 @@ button,
 
 .person-info {
 	font-size: 0.9rem;
+}
+.person-link {
+	color: #fff !important;
+	cursor: pointer;
 }
 
 .email-info {

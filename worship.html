@@ -377,7 +377,7 @@
             </a>
         </div>
         <div class="col-md-8">
-            <ul class="nav nav-flex-icons float-md-right profile-wrapper">
+            <ul class="nav nav-flex-icons align-items-center float-md-right profile-wrapper">
                 {if group_id == "1" || group_id == "19" || group_id == "13"}
                     <script type="text/javascript">
                         function AdminServiceLiveCheck() {
@@ -428,10 +428,15 @@
                     <li class="nav-item">
                         <a id="service_live" class="nav-link" type="button"></a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item mr-3">
                         <a id="reload_map" class="nav-link" href='#' onclick='reload_map()'>Reload Map</a>
                     </li>
                 {/if}
+
+                {!-- Give Button --}
+                <li class="nav-item">
+                    <a class="nav-link btn btn-give" href='https://www.northlandchurch.net/give' target="_blank">Give</a>
+                </li>
 
                 {!-- Section for Profile --}
                 {if logged_in}
@@ -566,7 +571,7 @@
 				<div class="nav nav-tabs nav-pills nav-justified justify-content-center" role="tablist">
 					<a class="nav-item nav-link active" id="map-tab" data-toggle="tab" href="#map" role="tab" aria-controls="map" aria-selected="true">Map</a>
                     {!-- <a class="nav-item nav-link" id="notes-tab" data-toggle="tab" href="#notes" role="tab" aria-controls="notes" aria-selected="false">Notes</a>	--}
-					<a class="nav-item nav-link" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="false">Chat</a>
+					<a class="nav-item nav-link" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="false">Group Chat</a>
                     <a class="nav-item nav-link" id="guide-tab" data-toggle="tab" href="#guide" role="tab" aria-controls="guide" aria-selected="false">Worship Guide</a>
                     <a class="nav-item nav-link" id="give-tab" data-toggle="tab" href="#give" role="tab" aria-controls="give" aria-selected="false">Give</a>
 				</div>
@@ -584,52 +589,22 @@
                 {!-- TAB: Chat --}
 				<div class="tab-pane fade" id="chat" role="tabpanel" aria-labelledby="chat-tab">
 					<div class="row">
-						{!-- Left Chat Section --}
 						<div class="col">
-							<div id="chat-field-box">
+							<div id="chat-field-box mt-3">
 								<form name="chatform" id="group_chat_form">
 									<div class="form-row search-form">
-										<div class="form-group col-9">
+										<div class="form-group col-9 mb-0">
 											<input type="text" id="groupchat_field" class="form-control" placeholder="Enter your message..." style="font-size: 0.8rem;">
 										</div>
-										<div class="form-group col-3">
-											<button type="submit" class="btn btn-info" style="font-size: 0.8rem;">Send</button>
+										<div class="form-group col-3 mb-0">
+											<button type="submit" class="btn btn-secondary w-100">Send</button>
 										</div>
 									</div>
 								</form>
 							</div>
 
-								<div id="chat-box-list"></div>
-
+							<div id="chat-box-list"></div>
 						</div>
-						{!-- End of Left Chat Section --}
-
-						{!-- Right Chat Section --}
-						<div class="col">
-							{!-- Section for Search bar --}
-							<div id="search-box">
-								<form name="search_people" id="search_people">
-									<div class="form-row search-form">
-										<div class="form-group col">
-											<input type="text" id="filter-search" class="form-control" placeholder="Enter name to Search people..." style="font-size: 0.8rem;">
-										</div>
-									</div>
-								</form>
-							</div>
-
-							{!-- Section for Roster Stack --}
-							<div>
-								<div id="chat-disconnected" class="rostermessage">Chat loading...<br>Refresh your browser if Chat does not load within a couple of minutes.</div>
-								<div id="chatroster" class="custom_scrollbar">
-									<div id="minister"></div>
-									<div id="host"></div>
-									<div id="tech-support"></div>
-									<div id="people"></div>
-								</div>
-								<br>
-							</div>	
-						</div>
-						{!-- End of Right Chat Section --}
 					</div>
 
 					<div class="row">
@@ -686,6 +661,36 @@
 
             <div id="chat-tab-bar">
                 <ul id="chat-slider-ul"></ul>
+            </div>
+
+            <div class="btn-group dropup float-right private-chat">
+                <button type="button" class="btn btn-primary dropdown-toggle private-chat--btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Private Chat
+                </button>
+                <div class="dropdown-menu">
+                    {!-- Section for Search bar --}
+                    <div id="search-box mt-3">
+                        <form name="search_people" id="search_people">
+                            <div class="form-row search-form">
+                                <div class="form-group col">
+                                    <input type="text" id="filter-search" class="form-control" placeholder="Enter name to Search people..." style="font-size: 0.8rem;">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    {!-- Section for Roster Stack --}
+                    <div>
+                        <div id="chat-disconnected" class="rostermessage">Chat loading...<br>Refresh your browser if Chat does not load within a couple of minutes.</div>
+                        <div id="chatroster" class="custom_scrollbar">
+                            <div id="minister"></div>
+                            <div id="host"></div>
+                            <div id="tech-support"></div>
+                            <div id="people"></div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
             </div>
         </div>
 	</div>
@@ -1071,27 +1076,35 @@ function UpdateClientLocation()
 {!-- Template for Group Chat --}
 <script type="text/x-handlebars-template" id="groupmessage_html">
     <div class="groupchat" id="groupmessage_{{id}}">
-        <div class="groupchat_header">
-            <div class="groupchat_person">
-                <div class="avatar-bg mr-2">
-                    <img src="{{photourl}}" width="30" height="30" onerror="this.src='/images/avatar.png'">
+        <div class="groupchat-main">
+            <div class="groupchat-avatar">
+                <div class="groupchat-avatar--bg">
+                    <img src="{{photourl}}" width="45" height="45" onerror="this.src='/images/avatar.png'">
                 </div>
-                <div class="name">{{nickname}}</div>
-                <div class="chat-time-stamp">{{dateFormat}}</div>
+
+                <div class="groupchat-message--controls">
+                    <a class="w-100 person-link btn btn-sm btn-dark private_link_{{chatid}}" onclick="StartPrivateChat('{{chatid}}', '{{nickname}}')" {{#handlebars_if user_online}}{{else}}style="display:none"{{/handlebars_if}}>Chat</button>
+                    {if group_id == "1" || group_id == "19" || group_id == "13"}
+                        <a href="#" class="w-100 btn btn-danger float-right btn-sm" onclick="RemoveGroupMessage('{{id}}')">X</a>
+                    {/if}
+                </div>
+            </div>
+            <div class="groupchat-message--contain">
+                <div class="groupchat-message--info">
+                    <div class="groupchat-message--name">
+                        {{nickname}}
+                    </div>
+                    <div class="groupchat-message--time">{{dateFormat}}</div>
+                    <div class="clear"></div>
+                </div>
+
+                <div class="clear"></div>
+
+                <p class="groupchat-message--content">
+                    {{{message}}}
+                </div>
                 <div class="clear"></div>
             </div>
-
-            <div class="groupchat_link">
-                <a class="chat-action btn btn-info btn-sm private_link_{{chatid}}" onclick="StartPrivateChat('{{chatid}}', '{{nickname}}')" {{#handlebars_if user_online}}{{else}}style="display:none"{{/handlebars_if}}>Chat</button>
-                {if group_id == "1" || group_id == "19" || group_id == "13"}
-                    <a href="#" class="chat-action btn btn-info btn-sm" onclick="RemoveGroupMessage('{{id}}')">Remove</a>
-                {/if}
-            </div>
-            <div class="clear"></div>
-        </div>
-
-        <div class="group-chat-text">
-            {{{message}}}
         </div>
     </div>
 </script>

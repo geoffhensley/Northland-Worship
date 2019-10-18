@@ -6,11 +6,13 @@ body {
 	background: #f0f0f0;
 }
 
-.alpha {
-	padding-left: 0;
-}
-.omega {
-	padding-right: 0;
+@media (min-width: 992px) {
+	.alpha {
+		padding-left: 0;
+	}
+	.omega {
+		padding-right: 0;
+	}
 }
 
 h1,
@@ -29,6 +31,10 @@ a:hover {
 	color: #e16e4c;
 	text-decoration: underline;
 }
+a.underline {
+	color: #e16e4c;
+	text-decoration: underline;
+}
 
 textarea,
 input {
@@ -43,9 +49,14 @@ input {
 
 	resize: none; /*remove the resize handle on the bottom right*/
 }
+*:focus {
+	outline: none !important;
+}
 button,
 .btn {
 	border-radius: 0;
+	text-transform: uppercase;
+	font-family: "Roboto Condensed", sans-serif;
 }
 
 .form-control,
@@ -97,6 +108,11 @@ button,
 .nav-pills .nav-link:last-of-type {
 	border-right: none;
 }
+.nav-tabs .nav-item.show .nav-link,
+.nav-tabs .nav-link.active {
+	border: none;
+}
+
 .btn-primary {
 	background-color: #e16e4c;
 	border: none;
@@ -111,6 +127,25 @@ button,
 	color: #fff;
 	border: none;
 }
+
+.btn-secondary {
+	border: none;
+}
+
+.btn-tertiary {
+	background-color: #7cc475;
+}
+.btn-tertiary:hover,
+.btn-tertiary:active,
+.btn-tertiary:focus,
+.btn-tertiary:not(:disabled):not(.disabled).active,
+.btn-tertiary:not(:disabled):not(.disabled):active,
+.show > .btn-tertiary.dropdown-toggle {
+	background-color: #333;
+	color: #fff;
+	border: none;
+}
+
 .btn-give {
 	padding: 13px 35px;
 	background-color: #e1b525;
@@ -129,6 +164,7 @@ button,
 	* element that contains the map. */
 #map {
 	height: 100%;
+	min-height: 500px;
 }
 
 #infowindow {
@@ -146,11 +182,18 @@ button,
 	margin: 15px auto 50px;
 }
 
+@media (max-width: 991px) {
+	.worship-contain--col {
+		width: 100%;
+		margin-bottom: 14px;
+	}
+}
 /* Tabs */
 .tab-nav {
 	background: #fff;
 }
 .tab-content {
+	min-height: 500px;
 	background: #fff;
 	overflow: hidden;
 	overflow-y: auto;
@@ -225,11 +268,30 @@ button,
 #chat-box-list {
 	overflow: auto;
 }
+#chat-field-box {
+	position: sticky;
+	top: 0;
+	width: 100%;
+	background: #efedea;
+	padding: 7px 0;
+	z-index: 60;
+	border-bottom: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+}
+.groupchat-input {
+	height: 40px;
+}
 
 #chatroster {
 	overflow: auto;
 }
+.chatroster-list {
+}
 
+.private-chat--list {
+	min-width: 300px;
+}
 .private-chat--btn {
 	min-height: 40px;
 }
@@ -241,6 +303,9 @@ button,
 .groupchat {
 	border-top: 1px solid #cccccc;
 	padding: 10px 0px;
+}
+.groupchat:first-of-type {
+	border-top: none;
 }
 
 .groupchat-main {
@@ -267,7 +332,7 @@ button,
 	display: block;
 }
 .groupchat-message--name {
-	float: left;
+	width: 100%;
 	font-family: "FormaDJRText", sans-serif;
 	font-size: 1rem;
 	line-height: 1.2;
@@ -275,9 +340,15 @@ button,
 	word-wrap: break-word;
 	color: #4a4a4a;
 }
+.groupchat-message--loc {
+	width: 100%;
+	font-family: "FormaDJRText", sans-serif;
+	font-size: 0.75rem;
+	word-wrap: break-word;
+	color: #4a4a4a;
+}
 .groupchat-message--time {
-	float: right;
-	font-size: 0.875rem;
+	font-size: 0.75rem;
 	word-wrap: break-word;
 	color: #7e7e7e;
 }
@@ -290,6 +361,12 @@ button,
 	padding: 0;
 }
 .groupchat-message--controls {
+	float: right;
+	width: 100px;
+}
+.groupchat-message--controls .person-link {
+	width: 100%;
+	margin-bottom: 7px;
 }
 
 #profile-logout {
@@ -327,15 +404,22 @@ button,
 	border-bottom: 1px solid #cccccc;
 }
 
+#filter-search {
+	height: auto;
+	border-left: none;
+	border-right: none;
+}
+
 .online-minister {
-	background-color: #909a7f;
-	background-image: url(/_assets/img/v2/onlineworship/noise.png);
 	border-top: 1px solid #adb99a;
 }
 
 .person {
 	border-top: 1px solid #cccccc;
-	padding: 10px 0px;
+	padding: 7px 14px;
+}
+.person:first-of-type {
+	border-top: none;
 }
 
 .person .avatar-bg {
@@ -355,6 +439,10 @@ button,
 }
 .person-link {
 	color: #fff !important;
+	cursor: pointer;
+}
+
+.pointer {
 	cursor: pointer;
 }
 
@@ -420,6 +508,33 @@ button,
 	bottom: 16px;
 }
 
+@media (max-width: 576px) {
+	#chat-bar {
+		width: 100%;
+		margin-left: -15px;
+		height: 60px;
+	}
+	.chat-tab {
+		height: 60px;
+		padding-top: 18px;
+	}
+	.private-chat--btn {
+		min-height: 60px;
+	}
+	#chat-slider-container li {
+		height: 60px;
+	}
+}
+
+@media (max-width: 768px) {
+	.nav-item--user {
+		width: 70%;
+	}
+	.nav-item--give {
+		width: 30%;
+	}
+}
+
 .chat-tab h1 {
 	/* padding: 7px; */
 	font-size: 18px;
@@ -446,6 +561,7 @@ button,
 
 .tab-loggedoff {
 	background-color: #979797;
+	opacity: 0.5;
 }
 
 .single-chat-window {
@@ -537,7 +653,7 @@ button,
 }
 
 .pmsg {
-	padding: 6px;
+	padding: 0.5rem;
 	background-repeat: no-repeat;
 	display: inline-block;
 }
@@ -594,9 +710,9 @@ button,
 }
 
 .pmsg_me_bg {
-	background-color: #eeeeee;
+	background-color: #efedea;
 	border-style: solid;
-	border-color: #aaa;
+	border-color: #cccccc;
 	border-width: 1px 0;
 	width: 100%;
 }

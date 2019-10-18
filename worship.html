@@ -14,7 +14,7 @@
     {!-- Relative stylesheet inside EE template group --}
 	<link rel="stylesheet" href="style">
 
-    <title>Worship Online - Northland Church</title>
+    <title>Online Worship - Northland Church</title>
 
     {!-- Global site tag (gtag.js) - Google Analytics --}
     {!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-966214-29"></script>
@@ -426,21 +426,24 @@
                         <a href="/admin" class="nav-link" target="_blank">Admin Console</a>
                     </li>
                     <li class="nav-item">
-                        <a id="service_live" class="nav-link" type="button"></a>
+                        <a href="#" id="service_live" class="nav-link"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" onclick="ClearGroupChat()">Clear Chat</a>
                     </li>
                     <li class="nav-item mr-3">
                         <a id="reload_map" class="nav-link" href='#' onclick='reload_map()'>Reload Map</a>
                     </li>
                 {/if}
 
-                {!-- Give Button --}
-                <li class="nav-item">
-                    <a class="nav-link btn btn-give" href='https://www.northlandchurch.net/give' target="_blank">Give</a>
+                {!-- Give Button for tablet and up --}
+                <li class="nav-item d-none d-md-inline">
+                    <a class="nav-link btn btn-give" href='https://www.northlandchurch.net/give' target="_blank">Give ></a>
                 </li>
 
                 {!-- Section for Profile --}
                 {if logged_in}
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown nav-item--user">
                         <a class="nav-link dropdown-toggle" id="profile-info" data-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             <img id="profile-avatar-img" src="/images/member_photos/50x50/photo_{member_id}.jpg" onerror="this.src='/images/avatar.png'" class="z-depth-0 mr-2" alt="Avatar" height="50">
@@ -453,7 +456,7 @@
                         </div>
                     </li>
                 {if:else}
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown nav-item--user">
                         <a class="nav-link dropdown-toggle" id="profile-info" href="#login-register-box" data-toggle="modal" data-target="#loginModal">
                             <img id="profile-avatar-img" src="/images/avatar.png" class="z-depth-0" alt="Avatar" height="50">
                             <span><strong>Log In</strong></span>
@@ -465,6 +468,11 @@
 
                     <div class="rostermessage">Please <a class="user-login" href="#login-register-box" style="text-decoration:underline" data-toggle="modal" data-target="#loginModal">login</a> to access additional features like, Request Prayer, Read the Bible and more.</div> --}
                 {/if}
+
+                {!-- Give Button for mobile --}
+                <li class="nav-item d-md-none d-sm-inline float-right nav-item--give">
+                    <a class="nav-link btn btn-give" href='https://www.northlandchurch.net/give' target="_blank">Give ></a>
+                </li>
             </ul>
         </div>
     </div>
@@ -472,6 +480,34 @@
 	<div id="worship-contain" class="d-lg-flex flex-row align-items-stretch">
 		{!-- Worship video section	--}
 		<div class="col-lg-7 alpha worship-contain--col">
+
+            {!-- Share for mobile only --}
+            <div class="d-md-none mb-3">
+                <h5 class="sidebar-heading-h3 float-left mr-3 mt-2">Share</h5>
+                <div class="share-button facebook w-embed float-left mr-2">
+                    <a onclick="window.open(this.href, 'twitter-share','width=580,height=296');return false;" href="http://www.facebook.com/sharer/sharer.php?u=https://www.northlandchurch.church/worship">
+                        <div>
+                            <img src="https://assets-global.website-files.com/5a941dc804115100018caf6f/5b3aa0277b1e3f30e2956237_Facebook-icon.svg">
+                        </div>
+                    </a>
+                </div>
+                <div class="share-button twitter w-embed float-left mr-2">
+                    <a onclick="window.open(this.href, 'twitter-share','width=580,height=296');return false;" href="http://twitter.com/share?url=https://www.northlandchurch.church/worship&amp;text=Worship with me at Northland Church online. @northlandchurch">
+                        <div>
+                            <img src="https://assets-global.website-files.com/5a941dc804115100018caf6f/5b3aa027fa3b00444b6fad46_Twitter-icon.svg">
+                        </div>
+                    </a>
+                </div>
+                <div class="share-button email w-embed float-left">
+                    <a href="#" data-toggle="modal" data-target="#inviteModal">
+                        <div>
+                            <img src="https://assets-global.website-files.com/5a941dc804115100018caf6f/5b989285c0576809e458a7c8_email.svg">
+                        </div>
+                    </a>
+                </div>
+                <div class="clear"></div>
+            </div>
+
 			<div id="onlineworship-video">
                 {!-- WORSHIP VIDEO --}
                 {if service_live=="true"}
@@ -502,8 +538,8 @@
                     {/if}
 
                     {if service_live == "true"}
-                        <div class="alert alert-info" role="alert">
-                            Having video problems? <a href="#" onclick="LoadYoutube(); return false;">Click here to use our backup stream.</a><br>
+                        <div class="alert alert-secondary" role="alert">
+                            Having video problems? <br class="d-md-none"><a href="#" onclick="LoadYoutube(); return false;" class="underline">Click here to use our backup stream.</a><br>
                         <?php if (({current_time format="%G%i"} > 430) && ({current_time format="%G%i"} < 1000)) : ?>
                                 <div id="translations" class="translations">
                                     Translation: 
@@ -538,7 +574,7 @@
                     {/if}
                 </div>
 
-                <div class="onlineworship-social float-right">
+                <div class="onlineworship-social float-right d-none d-md-flex">
                     <h3 class="sidebar-heading-h3">Share</h3>
                     <div class="share-button facebook w-embed">
                         <a onclick="window.open(this.href, 'twitter-share','width=580,height=296');return false;" href="http://www.facebook.com/sharer/sharer.php?u=https://www.northlandchurch.church/worship">
@@ -569,11 +605,11 @@
 		<div class="col-lg-5 omega worship-contain--col">
 			<nav class="tab-nav">
 				<div class="nav nav-tabs nav-pills nav-justified justify-content-center" role="tablist">
-					<a class="nav-item nav-link active" id="map-tab" data-toggle="tab" href="#map" role="tab" aria-controls="map" aria-selected="true">Map</a>
-                    {!-- <a class="nav-item nav-link" id="notes-tab" data-toggle="tab" href="#notes" role="tab" aria-controls="notes" aria-selected="false">Notes</a>	--}
-					<a class="nav-item nav-link" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="false">Group Chat</a>
-                    <a class="nav-item nav-link" id="guide-tab" data-toggle="tab" href="#guide" role="tab" aria-controls="guide" aria-selected="false">Worship Guide</a>
-                    <a class="nav-item nav-link" id="give-tab" data-toggle="tab" href="#give" role="tab" aria-controls="give" aria-selected="false">Give</a>
+					<a class="d-flex justify-content-center align-items-center nav-item nav-link active" id="map-tab" data-toggle="tab" href="#map" role="tab" aria-controls="map" aria-selected="true">Map</a>
+                    {!-- <a class="d-flex justify-content-center align-items-center nav-item nav-link" id="notes-tab" data-toggle="tab" href="#notes" role="tab" aria-controls="notes" aria-selected="false">Notes</a>	--}
+					<a class="d-flex justify-content-center align-items-center nav-item nav-link" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="false">Group Chat</a>
+                    <a class="d-flex justify-content-center align-items-center nav-item nav-link" id="guide-tab" data-toggle="tab" href="#guide" role="tab" aria-controls="guide" aria-selected="false">Worship Guide</a>
+                    <a class="d-flex justify-content-center align-items-center nav-item nav-link" id="give-tab" data-toggle="tab" href="#give" role="tab" aria-controls="give" aria-selected="false">Give</a>
 				</div>
 			</nav>
 
@@ -590,35 +626,21 @@
 				<div class="tab-pane fade" id="chat" role="tabpanel" aria-labelledby="chat-tab">
 					<div class="row">
 						<div class="col">
-							<div id="chat-field-box mt-3">
+							<div id="chat-field-box">
 								<form name="chatform" id="group_chat_form">
 									<div class="form-row search-form">
-										<div class="form-group col-9 mb-0">
-											<input type="text" id="groupchat_field" class="form-control" placeholder="Enter your message..." style="font-size: 0.8rem;">
+										<div class="form-group col-md-10 col-sm-9 mb-0">
+											<input type="text" id="groupchat_field" class="form-control groupchat-input" placeholder="Enter your message..." style="font-size: 0.8rem;">
 										</div>
-										<div class="form-group col-3 mb-0">
-											<button type="submit" class="btn btn-secondary w-100">Send</button>
+										<div class="form-group col-md-2 col-sm-3 mb-0">
+											<button type="submit" class="btn btn-secondary w-100 groupchat-input">Send</button>
 										</div>
 									</div>
 								</form>
-							</div>
+                            </div>
 
-							<div id="chat-box-list"></div>
+                            <div id="chat-box-list"></div>
 						</div>
-					</div>
-
-					<div class="row">
-						<div class="col">
-                            {if group_id == "1" || group_id == "19" || group_id == "13"}
-                                <div id="admin_panel">
-                                    <strong>Admin: </strong>
-                                    <div style="float: right">
-                                        <a class="btn btn-warning btn-sm" onclick="ClearGroupChat()">Clear Chat</a>
-                                    </div>
-                                </div>
-                            {/if}
-						</div>
-						<div class="col"></div>
 					</div>
                 </div>
 
@@ -628,15 +650,31 @@
                 {!-- TAB: Give --}
 				<div class="tab-pane fade" id="give" role="tabpanel" aria-labelledby="give-tab">
                     <div class="giving-form">
-                        <form id="giving-form">
+                        <h4>Why We Give</h4>
+                        <p>
+                            God has demonstrated grace to us, giving us what we don’t deserve and can never earn. 
+                            In this same way, in all areas of our lives—with our time, our energy and our 
+                            resources—we can demonstrate His grace toward those around us.
+                        </p>
+                        <p>
+                            <a href="https://www.northlandchurch.net/series/life-giving-generosity" target="_blank" class="underline">Check out our sermon series on generosity ></a>
+                        </p>
+                            At Northland, your gifts contribute to the cultivation of environments in which God is worshiped, 
+                            the gospel is taught, relationships are built, people are served and the footprint of His Kingdom is expanded.
+                        </p>
+                        <p>
+                            <a href="https://northlandchurch.church/2018/" target="_blank" class="underline">See how God is using Northland in this community ></a>
+                        </p>
+                        <form id="giving-form" class="mt-4">
                             <div id="amount" role="group" class="form-group">
-                                <h5>Amount:</h5>
+                                <h4>Give Now</h4>
+                                <p>Amount:</p>
                                 <div>
                                     <input name="amount" type="number" required="required" aria-required="true" class="form-control">
                                 </div>
                             </div>
                             <div role="group" class="form-group">
-                                <h5>Fund:</h5>
+                                <p>Fund:</p>
                                 <select class="form-control" name="fund">
                                     <option value="0">General Fund</option>
                                     <option value="1">Missions</option>
@@ -667,13 +705,13 @@
                 <button type="button" class="btn btn-primary dropdown-toggle private-chat--btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Private Chat
                 </button>
-                <div class="dropdown-menu">
+                <div class="dropdown-menu pt-0 private-chat--list">
                     {!-- Section for Search bar --}
                     <div id="search-box mt-3">
                         <form name="search_people" id="search_people">
                             <div class="form-row search-form">
-                                <div class="form-group col">
-                                    <input type="text" id="filter-search" class="form-control" placeholder="Enter name to Search people..." style="font-size: 0.8rem;">
+                                <div class="form-group col mb-0">
+                                    <input type="text" id="filter-search" class="form-control" placeholder="Enter name to search people..." style="font-size: 0.8rem;">
                                 </div>
                             </div>
                         </form>
@@ -682,13 +720,12 @@
                     {!-- Section for Roster Stack --}
                     <div>
                         <div id="chat-disconnected" class="rostermessage">Chat loading...<br>Refresh your browser if Chat does not load within a couple of minutes.</div>
-                        <div id="chatroster" class="custom_scrollbar">
+                        <div id="chatroster" class="custom_scrollbar chatroster-list">
                             <div id="minister"></div>
                             <div id="host"></div>
                             <div id="tech-support"></div>
                             <div id="people"></div>
                         </div>
-                        <br>
                     </div>
                 </div>
             </div>
@@ -1030,48 +1067,58 @@ function UpdateClientLocation()
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAENRWzgvgTgrR26OuYWTinEIbs8Ik1UDw&callback=initMap">
 </script>
 
-{!-- Template for Roster Stack --}
+{!-- Template for Private Chat Roster Stack --}
 <script type="text/x-handlebars-template" id="rosteruser_html">
     <div id='worshiper{{chatid}}' class='person {{#ifCond usertype "minister"}}online-minister {{/ifCond}} {{#ifCond usertype "host"}}online-minister {{/ifCond}} notfriend {{#handlebars_if usertype}}signedin{{else}}notsignedin{{/handlebars_if}}'>
-        <div class="avatar-bg">
-            <img src="{{photourl}}" onerror="this.src='/images/avatar.png'">
-        </div>
-
-        <div class="person-info">
-            <div class="fullname" id="fullname_{{chatid}}">
-                {{name}}{{#ifCond usertype "minister"}} - Minister{{/ifCond}}{{#ifCond usertype "host"}} - Host{{/ifCond}}{{#ifCond usertype "support"}} - Tech Support{{/ifCond}}
-            </div>
-            <div id="address{{chatid}}" class="notupdatedaddress rosteraddress">
-                {{#handlebars_if loc}}{{loc}}{{else}}&nbsp;{{/handlebars_if}}
+        <div class="groupchat-avatar">
+            <div class="groupchat-avatar--bg">
+                <img src="{{photourl}}" onerror="this.src='/images/avatar.png'" width="45" height="45">
             </div>
         </div>
 
-        <div class="button-options">
-            {if group_id == "1" || group_id == "19"}
-                {{#handlebars_if usertype}}<button type="button" class="person-link btn btn-sm btn-secondary" onclick="clickProfileExpand(this, 'profile{{chatid}}', {{chatid}})">Profile</button>{{/handlebars_if}} 
-            {/if}
-            <button type="button" class="person-link btn btn-sm btn-dark" onclick="StartPrivateChat('{{chatid}}', '{{name}}')">Chat</button>
-        </div>
+        <div class="groupchat-message--contain">
+            <div class="groupchat-message--info">
+                <div class="groupchat-message--controls">
+                    {!-- Profile button but since most havent stayed up to date, removing for now
+                        {if group_id == "1" || group_id == "19"}
+                            {{#handlebars_if usertype}}<a href="#" class="person-link btn btn-sm btn-dark" onclick="clickProfileExpand(this, 'profile{{chatid}}', {{chatid}})">Profile</a>{{/handlebars_if}}
+                        {/if}
+                    --}
+                    <a href="#" class="person-link person-link--chat btn btn-sm btn-dark private_link_{{chatid}}" onclick="StartPrivateChat('{{chatid}}', '{{name}}')">Chat</a>
+                </div>
 
-        {if group_id == "1" || group_id == "19"}
-            <div class="email-info">
-                {{#handlebars_if email}}<a href="mailto:{{this.email}}" target="_blank" style="background-color:#C1DBCE !important">{{this.email}}</a>{{else}}<br>{{/handlebars_if}}
+                <div class="groupchat-message--name">
+                    <div id="fullname_{{chatid}}">
+                        {{name}}{{#ifCond usertype "minister"}} - Minister{{/ifCond}}{{#ifCond usertype "host"}} - Host{{/ifCond}}{{#ifCond usertype "support"}} - Tech Support{{/ifCond}}
+                    </div>
+                </div>
+
+                <div class="groupchat-message--loc">
+                    <p id="address{{chatid}}" class="notupdatedaddress rosteraddress mb-0">
+                        {{#handlebars_if loc}}{{loc}}{{else}}&nbsp;{{/handlebars_if}}
+                    </p>
+                    {if group_id == "1" || group_id == "19"}
+                        {{#handlebars_if email}}<a href="mailto:{{this.email}}" class="underline" target="_blank">{{this.email}}</a>{{/handlebars_if}}
+                    {/if}
+                </div>
+                <div class="groupchat-message--content">
+                    <p>{{{message}}}</p>
+
+                    {{#handlebars_if usertype}}
+                        <div class="mini-profile profile{{chatid}}" style="display: none">
+                            <div class="header">About {{name}}</div>
+                            <div class="body" id="profile-text{{chatid}}"></div>
+                            <div class="header">Prayer Requests</div>
+                            <div class="body" id="prayer-text{{chatid}}"></div>
+                        </div>
+                    {{/handlebars_if}}
+                </div>
+                <div class="clear"></div>
             </div>
-        {if:else}
-            <br>
-        {/if}
-
-        {{#handlebars_if usertype}}
-        <div class="mini-profile profile{{chatid}}" style="display: none">
-            <div class="header">About {{name}}</div>
-            <div class="body" id="profile-text{{chatid}}"></div>
-            <div class="header">Prayer Requests</div>
-            <div class="body" id="prayer-text{{chatid}}"></div>
+            <div class="clear"></div>
         </div>
-        {{/handlebars_if}}
     </div>
 </script>
-
 
 {!-- Template for Group Chat --}
 <script type="text/x-handlebars-template" id="groupmessage_html">
@@ -1082,34 +1129,40 @@ function UpdateClientLocation()
                     <img src="{{photourl}}" width="45" height="45" onerror="this.src='/images/avatar.png'">
                 </div>
 
-                <div class="groupchat-message--controls">
-                    <a class="w-100 person-link btn btn-sm btn-dark private_link_{{chatid}}" onclick="StartPrivateChat('{{chatid}}', '{{nickname}}')" {{#handlebars_if user_online}}{{else}}style="display:none"{{/handlebars_if}}>Chat</button>
-                    {if group_id == "1" || group_id == "19" || group_id == "13"}
-                        <a href="#" class="w-100 btn btn-danger float-right btn-sm" onclick="RemoveGroupMessage('{{id}}')">X</a>
-                    {/if}
+                <div class="groupchat-message--time">
+                    {{dateFormat}}
                 </div>
             </div>
             <div class="groupchat-message--contain">
                 <div class="groupchat-message--info">
-                    <div class="groupchat-message--name">
+                    <div class="groupchat-message--controls">
+                        {if group_id == "1" || group_id == "19" || group_id == "13"}
+                            <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="pointer dropdown-item private_link_{{chatid}}" onclick="StartPrivateChat('{{chatid}}', '{{nickname}}')" {{#handlebars_if user_online}}{{else}}style="display:none"{{/handlebars_if}}>Chat</a>
+                                    <a href="#" class="dropdown-item" onclick="RemoveGroupMessage('{{id}}')">Delete</a>
+                                </div>
+                            </div>
+                        {if:else}
+                            <a class="person-link btn btn-sm btn-dark private_link_{{chatid}}" onclick="StartPrivateChat('{{chatid}}', '{{nickname}}')" {{#handlebars_if user_online}}{{else}}style="display:none"{{/handlebars_if}}>Chat</a>
+                        {/if}
+                    </div>
+                    <div class="groupchat-message--name pb-1">
                         {{nickname}}
                     </div>
-                    <div class="groupchat-message--time">{{dateFormat}}</div>
+                    <div class="groupchat-message--content">
+                        <p>{{{message}}}</p>
+                    </div>
                     <div class="clear"></div>
-                </div>
-
-                <div class="clear"></div>
-
-                <p class="groupchat-message--content">
-                    {{{message}}}
                 </div>
                 <div class="clear"></div>
             </div>
         </div>
     </div>
 </script>
-
-
 
 {!-- Template for Private Chat Container --}
 <script type="text/x-handlebars-template" id="privatecontainer_html">
@@ -1346,7 +1399,6 @@ function UpdateClientLocation()
     {if logged_in}
         var chat_nickname 	= "{screen_name}";
         var photo_url		= "{site_url}/images/member_photos/50x50/photo_<?php echo $member_id_reference; ?>.jpg";
-
     {if:else}
         var chat_nickname 	= "Worshiper <?php echo $member_id_reference; ?>";
         var photo_url		= "{site_url}/images/avatar.png";
@@ -1394,21 +1446,20 @@ function UpdateClientLocation()
             CheckServiceLive();
         {/if}
 
-        // Make column heights same size
-        var min_height = -1;  
-        var nav_tab_height = $(".nav-tabs").height();
-
-        $(".worship-contain--col").each(function() {
-            if ($(this).height() < min_height || min_height == -1) {
-                min_height = $(this).height();
+        // Check on resize and check browser width to not apply on mobile
+        if ($(window).width() > 767) { // apply on initial load
+            checkWorshipContain();
+        }
+        $(window).resize(function() { // apply when browser resizes
+            if ($(window).width() > 767) {
+                checkWorshipContain();
             }
-            $('.worship-contain').height(min_height);
-        })
-
-        $(".worship-contain--col").each(function() {
-            $(this).height(min_height);
         });
-        $(".tab-content").height(min_height - nav_tab_height);
+
+        // Close private chat window when clcking to open single private chat
+        $(".person-link--chat").on('click', function(){
+            $(".private-chat--btn").trigger('click');
+        });
 
         // Giving Form
         $("#giving-form").submit(function(event) {
@@ -1471,7 +1522,26 @@ function UpdateClientLocation()
             ToggleChatWindow($(this).attr('id').substring(3));
         });
 
+        // Custom click handler for Bootstrap dropdowns
+        $('.dropdown-menu').on('click', function(event){
+            var events = $._data(document, 'events') || {};
+            events = events.click || [];
+            for(var i = 0; i < events.length; i++) {
+                if(events[i].selector) {
+                    //Check if the clicked element matches the event selector
+                    if($(event.target).is(events[i].selector)) {
+                        events[i].handler.call(event.target, event);
+                    }
 
+                    // Check if any of the clicked element parents matches the 
+                    // delegated event selector (Emulating propagation)
+                    $(event.target).parents(events[i].selector).each(function(){
+                        events[i].handler.call(this, event);
+                    });
+                }
+            }
+            event.stopPropagation(); //Always stop propagation
+        });
 
         $groupchats = $("#chat-box-list");
         $privatechats = $("#chat-slider-ul");
@@ -1496,6 +1566,22 @@ function UpdateClientLocation()
             $('#onlineworship-video').css('top', $(this).scrollTop());
         });
     });
+
+    // Height of containers on page to make same size on desktop
+    function checkWorshipContain() {
+        var min_height = -1;
+        var nav_tab_height = $(".nav-tabs").height()
+        $('.tab-content').css('height', 'auto');
+        $(".worship-contain--col").each(function() {
+            $('.worship-contain').css('height', 'auto');
+            if ($(this).height() < min_height || min_height == -1) {
+                min_height = $(this).height();
+            }
+            $('.worship-contain').css('min-height', min_height);
+        })
+
+        $(".tab-content").height(min_height - nav_tab_height);
+    }
 
 
     //////////////////////////////////////////////////////////////////////////////////////
@@ -1916,9 +2002,7 @@ function UpdateClientLocation()
             else {
                 $("#chat-disconnected").html('Disconnected from chat...<br>Attempting to reconnect').show();
             }
-
         });
-
 
         socket.on('chat users', function(data) {
             ClearChatUsers();

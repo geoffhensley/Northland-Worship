@@ -3,7 +3,7 @@
 <head>
     {!-- Required meta tags --}
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
 
     <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js" type="text/javascript"></script>
     <script type="text/javascript">WebFont.load({ google: {families: ["Roboto Condensed:300,regular,700","Roboto Mono:regular"]}});</script>
@@ -539,34 +539,35 @@
 
                     {if service_live == "true"}
                         <div class="alert alert-secondary" role="alert">
-                            Having video problems? <br class="d-md-none"><a href="#" onclick="LoadYoutube(); return false;" class="underline">Click here to use our backup stream.</a><br>
+                            Having video problems? <br class="d-md-none"><a href="#" onclick="LoadYoutube(); return false;" class="underline">Click here to use our backup stream.</a>
+                        </div>
+
                         <?php if (({current_time format="%G%i"} > 430) && ({current_time format="%G%i"} < 1000)) : ?>
-                                <div id="translations" class="translations">
-                                    Translation: 
-                                    <button type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="btn btn-info btn-sm" disabled>English</button> 
-                                    <button type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="btn btn-info btn-sm" >Espanol</button> 
-                                    <button type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="btn btn-info btn-sm" disabled>Interpreted for the Deaf and Hard of Hearing</button>
-                                </div>
+                            <div id="translations" class="translations">
+                                <strong>TRANSLATION:</strong> 
+                                <a href="#" type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm disabled" disabled>English</a> 
+                                <a href="#" type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm" >Espanol</a> 
+                                <a href="#" type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="d-block d-md-inline btn btn-secondary btn-sm disabled" disabled>Interpreted for the Deaf and Hard of Hearing</a>
+                            </div>
                         <?php endif; ?>
 
                         <?php if (({current_time format="%G%i"} > 1020) && ({current_time format="%G%i"} < 1330)) : ?>
-                                <div id="translations" class="translations">
-                                    Translation: 
-                                    <button type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="btn btn-info btn-sm" disabled>English</button> 
-                                    <button type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="btn btn-info btn-sm" >Espanol</button> 
-                                    <button type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="btn btn-info btn-sm" >Interpreted for the Deaf and Hard of Hearing</button>
-                                </div>
+                            <div id="translations" class="translations">
+                                <strong>TRANSLATION:</strong>
+                                <a href="#" type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm disabled" disabled>English</a> 
+                                <a href="#" type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm" >Espanol</a> 
+                                <a href="#" type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="d-block d-md-inline btn btn-secondary btn-sm" >Interpreted for the Deaf and Hard of Hearing</a>
+                            </div>
                         <?php endif; ?>
 
                         <?php if (({current_time format="%G%i"} > 1630) && ({current_time format="%G%i"} < 2100)) : ?>
-                                <div id="translations" class="translations">
-                                    Translation: 
-                                    <button type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="btn btn-info btn-sm" disabled>English</button> 
-                                    <button type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="btn btn-info btn-sm" disabled>Espanol</button> 
-                                    <button type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="btn btn-info btn-sm" disabled>Interpreted for the Deaf and Hard of Hearing</button>
-                                </div>
+                            <div id="translations" class="translations">
+                                <strong>TRANSLATION:</strong>
+                                <a href="#" type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm disabled" disabled>English</a> 
+                                <a href="#" type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm disabled" disabled>Espanol</a> 
+                                <a href="#" type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="d-block d-md-inline btn btn-secondary btn-sm disabled" disabled>Interpreted for the Deaf and Hard of Hearing</a>
+                            </div>
                         <?php endif; ?>
-                        </div>
 
                         <div id="current-viewers" class="below_videotab">Current Viewers: </div>
                         {!-- Button trigger modal --}
@@ -1454,11 +1455,6 @@ function UpdateClientLocation()
             if ($(window).width() > 767) {
                 checkWorshipContain();
             }
-        });
-
-        // Close private chat window when clcking to open single private chat
-        $(".person-link--chat").on('click', function(){
-            $(".private-chat--btn").trigger('click');
         });
 
         // Giving Form
@@ -2442,7 +2438,6 @@ function UpdateClientLocation()
         UpdateChatTabs();
     }
 
-        
     function ClosePrivateChat(chatid) 
     {
         $("#privatecontainer_" + chatid).remove();
@@ -2454,6 +2449,10 @@ function UpdateClientLocation()
     {
         $('.single-chat-window').hide();
         $('.chat-tab').removeClass("tab-selected");
+
+        // Hide main private chat list
+        $(".private-chat").removeClass('show');
+        $(".private-chat--list").removeClass('show');
     }
 
 
@@ -2605,7 +2604,7 @@ function UpdateClientLocation()
 
         if ("{service_live}" == "true")
         {
-            $users_count.html("LIVE - " + n_viewers);
+            $users_count.html("<strong>LIVE:</strong> " + n_viewers);
         }
         else
         {

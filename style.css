@@ -42,6 +42,9 @@ input {
 	border-radius: none;
 	overflow: auto;
 	outline: none;
+	outline-color: transparent !important;
+	outline-style: none !important;
+	-webkit-appearance: none;
 
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
@@ -111,6 +114,11 @@ button,
 .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active {
 	border: none;
+}
+
+.btn.disabled,
+.btn:disabled {
+	color: #6c757d;
 }
 
 .btn-primary {
@@ -291,6 +299,7 @@ button,
 
 .private-chat--list {
 	min-width: 300px;
+	height: 60vh;
 }
 .private-chat--btn {
 	min-height: 40px;
@@ -508,33 +517,6 @@ button,
 	bottom: 16px;
 }
 
-@media (max-width: 576px) {
-	#chat-bar {
-		width: 100%;
-		margin-left: -15px;
-		height: 60px;
-	}
-	.chat-tab {
-		height: 60px;
-		padding-top: 18px;
-	}
-	.private-chat--btn {
-		min-height: 60px;
-	}
-	#chat-slider-container li {
-		height: 60px;
-	}
-}
-
-@media (max-width: 768px) {
-	.nav-item--user {
-		width: 70%;
-	}
-	.nav-item--give {
-		width: 30%;
-	}
-}
-
 .chat-tab h1 {
 	/* padding: 7px; */
 	font-size: 18px;
@@ -744,6 +726,39 @@ button,
 
 #chat-slider-ul {
 	overflow: hidden;
+}
+
+@media (max-width: 576px) {
+	#chat-bar {
+		width: 100%;
+		margin-left: -15px;
+		height: 60px;
+	}
+	.chat-tab {
+		height: 60px;
+		padding-top: 18px;
+	}
+	.private-chat--btn {
+		min-height: 60px;
+	}
+	#chat-slider-container li {
+		height: 60px;
+	}
+	#chat-slider-ul {
+		height: 60px;
+	}
+	.single-chat-window {
+		bottom: 76px;
+	}
+}
+
+@media (max-width: 768px) {
+	.nav-item--user {
+		width: 70%;
+	}
+	.nav-item--give {
+		width: 30%;
+	}
 }
 
 .modal-header {

@@ -1871,19 +1871,6 @@ function UpdateClientLocation()
         }
     }
 
-    function showMinisterModal()
-    {
-        {if group_id == "1" || group_id == "19" || group_id == "13"}
-            var ministerModalSeen = getCookie('minister_modal');
-
-            if(!ministerModalSeen){
-                // Show minister modal to online ministers the first time
-                $('#ministerModal').modal('show');
-                setCookie('minister_modal','1','432000');
-            }
-        {/if}
-    }
-
     function InitializeEventHandlers()
     {
         var active_worshipers = getCookie('active_worshipers');
@@ -1894,7 +1881,6 @@ function UpdateClientLocation()
                 UpdateGroupSize(active_worshipers);
                 UpdateMyUserInfo();
                 setTimeout("UpdateStats(1, active_worshipers)", 120000); // Add to stats after 120 seconds
-                showMinisterModal();
             } else {
                 $('#welcomeLoggedInModal').modal('show');
             }
@@ -1921,7 +1907,6 @@ function UpdateClientLocation()
                 }
 
                 $('#welcomeLoggedInModal').modal('hide');
-                showMinisterModal();
                 return false;
             });
         {if:else}
@@ -1958,7 +1943,6 @@ function UpdateClientLocation()
                     }
 
                     $('#welcomeNotLoggedInModal').modal('hide');
-                    showMinisterModal();
                 }
                 else
                 {

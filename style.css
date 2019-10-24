@@ -44,7 +44,6 @@ input {
 	outline: none;
 	outline-color: transparent !important;
 	outline-style: none !important;
-	-webkit-appearance: none;
 
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
@@ -65,6 +64,11 @@ button,
 .form-control,
 .alert {
 	border-radius: 0;
+}
+
+.alert-secondary {
+	background: #efedea;
+	border: none;
 }
 
 .clear {
@@ -162,6 +166,11 @@ button,
 .btn-give:hover {
 	background-color: #ae8200;
 }
+
+.btn-mixed {
+	text-transform: none;
+}
+
 .dropdown-item:focus,
 .dropdown-item:active {
 	background-color: #333;
@@ -300,6 +309,8 @@ button,
 .private-chat--list {
 	min-width: 300px;
 	height: 60vh;
+	overflow: auto;
+	overflow-x: hidden;
 }
 .private-chat--btn {
 	min-height: 40px;
@@ -372,6 +383,8 @@ button,
 .groupchat-message--controls {
 	float: right;
 	width: 100px;
+	margin-left: 14px;
+	margin-bottom: 14px;
 }
 .groupchat-message--controls .person-link {
 	width: 100%;
@@ -426,9 +439,6 @@ button,
 .person {
 	border-top: 1px solid #cccccc;
 	padding: 7px 14px;
-}
-.person:first-of-type {
-	border-top: none;
 }
 
 .person .avatar-bg {
@@ -511,7 +521,6 @@ button,
 	user-select: none;
 	height: 40px;
 	cursor: pointer;
-	position: absolute;
 	font-size: 14px;
 	width: 100px;
 	bottom: 16px;
@@ -575,6 +584,7 @@ button,
 	background-color: #fff;
 	padding: 10px 15px;
 	max-width: 260px;
+	border: 1px solid #efedea;
 }
 
 .single-chat-header h1 {
@@ -720,6 +730,7 @@ button,
 }
 
 #chat-tab-bar {
+	max-width: 75%;
 	position: relative;
 	float: left;
 }
@@ -737,6 +748,9 @@ button,
 	.chat-tab {
 		height: 60px;
 		padding-top: 18px;
+	}
+	.private-chat {
+		max-width: 25%;
 	}
 	.private-chat--btn {
 		min-height: 60px;

@@ -56,7 +56,7 @@
 
 {!-- Modal --}
 <div data-swiftype-index="false" class="modal fade" id="worshipModal" tabindex="-1" role="dialog" aria-labelledby="worshipModalTitle" aria-hidden="true">
-	<div class="modal-dialog modal-lg" role="document">
+	<div class="modal-dialog modal-lg h-100 d-flex flex-column justify-content-center my-0" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="worshipModalTitle">Northland - Worship</h5>
@@ -77,8 +77,8 @@
 </div>
 
 {!-- Welcome Modal for Logged In user --}
-<div data-swiftype-index="false" class="modal fade" id="welcomeLoggedInModal" tabindex="-1" role="dialog" aria-labelledby="welcomeLoggedInModalLabel" data-backdrop="false" data-keyboard="false">
-	<div class="modal-dialog" role="document">
+<div data-swiftype-index="false" class="modal fade" id="welcomeLoggedInModal" tabindex="-1" role="dialog" aria-labelledby="welcomeLoggedInModalLabel" data-backdrop="static" data-focus="true" data-keyboard="false">
+	<div class="modal-dialog h-100 d-flex flex-column justify-content-center my-0" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="welcomeModalLabel">Welcome back {screen_name}!</h4>
@@ -88,11 +88,11 @@
 				<form id="welcomeLoggedIn" action="#" class="form-horizontal">
 					<div class="form-group">
 						<label for="num_worshipers" class="control-label">How many people are worshiping with you today?</label>
-						<input type="text" class="form-control" id="num_worshipers" name="num_worshipers" required maxlength="3">
+						<input type="number" class="form-control" id="num_worshipers" name="num_worshipers" required maxlength="3">
 					</div>
 
 					<div class="form-group">
-						<button type="submit" class="btn btn-primary btn-block" id="update_number_worshipers">Submit</button>
+						<button type="submit" class="btn btn-primary btn-block btn-lg" id="update_number_worshipers">Join</button>
 					</div>
 
 					<div id="welcomeLoggedIn_error" 	class="alert alert-danger" role="alert" style="display:none">
@@ -104,24 +104,79 @@
 	</div>
 </div>
 
+{if group_id == "1" || group_id == "19" || group_id == "13"}
+{!-- Minister/Admin Instructions Modal --}
+<div data-swiftype-index="false" class="modal fade" id="ministerModal" tabindex="-1" role="dialog" aria-labelledby="ministerModal" data-backdrop="true" data-keyboard="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Online Minister Notes</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <strong>Welcome to the new online worship environment!</strong> 
+                    Thank you for faithfully leading our congregation online. The community here could not
+                    exist without all you do! A few things have changed, and we want you to know what those things are.
+                    You can revisit this information any time in the top nav under "Minister Notes."
+                </p>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <strong>1. "Chat" is now split into "Group Chat" and "Private Chat"</strong>
+                    </li>
+                    <li class="list-group-item">
+                        <p><strong>2. "Group Chat" is in the same location and has an actions menu under each message</strong></p>
+
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Start private chat with worshiper</li>
+                            <li class="list-group-item">Delete the message</li>
+                        </ul>
+                    </li>
+                    <li class="list-group-item">
+                        <strong>3. "Private Chat" is now at the bottom right of the screen.</strong><br>
+                        Go here to start a private chat with individual worshipers.
+                    </li>
+                    <li class="list-group-item">
+                        <strong>4. User profile and log out button</strong><br>
+                        These are now under a user actions menu at the top right of the screen next to the Give button. Click on your name to access menu.
+                    </li>
+                    <li class="list-group-item">
+                        <strong>5. All admin tools are at the top of page</strong><br>
+                        This includes a link to the admin console, clearing the chat, turning on/off the service, and reloading the map.
+                    </li>
+                    <li class="list-group-item">
+                        <strong>6. This is now mobile friendly!</strong><br>
+                        This means all online worshipers can watch the video, chat, and access the other tools here from any mobile device.
+                    </li>
+                </ul>
+                <p class="mt-3">
+                    <strong>Have questions?</strong> Reach out on Slack - we're here to help!
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{/if}
+
 {!-- Welcome Modal --}
-<div data-swiftype-index="false" class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="welcomeModal" data-backdrop="false" data-keyboard="false">
-	<div class="modal-dialog" role="document">
+<div data-swiftype-index="false" class="modal fade" id="welcomeModal" tabindex="-1" role="dialog" aria-labelledby="welcomeModal" data-backdrop="static" data-focus="true" data-keyboard="false">
+	<div class="modal-dialog h-100 d-flex flex-column justify-content-center my-0" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title" id="welcomeModalLabel">Welcome to Online Worship at Northland!</h4>
+				<h4 class="modal-title" id="welcomeModalLabel">Welcome to online worship at Northland!</h4>
 			</div>
 
 			<div class="modal-body">
 				<div class="row">
-					<div class="col-md-12 col-sm-12">
-						<button type="button" class="btn btn-primary btn-block login-button" id="login-button">Click to Login with Northland</button>
+					<div class="col-md-12 col-sm-12 mb-2">
+						<button type="button" class="btn btn-primary btn-block btn-mixed btn-lg login-button" id="login-button">Click to log in with Northland</button>
 					</div>
 				</div>
-				<br />
 				<div class="row">
 					<div class="col-md-12 col-sm-12">
-						<button type="button" class="btn btn-primary btn-block login-button-anonymous">Join Worship without Login</button>
+						<button type="button" class="btn btn-secondary btn-block btn-mixed login-button-anonymous">Join worship without login</button>
 					</div>
 				</div>
 			</div>
@@ -130,11 +185,11 @@
 </div>
 
 {!-- Welcome Modal for Not Logged In user --}
-<div data-swiftype-index="false" class="modal fade" id="welcomeNotLoggedInModal" tabindex="-1" role="dialog" aria-labelledby="welcomeNotLoggedInModalLabel" data-backdrop="false" data-keyboard="false">
-	<div class="modal-dialog" role="document">
+<div data-swiftype-index="false" class="modal fade" id="welcomeNotLoggedInModal" tabindex="-1" role="dialog" aria-labelledby="welcomeNotLoggedInModalLabel" data-backdrop="static" data-focus="true" data-keyboard="false">
+	<div class="modal-dialog h-100 d-flex flex-column justify-content-center my-0" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title" id="welcomeModalLabel">Welcome to Online Worship at Northland!</h4>
+				<h4 class="modal-title" id="welcomeModalLabel">Welcome to online worship at Northland!</h4>
 			</div>
 
 			<div class="modal-body">
@@ -145,17 +200,17 @@
 							<input type="text" class="form-control" id="name_worshipers" name="name_worshipers" required maxlength="20">
 						</div>
 					</div>
-					<div id="alert_enter_name" 		class="alert alert-warning" role="alert" style="display:none">Please enter a name to join worship..</div>
-					<div id="alert_alphabet" 	class="alert alert-warning" role="alert" style="display:none">Please use alphabet or space for your name.</div>
+					<div id="alert_enter_name" 		class="alert alert-warning" role="alert" style="display:none">Please enter a name to join worship.</div>
+					<div id="alert_alphabet" 	class="alert alert-warning" role="alert" style="display:none">Please use letters and spaces.</div>
 					<div id="multiple_username" 	class="alert alert-warning" role="alert" style="display:none">
 						We found multiple accounts with your email address.
-						Send us an Email to <a href="mailto:keehong.pang@northlandchurch.net">keehong.pang@northlandchurch.net</a> to fix this.
+						Send an email to <a href="mailto:keehong.pang@northlandchurch.net">keehong.pang@northlandchurch.net</a> to fix this.
 					</div>
 
 					<div class="form-group">
 						<label for="num_worshipers1" class="col-sm-12 control-label">How many people are worshiping with you today?</label>
 						<div class="col-sm-12">
-							<input type="text" class="form-control" id="num_worshipers1" name="num_worshipers1" required maxlength="3">
+							<input type="number" class="form-control" id="num_worshipers1" name="num_worshipers1" required maxlength="3">
 						</div>
 					</div>
 
@@ -165,22 +220,22 @@
 
 					<div class="form-group">
 						<div class="col-sm-12">
-							<button type="submit" class="btn btn-primary btn-block" id="update_number_worshipers1">Join</button>
+							<button type="submit" class="btn btn-primary btn-block btn-lg" id="update_number_worshipers1">Join</button>
 						</div>
 					</div>
 				</form>
 			</div>
 
-			<div class="modal-footer">
-				<button type="button" class="btn btn-info btn-block welcome-button">Back to Selection</button>
+			<div class="modal-footer justify-content-start">
+				<button type="button" class="btn btn-transparent btn-mixed welcome-button">< Back to log in</button>
 			</div>
 		</div>
 	</div>
 </div>
 
 {!-- User Login Modal --}
-<div data-swiftype-index="false" class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" data-backdrop="false" data-keyboard="false">
-	<div class="modal-dialog " role="document">
+<div data-swiftype-index="false" class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" data-backdrop="static" data-focus="true" data-keyboard="false">
+	<div class="modal-dialog h-100 d-flex flex-column justify-content-center my-0" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="loginModalLabel">Sign In</h4>
@@ -190,7 +245,7 @@
 				<div class="row">
 					<div class="col-sm-12">
 						<p>
-						Click <a href="#" class="clickRegisterLink" >here to create an account</a>, or log in to your account below.
+						Click <a href="#" class="clickRegisterLink underline">here to create an account</a> or log in to your account below.
 						</p>
 					</div>
 				</div>
@@ -207,7 +262,7 @@
 					</div>
 					<div id="noregister_username" 	class="alert alert-warning" role="alert" style="display:none">
 						Your email address isn't in our system. 
-						<a href="#" class="clickRegisterLink" >Click here to create a new account.</a>
+						<a href="#" class="clickRegisterLink underline">Click here to create a new account.</a>
 					</div>
 					<div id="multiple_username" 	class="alert alert-warning" role="alert" style="display:none">
 						We found multiple accounts with your email address. 
@@ -222,13 +277,13 @@
 					</div>
 					<div id="incorrect_password" 	class="alert alert-warning" role="alert" style="display:none">
 						<strong>Incorrect Password Entered</strong><br>
-						<a href="#" id="reset_pw">Forgot your password? Click here to have your password emailed.</a>
+						<a href="#" id="reset_pw">Forgot your password? Have your password emailed to you.</a>
 					</div>
 
 					{!-- AUTO-LOGIN --}
 					<div class="form-group row">
 						<div class="col-sm-10 offset-sm-2">
-							<input type="checkbox" class="form-check-input"  name="auto_login" id="auto_login" checked />
+							<input type="checkbox" class="form-check-input" name="auto_login" id="auto_login" checked />
 							<label class="form-check-label" for="auto_login">Auto-login on future visit?</label>
 						</div>
 					</div>
@@ -239,22 +294,22 @@
 
 					<div class="form-group row">
 						<div class="col">
-							<button type="submit" class="btn btn-primary btn-block">Login</button>
+							<button type="submit" class="btn btn-primary btn-block btn-lg">Log in</button>
 						</div>
 					</div>
 				{/exp:member:login_form}
 			</div>
 
-			<div class="modal-footer">
-				<button type="button" class="btn btn-info btn-block welcome-button">Back to Selection</button>
-			</div>
+			<div class="modal-footer justify-content-start">
+                <button type="button" class="btn btn-transparent btn-mixed welcome-button">< Back to log in</button>
+            </div>
 		</div>
 	</div>
 </div>
 
 {!-- User Registration Modal --}
-<div data-swiftype-index="false" class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" data-backdrop="false" data-keyboard="false">
-	<div class="modal-dialog" role="document">
+<div data-swiftype-index="false" class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="registerModalLabel" data-backdrop="static" data-focus="true" data-keyboard="false">
+	<div class="modal-dialog h-100 d-flex flex-column justify-content-center my-0" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h4 class="modal-title" id="registerModalLabel">Create a New Account</h4>
@@ -269,7 +324,7 @@
 						</div>
 					</div>
 					<div id="invalid_username" 		class="alert alert-warning" role="alert" style="display:none">We need a valid email to proceed.</div>
-					<div id="registered_username" 	class="alert alert-warning" role="alert" style="display:none">Your email address is already registered. <a href="#" class="clickLoginLink">Click here to login.</a></div>
+					<div id="registered_username" 	class="alert alert-warning" role="alert" style="display:none">Your email address is already registered. <a href="#" class="clickLoginLink underline">Click here to log in.</a></div>
 					<div id="multiple_username" 	class="alert alert-warning" role="alert" style="display:none">
 						We found multiple accounts with your email address. 
 						Send us an Email to <a href="mailto:keehong.pang@northlandchurch.net">keehong.pang@northlandchurch.net</a> to fix this.
@@ -315,21 +370,21 @@
 					</div>
 
 					<div class="form-group">
-						<button type="submit" class="btn btn-primary btn-block">Register</button>
+						<button type="submit" class="btn btn-primary btn-block btn-lg">Register</button>
 					</div>
 				</form>
 			</div>
 
-			<div class="modal-footer">
-				<button type="button" class="btn btn-info btn-block welcome-button">Back to Selection</button>
-			</div>
+			<div class="modal-footer justify-content-start">
+                <button type="button" class="btn btn-transparent btn-mixed welcome-button">< Back to log in</button>
+            </div>
 		</div>
 	</div>
 </div>
 
 {!-- Share Email modal --}
-<div data-swiftype-index="false" class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="inviteModal" data-backdrop="false" data-keyboard="false">
-    <div class="modal-dialog" role="document">
+<div data-swiftype-index="false" class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="inviteModal" data-backdrop="false" data-keyboard="true">
+    <div class="modal-dialog h-100 d-flex flex-column justify-content-center my-0" role="document">
         <div id="online-invite" class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Invite someone to worship online</h4>
@@ -427,6 +482,9 @@
                         }
                     </script>
 
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" data-toggle="modal" data-target="#ministerModal">Minister Notes</a>
+                    </li>
                     <li class="nav-item">
                         <a href="/admin" class="nav-link" target="_blank">Admin Console</a>
                     </li>
@@ -527,7 +585,7 @@
             </div>
 
             <div class="onlineworship-info">
-                <div class="float-left">
+                <div class="float-left w-100">
                     {if service_live != "true"}
                         <h3 class="pt-3">
                             Welcome to online worship at Northland!
@@ -544,34 +602,34 @@
 
                     {if service_live == "true"}
                         <div class="alert alert-secondary" role="alert">
-                            Having video problems? <br class="d-md-none"><a href="#" onclick="LoadYoutube(); return false;" class="underline">Click here to use our backup stream.</a>
+                            Having video problems? <br class="d-md-none"><span id="backup-replace"><a href="#" onclick="LoadYoutube(); return false;" class="underline">Click here to use our backup stream.</a></span>
                         </div>
 
                         <?php if (({current_time format="%G%i"} > 430) && ({current_time format="%G%i"} < 1000)) : ?>
                             <div id="translations" class="translations">
                                 <strong>TRANSLATION:</strong> 
-                                <a href="#" type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm disabled" disabled>English</a> 
-                                <a href="#" type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm" >Espanol</a> 
-                                <a href="#" type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="d-block d-md-inline btn btn-secondary btn-sm disabled" disabled>Interpreted for the Deaf and Hard of Hearing</a>
+                                <a href="#" id="translation_english" onclick="LoadEnglish(); return false;" class="d-block d-md-inline btn btn-primary btn-sm" disabled>English</a> 
+                                <a href="#" id="translation_spanish" onclick="LoadSpanish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm">Espanol</a> 
+                                {!-- <a href="#" type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="d-block d-md-inline btn btn-secondary btn-sm disabled" disabled>Interpreted for the Deaf and Hard of Hearing</a> --}
                             </div>
                         <?php endif; ?>
 
                         <?php if (({current_time format="%G%i"} > 1020) && ({current_time format="%G%i"} < 1330)) : ?>
                             <div id="translations" class="translations">
                                 <strong>TRANSLATION:</strong>
-                                <a href="#" type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm disabled" disabled>English</a> 
-                                <a href="#" type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm" >Espanol</a> 
-                                <a href="#" type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="d-block d-md-inline btn btn-secondary btn-sm" >Interpreted for the Deaf and Hard of Hearing</a>
+                                <a href="#" id="translation_english" onclick="LoadEnglish(); return false;" class="d-block d-md-inline btn btn-primary btn-sm" disabled>English</a> 
+                                <a href="#" id="translation_spanish" onclick="LoadSpanish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm" >Espanol</a> 
+                                <a href="#" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="d-block d-md-inline btn btn-secondary btn-sm" >Interpreted for the Deaf and Hard of Hearing</a>
                             </div>
                         <?php endif; ?>
 
                         <?php if (({current_time format="%G%i"} > 1630) && ({current_time format="%G%i"} < 2100)) : ?>
-                            <div id="translations" class="translations">
+                            {!-- <div id="translations" class="translations">
                                 <strong>TRANSLATION:</strong>
                                 <a href="#" type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm disabled" disabled>English</a> 
                                 <a href="#" type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm disabled" disabled>Espanol</a> 
                                 <a href="#" type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="d-block d-md-inline btn btn-secondary btn-sm disabled" disabled>Interpreted for the Deaf and Hard of Hearing</a>
-                            </div>
+                            </div> --}
                         <?php endif; ?>
 
                         <div id="current-viewers" class="below_videotab">Current Viewers: </div>
@@ -700,10 +758,9 @@
 
 	<div id="chat-bar">
         <div id="chat-slider-container">
-            <div id="chat-left" style="display:none; ">&lt;&lt;</div>
-            <div id="chat-right" style="display:none;">&gt;&gt;</div>
-
             <div id="chat-tab-bar">
+                <div id="chat-left" style="display:none; ">&lt;&lt;</div>
+                <div id="chat-right" style="display:none;">&gt;&gt;</div>
                 <ul id="chat-slider-ul"></ul>
             </div>
 
@@ -1094,7 +1151,7 @@ function UpdateClientLocation()
                 </div>
 
                 <div class="groupchat-message--name">
-                    <div id="fullname_{{chatid}}">
+                    <div id="fullname_{{chatid}}" class="privatechat-roster--name">
                         {{name}}{{#ifCond usertype "minister"}} - Minister{{/ifCond}}{{#ifCond usertype "host"}} - Host{{/ifCond}}{{#ifCond usertype "support"}} - Tech Support{{/ifCond}}
                     </div>
                 </div>
@@ -1157,7 +1214,7 @@ function UpdateClientLocation()
                         {/if}
                     </div>
                     <div class="groupchat-message--name pb-1">
-                        {{nickname}}
+                        {{nickname}}{{#ifCond usertype "minister"}} - Minister{{/ifCond}}{{#ifCond usertype "host"}} - Host{{/ifCond}}{{#ifCond usertype "support"}} - Tech Support{{/ifCond}}
                     </div>
                     <div class="groupchat-message--content">
                         <p>{{{message}}}</p>
@@ -1413,7 +1470,7 @@ function UpdateClientLocation()
 
     var chat_tabs_open = 0; 	// Number of chat tabs currently open
     var chat_slider_index = 0;	// Current index/location of slider
-    var chat_tabs_max = 8; 		// Max number of chat tabs viewable at once
+    var chat_tabs_max = 12; 		// Max number of chat tabs viewable at once
     var chat_tab_bar_width = 0; // Width of tab bar
     var current_chat_uid = "";	// Current opened chat UID
 
@@ -1507,7 +1564,7 @@ function UpdateClientLocation()
 
         $('#filter-search').keyup(function() {
             var searchname = $('#filter-search').val();
-            FindPeople(searchname);
+            findPeople(searchname);
         });
 
         $('#guide-tab').click(function() {
@@ -1814,12 +1871,33 @@ function UpdateClientLocation()
         }
     }
 
+    function showMinisterModal()
+    {
+        {if group_id == "1" || group_id == "19" || group_id == "13"}
+            var ministerModalSeen = getCookie('minister_modal');
 
+            if(!ministerModalSeen){
+                // Show minister modal to online ministers the first time
+                $('#ministerModal').modal('show');
+                setCookie('minister_modal','1','432000');
+            }
+        {/if}
+    }
 
     function InitializeEventHandlers()
     {
+        var active_worshipers = getCookie('active_worshipers');
         {if logged_in}
-            $('#welcomeLoggedInModal').modal('show');
+            // If cookie is still available, use it
+            if(active_worshipers) {
+                ChatConnect();
+                UpdateGroupSize(active_worshipers);
+                UpdateMyUserInfo();
+                setTimeout("UpdateStats(1, active_worshipers)", 120000); // Add to stats after 120 seconds
+                showMinisterModal();
+            } else {
+                $('#welcomeLoggedInModal').modal('show');
+            }
 
             $('#update_number_worshipers').click(function(e)
             {
@@ -1831,26 +1909,29 @@ function UpdateClientLocation()
                     logged_in_groupsize = temp_groupsize;
                     UpdateGroupSize(logged_in_groupsize);
                     UpdateMyUserInfo();
+                    setCookie('active_worshipers',logged_in_groupsize,'5400'); // Set cookie so users don't have to keep doing this -- expires in 1.5 hrs
                     setTimeout("UpdateStats(1, logged_in_groupsize)", 120000); // Add to stats after 120 seconds
                 }
                 else
                 {
                     UpdateGroupSize(logged_in_groupsize);
                     UpdateMyUserInfo();
+                    setCookie('active_worshipers',logged_in_groupsize,'5400');
                     setTimeout("UpdateStats(1, 1)", 120000); // Add to stats after 120 seconds
                 }
 
                 $('#welcomeLoggedInModal').modal('hide');
+                showMinisterModal();
                 return false;
             });
         {if:else}
             $('#welcomeModal').modal('show');
 
-            $('#update_number_worshipers1').click(function(e) 
+            $('#update_number_worshipers1').click(function(e)
             {
                 var temp_groupsize = $('#num_worshipers1').val();
 
-                if ($.trim($("#name_worshipers").val()).length > 2) 
+                if ($.trim($("#name_worshipers").val()).length >= 2)
                 {
                     $("#anonymous_name").text($.trim($("#name_worshipers").val()));
                     $("#anonymous_name").profanityFilter({
@@ -1865,18 +1946,19 @@ function UpdateClientLocation()
                         logged_in_groupsize = temp_groupsize;
                         UpdateGroupSize(logged_in_groupsize);
                         UpdateMyUserInfo();
+                        setCookie('active_worshipers',logged_in_groupsize,'5400');
                         setTimeout("UpdateStats(1, logged_in_groupsize)", 120000); // Add to stats after 120 seconds
                     }
                     else
                     {
                         UpdateGroupSize(logged_in_groupsize);
                         UpdateMyUserInfo();
+                        setCookie('active_worshipers',logged_in_groupsize,'5400');
                         setTimeout("UpdateStats(1, 1)", 120000); // Add to stats after 120 seconds
                     }
 
                     $('#welcomeNotLoggedInModal').modal('hide');
-
-
+                    showMinisterModal();
                 }
                 else
                 {
@@ -1898,7 +1980,7 @@ function UpdateClientLocation()
                 var w_name = $.trim($("#name_worshipers").val());
                 var regexp = /[^a-z A-Z]/g;
 
-                if (w_name.length < 3) {
+                if (w_name.length < 2) {
                     $("#alert_enter_name").slideDown();
                 }
                 else {
@@ -1915,8 +1997,6 @@ function UpdateClientLocation()
                 }
             });
         {/if}
-
-
 
         $('#chat-right').click(function() { ModifyChatTabIndex(1); });
         $('#chat-left').click(function() { ModifyChatTabIndex(-1); });
@@ -2080,6 +2160,10 @@ function UpdateClientLocation()
                     }
                 }
 
+                //if (data.keyCode == 27) {
+                //    ClosePrivateChat(data.chatid);
+                //}
+
                 if (data.mine && $("#privatemessages_" + data.chatid + " > div:last").hasClass("pmsg_me_bg")) {
                     $("#privatemessages_" + data.chatid + " > .pmsg > .pmsg_body_container:last").append("<p class='pmsg_body'>" + data.message + "</p>");
                 }
@@ -2198,9 +2282,7 @@ function UpdateClientLocation()
         }
     {/if}
 
-
-
-    function SendPrivateMessage(id, message) 
+    function SendPrivateMessage(id, message)
     {
         if (id && message) {
             socket.emit('send private message', { receiverid: id, msg: message });
@@ -2210,27 +2292,26 @@ function UpdateClientLocation()
 
     // Special Functions for Administator
     {if group_id == "1" || group_id == "19" || group_id == "13"}
-        function RemoveGroupMessage(messageid) 
+        function RemoveGroupMessage(messageid)
         {
             var confirmation = confirm("Are you sure you want to delete this chat message?");
-            if (confirmation == true) 
+            if (confirmation == true)
             {
                 socket.emit('remove group message s3cretc0de', messageid);
             }
         }
 
-        function ClearGroupChat() 
+        function ClearGroupChat()
         {
             var confirmation = confirm("Are you sure you want to clear chat?");
-            if (confirmation == true) 
+            if (confirmation == true)
             {
                 socket.emit('clear group chat s3cretc0de');
             }
         }
     {/if}
 
-
-    function ClearChatUsers() 
+    function ClearChatUsers()
     {
         markersArray = {};
         usersArray = {};
@@ -2249,7 +2330,6 @@ function UpdateClientLocation()
         AddUser(<?php echo $member_id_reference; ?>, client_latitude, client_longitude, client_location, "{screen_name}", logged_in_groupsize, true, photo_url);
         AddMarker(<?php echo $member_id_reference; ?>, client_latitude, client_longitude);
     }
-
 
     // User info container to store latitude, longitude, and UID. Has functions for returning Google Marker and LatLng objects
     function UserInfo(uid) 
@@ -2287,7 +2367,6 @@ function UpdateClientLocation()
         this.GetPhotoUrl = function() { return this.photourl; }
     }
 
-
     function AddChatUser(data) 
     {
         if (data.usertype == "minister") { $ministerroster.prepend(rosteruser_template(data)); }
@@ -2300,9 +2379,8 @@ function UpdateClientLocation()
         AddUser(data.chatid, data.lat, data.lon, data.loc, data.name, data.groupsize, data.usertype, data.photourl);
         AddMarker(data.chatid, data.lat, data.lon);
 
-
         // Add private chat onto the slider bar so that worship admin group can chat easily
-        {if group_id == "19"}		// Worship Admin Group
+        {if group_id == "1" || group_id == "19" || group_id == "13"} // Admins
             // for existing user
             if (document.getElementById("privatemessages_" + data.chatid)) 
             {
@@ -2315,7 +2393,7 @@ function UpdateClientLocation()
             {
                 var tab_nickname = "";
                 var chatid = data.chatid;
-                
+
                 if (data.name.length > 10) { tab_nickname = data.name.substr(0,10) + "...";	}
                 else { tab_nickname = data.name; }
 
@@ -2340,7 +2418,7 @@ function UpdateClientLocation()
                 }
                 UpdateChatTabs();
 
-                $("#private_chatfield_" + chatid).val(data.name);
+                // $("#private_chatfield_" + chatid).val(data.name);
 
                 $("#privatecontainer_" + chatid).removeClass('selected');
                 $("#tab" + chatid).removeClass('tab-selected');
@@ -2351,13 +2429,11 @@ function UpdateClientLocation()
             if (document.getElementById("privatemessages_" + data.chatid)) 
             {
                 $("#privatemessages_" + data.chatid + " .user_disconnected").remove();
-                $("#private_chatfield_" + data.chatid).removeAttr("disabled").css("background-color","#FFF");
+                $("#private_chatfield_" + data.chatid).removeAttr("disabled");
                 $("#tab" + data.chatid).removeClass('tab-loggedoff');
             }
         {/if}
     }
-
-
 
     function AddUser(chatid, lat, lng, loc, fullname, groupsize, role, photourl) 
     {
@@ -2389,13 +2465,10 @@ function UpdateClientLocation()
     RemoveMarker(chatid);
     }
 
-
     function RemoveUser(chatid) 
     {
         delete usersArray[chatid];
     }
-        
-
 
     function StartPrivateChat(chatid, nickname) 
     {
@@ -2537,7 +2610,7 @@ function UpdateClientLocation()
 
         if (chat_tabs_open > chat_tabs_max) 
         {
-            chat_tab_bar_width = chat_tabs_max * 102; // 102 pixels wide per chat tab
+            chat_tab_bar_width = chat_tabs_max * 100; // 102 pixels wide per chat tab
 
             if(chat_slider_index >= 0 && (chat_tabs_max + chat_slider_index) < chat_tabs_open) { $('#chat-right').show(); }
             else { $('#chat-right').hide(); }
@@ -2547,7 +2620,7 @@ function UpdateClientLocation()
         }
         else
         {
-            chat_tab_bar_width = chat_tabs_open * 102; // 102 pixels wide per chat tab
+            chat_tab_bar_width = chat_tabs_open * 100; // 102 pixels wide per chat tab
             $('#chat-left').hide();
             $('#chat-right').hide();
         }
@@ -2617,14 +2690,14 @@ function UpdateClientLocation()
         }
     }
 
-    function FindPeople(name)
+    function findPeople(name)
     {
         if (name.length > 0) {
             $('.person').removeClass('person-found');
 
-            $(".person > .person-info > .fullname").each(function() {
+            $(".privatechat-roster--name").each(function() {
                 if ($(this).text().toLowerCase().indexOf(name.toLowerCase()) != -1) {
-                    $(this).parents().eq(1).addClass("person-found");
+                    $(this).closest(".person").addClass("person-found");
                 }
             });
 
@@ -3094,6 +3167,7 @@ function UpdateClientLocation()
     {
         $("#media_iframe").html("<iframe src='//player.streammonkey.com/iframe/REUQk4eV' width='100%' height='100%' frameborder='0' style='position: absolute;top: 0;left: 0;width: 100%;height: 100%;' allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>");
     //		$("#media_iframe").html("<iframe src='//player.streammonkey.com/iframe/vlmouwbw' width='100%' height='100%' frameborder='0' style='position: absolute;top: 0;left: 0;width: 100%;height: 100%;' allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>");
+        $("#backup-replace").html('<a href="#" onclick="LoadYoutube(); return false;" class="underline">Click here to use our backup stream.</a>')
 
         generate_translation_message("English");
     }
@@ -3101,10 +3175,26 @@ function UpdateClientLocation()
     function LoadYoutube()
     {
         $("#media_iframe").html("<iframe width='100%' height='350' src='https://www.youtube.com/embed/live_stream?channel=UCqV9iVqSzr5odrCDdkEmogw&autoplay=1' frameborder='0' allowfullscreen></iframe>");
+        $("#backup-replace").html('<a href="#" onclick="LoadEnglish(); return false;" class="underline">Return to our primary stream.</a>')
 
         generate_translation_message("YouTube");
     }
 
+    function setCookie(key, value, expiry) {
+        var expires = new Date();
+        expires.setTime(expires.getTime() + (expiry * 1000));
+        document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+    }
+
+    function getCookie(key) {
+        var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+        return keyValue ? keyValue[2] : null;
+    }
+
+    function eraseCookie(key) {
+        var keyValue = getCookie(key);
+        setCookie(key, keyValue, '-1');
+    }
 
     function generate_translation_message(source)
     {
@@ -3114,11 +3204,19 @@ function UpdateClientLocation()
         {
             switch (source) {
                 case "English":
+                    $("#translation_english").removeClass("btn-secondary").addClass("btn-primary");
+                    $("#translation_spanish").removeClass("btn-primary").addClass("btn-secondary");
+                    $("#translation_deaf").removeClass("btn-primary").addClass("btn-secondary");
+
                     $("#translation_english").prop("disabled", true);
                     $("#translation_spanish").prop("disabled", false);
                     $("#translation_deaf").prop("disabled", true);
                     break;
                 case "Spanish":
+                    $("#translation_spanish").removeClass("btn-secondary").addClass("btn-primary");
+                    $("#translation_english").removeClass("btn-primary").addClass("btn-secondary");
+                    $("#translation_deaf").removeClass("btn-primary").addClass("btn-secondary");
+
                     $("#translation_english").prop("disabled", false);
                     $("#translation_spanish").prop("disabled", true);
                     $("#translation_deaf").prop("disabled", true);
@@ -3135,16 +3233,28 @@ function UpdateClientLocation()
         {
             switch (source) {
                 case "English":
+                    $("#translation_english").removeClass("btn-secondary").addClass("btn-primary");
+                    $("#translation_spanish").removeClass("btn-primary").addClass("btn-secondary");
+                    $("#translation_deaf").removeClass("btn-primary").addClass("btn-secondary");
+
                     $("#translation_english").prop("disabled", true);
                     $("#translation_spanish").prop("disabled", false);
                     $("#translation_deaf").prop("disabled", false);
                     break;
                 case "Spanish":
+                    $("#translation_spanish").removeClass("btn-secondary").addClass("btn-primary");
+                    $("#translation_english").removeClass("btn-primary").addClass("btn-secondary");
+                    $("#translation_deaf").removeClass("btn-primary").addClass("btn-secondary");
+
                     $("#translation_english").prop("disabled", false);
                     $("#translation_spanish").prop("disabled", true);
                     $("#translation_deaf").prop("disabled", false);
                     break;
                 case "Deaf":
+                    $("#translation_deaf").removeClass("btn-secondary").addClass("btn-primary");
+                    $("#translation_english").removeClass("btn-primary").addClass("btn-secondary");
+                    $("#translation_spanish").removeClass("btn-primary").addClass("btn-secondary");
+
                     $("#translation_english").prop("disabled", false);
                     $("#translation_spanish").prop("disabled", false);
                     $("#translation_deaf").prop("disabled", true);
@@ -3161,6 +3271,10 @@ function UpdateClientLocation()
         {
             switch (source) {
                 case "English":
+                    $("#translation_english").removeClass("btn-secondary").addClass("btn-primary");
+                    $("#translation_spanish").removeClass("btn-primary").addClass("btn-secondary");
+                    $("#translation_deaf").removeClass("btn-primary").addClass("btn-secondary");
+
                     $("#translation_english").prop("disabled", true);
                     $("#translation_spanish").prop("disabled", true);
                     $("#translation_deaf").prop("disabled", true);

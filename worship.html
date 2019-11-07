@@ -1234,8 +1234,23 @@ function UpdateClientLocation()
 
         <div class="single-chat-window" id="div{{chatid}}" style="display: block;">
             <div class="single-chat-header" id="chat-header{{chatid}}">
+                {if group_id == "1" || group_id == "19" || group_id == "13"}
+                    {{#ifCond is_img true}}
+                        <div class="groupchat-avatar groupchat-avatar--mini">
+                            <div class="groupchat-avatar--bg">
+                                <img src="{{img}}" width="45" height="45">
+                            </div>
+                        </div>
+                    {{/ifCond}}
+                {/if}
                 <h1>{{nickname}}</h1>
                 <a class="chat-close" href="javascript:ClosePrivateChat('{{chatid}}')">X</a>
+                {if group_id == "1" || group_id == "19" || group_id == "13"}
+                    {{#ifCond is_local true}}
+                        <br>
+                        <p><small>{{local}}<small></p>
+                    {{/ifCond}}
+                {/if}
                 <div class="clear"></div>
             </div>
 
@@ -1982,6 +1997,25 @@ function UpdateClientLocation()
             });
         {/if}
 
+        document.onkeydown = function(e) {
+            switch (e.keyCode) {
+                case 37:
+                    // console.log("left");
+                    ModifyChatTabIndex(-1);
+                    break;
+                case 38:
+                    // console.log("up");
+                    break;
+                case 39:
+                    // console.log("right");
+                    ModifyChatTabIndex(1);
+                    break;
+                case 40:
+                    // console.log("down");
+                    break;
+            }
+        };
+
         $('#chat-right').click(function() { ModifyChatTabIndex(1); });
         $('#chat-left').click(function() { ModifyChatTabIndex(-1); });
 
@@ -2378,11 +2412,16 @@ function UpdateClientLocation()
                 var tab_nickname = "";
                 var chatid = data.chatid;
 
-                if (data.name.length > 10) { tab_nickname = data.name.substr(0,10) + "...";	}
-                else { tab_nickname = data.name; }
+                // Fix name of chat user for title
+                if (data.name.length > 10) {
+                    tab_nickname = data.name.substr(0,10) + "...";
+                } else {
+                    tab_nickname = data.name;
+                }
 
-                $privatechats.append(privatecontainer_template({chatid : chatid, tabnickname: tab_nickname, nickname: data.name}));
-    //			$("#private_chatfield_" + chatid).autosize();
+                // Add the chat to the tabs
+                $privatechats.append(privatecontainer_template({chatid : chatid, tabnickname: tab_nickname, nickname: data.name, local: data.loc, img: data.photourl, is_img: true, is_local: true}));
+    			// $("#private_chatfield_" + chatid).autosize();
                 autosize($("private_chatfield_" + chatid));
 
                 $("#private_chatfield_" + chatid).keypress(function(e) {
@@ -2467,7 +2506,7 @@ function UpdateClientLocation()
             else if (nickname.length > 10) { tab_nickname = nickname.substr(0,10) + "...";	}
             else { tab_nickname = nickname; }
 
-            $privatechats.append(privatecontainer_template({chatid : chatid, tabnickname: tab_nickname, nickname: nickname}));
+            $privatechats.append(privatecontainer_template({chatid : chatid, tabnickname: tab_nickname, nickname: nickname, is_img: false, is_local: false}));
     //		$("#private_chatfield_" + chatid).autosize();
             autosize($("private_chatfield_" + chatid));
 
@@ -2620,7 +2659,7 @@ function UpdateClientLocation()
         $('.single-chat-window').each(function()
         {
             var temp_divid = this.id.substring(3);
-            $('#div' + temp_divid).css({'left': $('#privatecontainer_' + temp_divid).position().left});
+            $('#div' + temp_divid).css({'bottom': '56px', 'left': $('#privatecontainer_' + temp_divid).position().left});
         });
 
     }

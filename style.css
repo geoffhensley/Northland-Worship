@@ -306,6 +306,11 @@ button,
 .chatroster-list {
 }
 
+.chat-search-box {
+	padding: 7px;
+	background-color: #efedea;
+}
+
 .private-chat--list {
 	min-width: 300px;
 	height: 60vh;
@@ -429,19 +434,13 @@ button,
 	border-bottom: 1px solid #cccccc;
 }
 
-#filter-search {
-	height: auto;
-	border-left: none;
-	border-right: none;
-}
-
 .online-minister {
 	border-top: 1px solid #adb99a;
 }
 
 .person {
 	border-top: 1px solid #cccccc;
-	padding: 7px 14px;
+	padding: 7px;
 }
 
 .person .avatar-bg {
@@ -585,7 +584,7 @@ button,
 .single-chat-header {
 	cursor: pointer;
 	background-color: #fff;
-	padding: 10px 15px;
+	padding: 8px 10px;
 	max-width: 260px;
 	border: 1px solid #efedea;
 }
@@ -612,8 +611,10 @@ button,
 .chat-close {
 	float: right;
 	cursor: pointer;
-	color: #000;
+	font-family: "FormaDJRText", sans-serif;
 	font-weight: 700;
+	color: #000;
+	line-height: 18px;
 }
 
 .chat-close:hover {

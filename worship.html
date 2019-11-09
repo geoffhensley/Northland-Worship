@@ -770,7 +770,7 @@
                 </button>
                 <div class="dropdown-menu pt-0 private-chat--list">
                     {!-- Section for Search bar --}
-                    <div id="search-box mt-3">
+                    <div id="search-box" class="chat-search-box">
                         <form name="search_people" id="search_people">
                             <div class="form-row search-form">
                                 <div class="form-group col mb-0">
@@ -1248,7 +1248,7 @@ function UpdateClientLocation()
                 {if group_id == "1" || group_id == "19" || group_id == "13"}
                     {{#ifCond is_local true}}
                         <br>
-                        <p><small>{{local}}<small></p>
+                        <p class="mb-0"><small>{{local}}<small></p>
                     {{/ifCond}}
                 {/if}
                 <div class="clear"></div>
@@ -2012,6 +2012,10 @@ function UpdateClientLocation()
                     break;
                 case 40:
                     // console.log("down");
+                    break;
+                case 27:
+                    // console.log("esc");
+                    HideChatWindows();
                     break;
             }
         };

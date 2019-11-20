@@ -110,14 +110,13 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Online Minister Notes</h4>
+                <h4 class="modal-title">Host Notes</h4>
             </div>
             <div class="modal-body">
                 <p>
                     <strong>Welcome to the new online worship environment!</strong> 
                     Thank you for faithfully leading our congregation online. The community here could not
                     exist without all you do! A few things have changed, and we want you to know what those things are.
-                    You can revisit this information any time in the top nav under "Minister Notes."
                 </p>
                 <ul class="list-group">
                     <li class="list-group-item">
@@ -483,7 +482,7 @@
                     </script>
 
                     <li class="nav-item">
-                        <a href="#" class="nav-link" data-toggle="modal" data-target="#ministerModal">Minister Notes</a>
+                        <a href="#" class="nav-link" data-toggle="modal" data-target="#ministerModal">Host Notes</a>
                     </li>
                     <li class="nav-item">
                         <a href="/admin" class="nav-link" target="_blank">Admin Console</a>
@@ -619,7 +618,7 @@
                                 <strong>TRANSLATION:</strong>
                                 <a href="#" id="translation_english" onclick="LoadEnglish(); return false;" class="d-block d-md-inline btn btn-primary btn-sm" disabled>English</a> 
                                 <a href="#" id="translation_spanish" onclick="LoadSpanish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm" >Espanol</a> 
-                                <a href="#" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="d-block d-md-inline btn btn-secondary btn-sm" >Interpreted for the Deaf and Hard of Hearing</a>
+                                {!-- <a href="#" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="d-block d-md-inline btn btn-secondary btn-sm" >Interpreted for the Deaf and Hard of Hearing</a> --}
                             </div>
                         <?php endif; ?>
 
@@ -1234,23 +1233,15 @@ function UpdateClientLocation()
 
         <div class="single-chat-window" id="div{{chatid}}" style="display: block;">
             <div class="single-chat-header" id="chat-header{{chatid}}">
-                {if group_id == "1" || group_id == "19" || group_id == "13"}
-                    {{#ifCond is_img true}}
-                        <div class="groupchat-avatar groupchat-avatar--mini">
-                            <div class="groupchat-avatar--bg">
-                                <img src="{{img}}" width="45" height="45">
-                            </div>
-                        </div>
-                    {{/ifCond}}
-                {/if}
+                <div class="groupchat-avatar groupchat-avatar--mini">
+                    <div class="groupchat-avatar--bg">
+                        <img src="{{img}}" width="45" height="45">
+                    </div>
+                </div>
                 <h1>{{nickname}}</h1>
                 <a class="chat-close" href="javascript:ClosePrivateChat('{{chatid}}')">X</a>
-                {if group_id == "1" || group_id == "19" || group_id == "13"}
-                    {{#ifCond is_local true}}
-                        <br>
-                        <p class="mb-0"><small>{{local}}<small></p>
-                    {{/ifCond}}
-                {/if}
+                <br>
+                <p class="mb-0"><small>{{local}}<small></p>
                 <div class="clear"></div>
             </div>
 
@@ -1485,7 +1476,7 @@ function UpdateClientLocation()
 
     var chat_tabs_open = 0; 	// Number of chat tabs currently open
     var chat_slider_index = 0;	// Current index/location of slider
-    var chat_tabs_max = 12; 		// Max number of chat tabs viewable at once
+    var chat_tabs_max = 8; 		// Max number of chat tabs viewable at once
     var chat_tab_bar_width = 0; // Width of tab bar
     var current_chat_uid = "";	// Current opened chat UID
 
@@ -2182,9 +2173,9 @@ function UpdateClientLocation()
                     }
                 }
 
-                //if (data.keyCode == 27) {
-                //    ClosePrivateChat(data.chatid);
-                //}
+                if (data.keyCode == 27) {
+                    ClosePrivateChat(data.chatid);
+                }
 
                 if (data.mine && $("#privatemessages_" + data.chatid + " > div:last").hasClass("pmsg_me_bg")) {
                     $("#privatemessages_" + data.chatid + " > .pmsg > .pmsg_body_container:last").append("<p class='pmsg_body'>" + data.message + "</p>");
@@ -2423,8 +2414,8 @@ function UpdateClientLocation()
                     tab_nickname = data.name;
                 }
 
-                // Add the chat to the tabs
-                $privatechats.append(privatecontainer_template({chatid : chatid, tabnickname: tab_nickname, nickname: data.name, local: data.loc, img: data.photourl, is_img: true, is_local: true}));
+                // Add ALL people from roster to chat tabs
+                // $privatechats.append(privatecontainer_template({chatid : chatid, tabnickname: tab_nickname, nickname: data.name, local: data.loc, img: data.photourl, is_img: true, is_local: true}));
     			// $("#private_chatfield_" + chatid).autosize();
                 autosize($("private_chatfield_" + chatid));
 
@@ -2479,17 +2470,17 @@ function UpdateClientLocation()
     {
         $("#worshiper" + chatid).remove();
 
-    if (document.getElementById("privatemessages_" + chatid)) 
-    {
-            $("#privatemessages_" + chatid).append('<div class="pmsg_notification user_disconnected">This person has logged off.</div><div class="clear"></div>');
-            $("#private_chatfield_" + chatid).attr("disabled","disabled").css("background-color","#BBB");
-            $("#tab" + chatid).addClass('tab-loggedoff');
-    }
+        if (document.getElementById("privatemessages_" + chatid)) 
+        {
+                $("#privatemessages_" + chatid).append('<div class="pmsg_notification user_disconnected">This person has logged off.</div><div class="clear"></div>');
+                $("#private_chatfield_" + chatid).attr("disabled","disabled").css("background-color","#BBB");
+                $("#tab" + chatid).addClass('tab-loggedoff');
+        }
 
-    $(".private_link_" + chatid).hide();
+        $(".private_link_" + chatid).hide();
 
-    RemoveUser(chatid);
-    RemoveMarker(chatid);
+        RemoveUser(chatid);
+        RemoveMarker(chatid);
     }
 
     function RemoveUser(chatid) 
@@ -2503,6 +2494,8 @@ function UpdateClientLocation()
         {
             HideChatWindows();
             var tab_nickname = "";
+            var tab_location = usersArray[chatid].location;
+            var tab_photo = usersArray[chatid].photourl;
 
             if (nickname.indexOf("Worshiper ") != -1) {
                 tab_nickname = nickname.replace("Worshiper ", "");
@@ -2510,8 +2503,8 @@ function UpdateClientLocation()
             else if (nickname.length > 10) { tab_nickname = nickname.substr(0,10) + "...";	}
             else { tab_nickname = nickname; }
 
-            $privatechats.append(privatecontainer_template({chatid : chatid, tabnickname: tab_nickname, nickname: nickname, is_img: false, is_local: false}));
-    //		$("#private_chatfield_" + chatid).autosize();
+            $privatechats.append(privatecontainer_template({chatid : chatid, tabnickname: tab_nickname, nickname: nickname, local: tab_location, img: tab_photo}));
+            // $("#private_chatfield_" + chatid).autosize();
             autosize($("private_chatfield_" + chatid));
 
             $("#private_chatfield_" + chatid).keypress(function(e) {
@@ -2523,7 +2516,7 @@ function UpdateClientLocation()
                 }
             });
 
-    //		 $("#privatemessages_" +  chatid).slimScroll({ height: '100%', size: '5px', start: 'bottom', railVisible: true, railOpacity: 0.5 });
+            // $("#privatemessages_" +  chatid).slimScroll({ height: '100%', size: '5px', start: 'bottom', railVisible: true, railOpacity: 0.5 });
 
             // Reposition tabs if it's outside the max in the tab slider
             var chatid_tab_index = $('#privatecontainer_' + chatid).index('.single-chat');
@@ -2556,8 +2549,8 @@ function UpdateClientLocation()
         $('.chat-tab').removeClass("tab-selected");
 
         // Hide main private chat list
-        $(".private-chat").removeClass('show');
-        $(".private-chat--list").removeClass('show');
+        // $(".private-chat").removeClass('show');
+        // $(".private-chat--list").removeClass('show');
     }
 
 
@@ -2639,11 +2632,17 @@ function UpdateClientLocation()
         {
             chat_tab_bar_width = chat_tabs_max * 100; // 102 pixels wide per chat tab
 
-            if(chat_slider_index >= 0 && (chat_tabs_max + chat_slider_index) < chat_tabs_open) { $('#chat-right').show(); }
-            else { $('#chat-right').hide(); }
+            if(chat_slider_index >= 0 && (chat_tabs_max + chat_slider_index) < chat_tabs_open) {
+                $('#chat-right').show();
+            } else {
+                $('#chat-right').hide();
+            }
 
-            if(chat_slider_index <= 0) { $('#chat-left').hide(); }
-            else { $('#chat-left').show();	}
+            if(chat_slider_index <= 0) {
+                $('#chat-left').hide();
+            } else {
+                $('#chat-left').show();
+            }
         }
         else
         {

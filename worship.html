@@ -574,7 +574,7 @@
                 {!-- WORSHIP VIDEO --}
                 {if service_live=="true"}
 					<div class="responsive-video-player" id="media_iframe">
-						<iframe src="//player.streammonkey.com/iframe/REUQk4eV" width="100%" height="100%" frameborder="0" allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>
+						<iframe id="vimeo_player" src="https://vimeo.com/event/19626/embed" width="100%" height="100%" frameborder="0" allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>
 					</div>
 			    {if:else}
 					<div class="responsive-video-player">
@@ -2063,6 +2063,7 @@ function UpdateClientLocation()
     function ChatConnect() 
     {
         socket = io.connect('https://newdevchat.northlandchurch.net:3000', {
+//        socket = io.connect('https://northlandchurch.church:3000', {
             'reconnect': true,
             'reconnectionDelay': 2000,
             'max reconnection attempts': 10000,
@@ -3177,21 +3178,21 @@ function UpdateClientLocation()
 
     function LoadSpanish()
     {
-        $("#media_iframe").html("<iframe src='https://www.streammonkey.com/iframe/2678' width='100%' height='350px' frameborder='0' allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>");
+        $("#media_iframe").html("<iframe id='vimeo_player' src='https://vimeo.com/event/19626/embed' width='100%' height='350px' frameborder='0' allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>");
 
         generate_translation_message("Spanish");
     }
 
     function LoadDeaf()
     {
-        $("#media_iframe").html("<iframe src='https://www.streammonkey.com/iframe/3377' width='100%' height='350px' frameborder='0' allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>");
+        $("#media_iframe").html("<iframe id='vimeo_player' src='https://www.streammonkey.com/iframe/3377' width='100%' height='350px' frameborder='0' allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>");
 
         generate_translation_message("Deaf");
     }
 
     function LoadEnglish()
     {
-        $("#media_iframe").html("<iframe src='//player.streammonkey.com/iframe/REUQk4eV' width='100%' height='100%' frameborder='0' style='position: absolute;top: 0;left: 0;width: 100%;height: 100%;' allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>");
+        $("#media_iframe").html("<iframe id='vimeo_player' src='https://vimeo.com/event/19626/embed' width='100%' height='100%' frameborder='0' style='position: absolute;top: 0;left: 0;width: 100%;height: 100%;' allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>");
     //		$("#media_iframe").html("<iframe src='//player.streammonkey.com/iframe/vlmouwbw' width='100%' height='100%' frameborder='0' style='position: absolute;top: 0;left: 0;width: 100%;height: 100%;' allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>");
         $("#backup-replace").html('<a href="#" onclick="LoadYoutube(); return false;" class="underline">Click here to use our backup stream.</a>')
 
@@ -3200,7 +3201,7 @@ function UpdateClientLocation()
 
     function LoadYoutube()
     {
-        $("#media_iframe").html("<iframe width='100%' height='350' src='https://www.youtube.com/embed/live_stream?channel=UCqV9iVqSzr5odrCDdkEmogw&autoplay=1' frameborder='0' allowfullscreen></iframe>");
+        $("#media_iframe").html("<iframe id='vimeo_player' width='100%' height='350' src='https://www.youtube.com/embed/live_stream?channel=UCqV9iVqSzr5odrCDdkEmogw&autoplay=1' frameborder='0' allowfullscreen></iframe>");
         $("#backup-replace").html('<a href="#" onclick="LoadEnglish(); return false;" class="underline">Return to our primary stream.</a>')
 
         generate_translation_message("YouTube");
@@ -3320,6 +3321,12 @@ function UpdateClientLocation()
             $("#translation_deaf").prop("disabled", true);
         }
     }
+    
+    // Do a fancy refresh to fix Vimeo's issue
+    setTimeout(function(){
+        var iframe = document.getElementById('vimeo_player');
+		iframe.src = iframe.src;
+    }, 3480000);
 </script>
 </body>
 </html>

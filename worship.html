@@ -128,6 +128,7 @@
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">Start private chat with worshiper</li>
                             <li class="list-group-item">Delete the message</li>
+                            <li class="list-group-item">Mute the user</li>
                         </ul>
                     </li>
                     <li class="list-group-item">
@@ -140,7 +141,13 @@
                     </li>
                     <li class="list-group-item">
                         <strong>5. All admin tools are at the top of page</strong><br>
-                        This includes a link to the admin console, clearing the chat, turning on/off the service, and reloading the map.
+                        This includes a link to the admin console, clearing the chat, turning on/off the service, loading live video player and reloading the map.
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Clear Chat - clearing all chats in Group Chat</li>
+                            <li class="list-group-item">Turning on/off the service - Changing the Worship to Live/VOD. This will inform the people to refresh their page.</li>
+                            <li class="list-group-item">Load Live - loading live video player without refreshing the page</li>
+                            <li class="list-group-item">Reload Map - reloading map without refreshing the page</li>
+                        </ul>
                     </li>
                     <li class="list-group-item">
                         <strong>6. This is now mobile friendly!</strong><br>
@@ -226,7 +233,7 @@
 			</div>
 
 			<div class="modal-footer justify-content-start">
-				<button type="button" class="btn btn-transparent btn-mixed welcome-button">< Back to log in</button>
+				<button type="button" class="btn btn-transparent btn-mixed welcome-button">< Back to main</button>
 			</div>
 		</div>
 	</div>
@@ -300,7 +307,7 @@
 			</div>
 
 			<div class="modal-footer justify-content-start">
-                <button type="button" class="btn btn-transparent btn-mixed welcome-button">< Back to log in</button>
+                <button type="button" class="btn btn-transparent btn-mixed welcome-button">< Back to main</button>
             </div>
 		</div>
 	</div>
@@ -375,7 +382,7 @@
 			</div>
 
 			<div class="modal-footer justify-content-start">
-                <button type="button" class="btn btn-transparent btn-mixed welcome-button">< Back to log in</button>
+                <button type="button" class="btn btn-transparent btn-mixed welcome-button">< Back to main</button>
             </div>
 		</div>
 	</div>
@@ -491,10 +498,13 @@
                         <a href="#" id="service_live" class="nav-link"></a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link" onclick="ClearGroupChat()">Clear Chat</a>
+                        <a href="#" class="nav-link" onclick="ClearGroupChat(); return false;">Clear Chat</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link" onclick="LoadEnglish(); return false;">Load Live</a>
                     </li>
                     <li class="nav-item mr-3">
-                        <a id="reload_map" class="nav-link" href='#' onclick='reload_map()'>Reload Map</a>
+                        <a id="reload_map" class="nav-link" href='#' onclick='reload_map(); return false;'>Reload Map</a>
                     </li>
                 {/if}
 
@@ -555,7 +565,7 @@
 			<span aria-hidden="true">&times;</span>
 		</button>		
 	</div>
-	
+
 	<div id="worship-contain" class="d-lg-flex flex-row align-items-stretch">
 		{!-- Worship video section	--}
 		<div class="col-lg-7 alpha worship-contain--col">
@@ -594,7 +604,8 @@
 						<iframe id="vimeo_player" src="https://vimeo.com/event/19626/embed" width="100%" height="100%" frameborder="0" allowfullscreen webkitAllowFullScreen mozAllowFullscreen></iframe>
 					</div>
 			    {if:else}
-					<div class="responsive-video-player">
+					<div class="responsive-video-player" id="media_iframe">
+<!--					<div class="responsive-video-player">	-->
 						<iframe id="vimeo_player" width="640" height="360" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 					</div>
 				{/if}
@@ -609,6 +620,13 @@
                         <p>
                             We currently aren't in live Worship, but you can watch the latest worship service here.
                         </p>
+{!--
+                        <p class="pb-3">
+                            <strong>JOIN US LIVE CHRISTMAS SERVICE:</strong><br> 
+							Wednesday: December 23 at 2, 4, and 6 P.M.<br>
+							Thursday: December 24 at 12, 2, 4, and 6 P.M.
+                        </p>
+--}						
                         {exp:channel:entries channel="media" category="48" limit="1" dynamic="off"}
                         <p class="pb-3">
                             <strong>JOIN US LIVE:</strong> {service_times_singleline}
@@ -622,7 +640,7 @@
                         </div>
 
                         <?php if (({current_time format="%G%i"} > 430) && ({current_time format="%G%i"} < 1000)) : ?>
-                            <div id="translations" class="translations">
+                            <div id="translations" class="translations d-none" >
                                 <strong>TRANSLATION:</strong> 
                                 <a href="#" id="translation_english" onclick="LoadEnglish(); return false;" class="d-block d-md-inline btn btn-primary btn-sm" disabled>English</a> 
                                 <a href="#" id="translation_spanish" onclick="LoadSpanish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm">Espanol</a> 
@@ -631,21 +649,21 @@
                         <?php endif; ?>
 
                         <?php if (({current_time format="%G%i"} > 1020) && ({current_time format="%G%i"} < 1330)) : ?>
-                            <div id="translations" class="translations">
+                            <div id="translations" class="translations d-none">
                                 <strong>TRANSLATION:</strong>
                                 <a href="#" id="translation_english" onclick="LoadEnglish(); return false;" class="d-block d-md-inline btn btn-primary btn-sm" disabled>English</a> 
                                 <a href="#" id="translation_spanish" onclick="LoadSpanish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm" >Espanol</a> 
-                                <a href="#" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="d-block d-md-inline btn btn-secondary btn-sm" >Interpreted for the Deaf and Hard of Hearing</a>
+                                {!-- <a href="#" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="d-block d-md-inline btn btn-secondary btn-sm" >Interpreted for the Deaf and Hard of Hearing</a> --}
                             </div>
                         <?php endif; ?>
 
                         <?php if (({current_time format="%G%i"} > 1630) && ({current_time format="%G%i"} < 2100)) : ?>
-                            {!-- <div id="translations" class="translations">
+                           	{!--<div id="translations" class="translations">
                                 <strong>TRANSLATION:</strong>
                                 <a href="#" type="button" id="translation_english" onclick="LoadEnglish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm disabled" disabled>English</a> 
-                                <a href="#" type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm disabled" disabled>Espanol</a> 
+                                <a href="#" type="button" id="translation_spanish" onclick="LoadSpanish(); return false;" class="d-block d-md-inline btn btn-secondary btn-sm disabled" disabled>Espanol</a>
                                 <a href="#" type="button" id="translation_deaf"    onclick="LoadDeaf(); return false;" 	  class="d-block d-md-inline btn btn-secondary btn-sm disabled" disabled>Interpreted for the Deaf and Hard of Hearing</a>
-                            </div> --}
+                            </div>--}
                         <?php endif; ?>
 
                         <div id="current-viewers" class="below_videotab">Current Viewers: </div>
@@ -797,7 +815,7 @@
             </div>
 
             <div class="btn-group dropup float-right private-chat">
-                <button type="button" class="btn btn-primary dropdown-toggle private-chat--btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn btn-primary dropdown-toggle private-chat--btn" onclick="toggleChatRoster();" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Private Chat
                 </button>
                 <div class="dropdown-menu pt-0 private-chat--list">
@@ -853,7 +871,8 @@
 
 {!-- Adaptive textarea code --}
 <script type="text/javascript" src="/_assets/onlineworship/autosize.min.js"></script>
-<script type="text/javascript" src="/_js/jquery.profanityfilter.min.js"></script>
+<!--<script type="text/javascript" src="/_js/jquery.profanityfilter.min.js"></script>-->
+<script type="text/javascript" src="/_js/jquery.profanityfilter.js"></script>
 
 <script>
 var map;
@@ -1168,17 +1187,24 @@ function UpdateClientLocation()
             <div class="groupchat-avatar--bg">
                 <img src="{{photourl}}" onerror="this.src='/images/avatar.png'" width="45" height="45">
             </div>
+            <div class="groupchat-avatar--bg">
+				{if group_id == "1" || group_id == "19"}
+				<div class="private_link1_{{chatid}}">
+					{{#handlebars_if user_muted}}
+					<a href="#" class="person-link btn btn-sm btn-dark" onclick="UnMuteUser('{{chatid}}', '{{name}}'); return false;" style="width: 45px; padding: 0px;">Un-Mute</a>
+					{{else}}
+					<a href="#" class="person-link btn btn-sm btn-dark" onclick="MuteUser('{{chatid}}', '{{name}}'); return false;" style="width: 45px; padding: 0px;">Mute</a>
+					{{/handlebars_if}}
+				</div>
+				{/if}
+            </div>
         </div>
 
         <div class="groupchat-message--contain">
             <div class="groupchat-message--info">
                 <div class="groupchat-message--controls">
-                    {!-- Profile button but since most havent stayed up to date, removing for now
-                        {if group_id == "1" || group_id == "19"}
-                            {{#handlebars_if usertype}}<a href="#" class="person-link btn btn-sm btn-dark" onclick="clickProfileExpand(this, 'profile{{chatid}}', {{chatid}})">Profile</a>{{/handlebars_if}}
-                        {/if}
-                    --}
-                    <a href="#" class="person-link person-link--chat btn btn-sm btn-dark private_link_{{chatid}}" onclick="StartPrivateChat('{{chatid}}', '{{name}}')">Chat</a>
+                    {!-- Profile button but since most havent stayed up to date, removing for now --}
+					<a href="#" class="person-link btn btn-dark private_link_{{chatid}}" onclick='StartPrivateChat("{{chatid}}", "{{name}}"); return false;'>Chat</a>
                 </div>
 
                 <div class="groupchat-message--name">
@@ -1236,12 +1262,12 @@ function UpdateClientLocation()
                                     Actions
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="pointer dropdown-item private_link_{{chatid}}" onclick="StartPrivateChat('{{chatid}}', '{{nickname}}')" {{#handlebars_if user_online}}{{else}}style="display:none"{{/handlebars_if}}>Chat</a>
-                                    <a href="#" class="dropdown-item" onclick="RemoveGroupMessage('{{id}}')">Delete</a>
+                                    <a class="pointer dropdown-item private_link_{{chatid}}" onclick='StartPrivateChat("{{chatid}}", "{{nickname}}")' {{#handlebars_if user_online}}{{else}}style="display:none"{{/handlebars_if}}>Chat</a>
+                                    <a href="#" class="dropdown-item" onclick="RemoveGroupMessage('{{id}}'); return false;">Delete</a>
                                 </div>
                             </div>
                         {if:else}
-<!--                            <a class="person-link btn btn-sm btn-dark private_link_{{chatid}}" onclick="StartPrivateChat('{{chatid}}', '{{nickname}}')" {{#handlebars_if user_online}}{{else}}style="display:none"{{/handlebars_if}}>Chat</a>	-->
+                            <a class="person-link btn btn-sm btn-dark private_link_{{chatid}}" onclick='StartPrivateChat("{{chatid}}", "{{nickname}}")' {{#handlebars_if user_online}}{{else}}style="display:none"{{/handlebars_if}}>Chat</a>
                         {/if}
                     </div>
                     <div class="groupchat-message--name pb-1">
@@ -1271,7 +1297,7 @@ function UpdateClientLocation()
                     </div>
                 </div>
                 <h1>{{nickname}}</h1>
-                <a class="chat-close" href="javascript:ClosePrivateChat('{{chatid}}')">X</a>
+                <a class="chat-close" href="javascript:ClosePrivateChat('{{chatid}}')"> X</a>
                 <br>
                 <p class="mb-0"><small>{{local}}<small></p>
                 <div class="clear"></div>
@@ -1459,15 +1485,15 @@ function UpdateClientLocation()
         {if '{exp:member:custom_profile_data}{manual_city_state}{/exp:member:custom_profile_data}' != "Yes"}
             switch(error.code) {
                 case error.PERMISSION_DENIED:
-                    console.warning("User denied the request for Geolocation.");
+                    console.log("User denied the request for Geolocation.");
                     geoip2.city(onSuccess, onError);
                     break;
                 case error.POSITION_UNAVAILABLE:
-                    console.warning("Location information is unavailable.");
+                    console.log("Location information is unavailable.");
                     geoip2.city(onSuccess, onError);
                     break;
                 case error.TIMEOUT:
-                    console.warning("The request to get user location timed out.");
+                    console.log("The request to get user location timed out.");
                     geoip2.city(onSuccess, onError);
                     break;
                 case error.UNKNOWN_ERROR:
@@ -1598,7 +1624,8 @@ function UpdateClientLocation()
             {
 				if (isValid(message))
 				{
-					socket.emit('send group message', message);
+//					socket.emit('send group message', message);
+					socket.emit('send group message to moderator', message);
 					$("#groupchat_field").val("");
 				}
 				else
@@ -1621,10 +1648,12 @@ function UpdateClientLocation()
 
         $(document).on('click', '.single-chat-header', function() {
             ToggleChatWindow($(this).attr('id').replace("chat-header",""));
+			return false;
         });
 
         $(document).on('click', '.chat-tab', function() {
             ToggleChatWindow($(this).attr('id').substring(3));
+			return false;
         });
 
         // Custom click handler for Bootstrap dropdowns
@@ -1736,7 +1765,7 @@ function UpdateClientLocation()
 
             // Pass email address to Register modal
             var email = $("#loginModal #username").val();
-            $("#registerModal #username").val(email);
+            $("#registerModal #regusername").val(email);
 
             return false;
         });
@@ -1747,7 +1776,7 @@ function UpdateClientLocation()
 
             // Pass email address to Login modal
             var email = $("#registerModal #regusername").val();
-            $("#loginModal #regusername").val(email);
+            $("#loginModal #username").val(email);
 
             return false;
         });
@@ -1936,6 +1965,7 @@ function UpdateClientLocation()
 
             $('#update_number_worshipers').click(function(e)
             {
+				$(this).prop('disabled', true);
                 ChatConnect();
 
                 var temp_groupsize = $('#num_worshipers').val();
@@ -2045,15 +2075,18 @@ function UpdateClientLocation()
         {/if}
 
         document.onkeydown = function(e) {
+//			console.log(e.keyCode);
             switch (e.keyCode) {
-                case 37:
+//                case 37:
+                case 219:
                     // console.log("left");
                     ModifyChatTabIndex(-1);
                     break;
                 case 38:
                     // console.log("up");
                     break;
-                case 39:
+//                case 39:
+                case 221:
                     // console.log("right");
                     ModifyChatTabIndex(1);
                     break;
@@ -2117,7 +2150,7 @@ function UpdateClientLocation()
         socket = io.connect('https://chatworship.northlandchurch.net:3000', {
             'reconnect': true,
             'reconnectionDelay': 5000,
-            'reconnectionAttempts': 10,
+            'reconnectionAttempts': 100,
             'forceNew': true
         });
 /*
@@ -2159,7 +2192,7 @@ function UpdateClientLocation()
             $('.chatbox').append('<div class="pmsg_notification youdisconnected">You have been disconnected.</div> <div id="clear"></div>');
 
             if (duplicate_connection) {
-                $("#chat-disconnected").html('<center>Disconnected from chat...<br>Another browser connected with your account</center>').show();
+                $("#chat-disconnected").html('<center>Disconnected from chat: Another browser connected with your account!<br>Refresh your browser to reconnect or <a href="#" onclick="ReconnectManually(); return false;">Click Here</a> to reconnect without refreshing page.</center>').show();
             }
             else {
 				var html = '<center>Disconnected from chat... Attempting to reconnect<br>This will disappear after connecting to Chat server.<br>You can still watch Worship Online.</center>'
@@ -2192,6 +2225,20 @@ function UpdateClientLocation()
             $(".private_link_" + data.chatid).show();
         });
 
+
+        socket.on('notify mute user', function(data) {
+			console.log('Muted user: ' + data);
+			var html = '<a href="#" class="person-link btn btn-sm btn-dark" onclick="UnMuteUser(\'' + data + '\', \'' + data + '\'); return false;" style="width: 45px; padding: 0px;">Un-Mute</a>';
+            $(".private_link1_" + data).html(html);
+        });
+
+        socket.on('notify unmute user', function(data) {
+			console.log('notify Unmute user: ' + data);
+			var html = '<a href="#" class="person-link btn btn-sm btn-dark" onclick="MuteUser(\'' + data + '\', \'' + data + '\'); return false;" style="width: 45px; padding: 0px;">Mute</a>';
+            $(".private_link1_" + data).html(html);
+        });
+
+		
         socket.on('remove chat user', function(data) {
             RemoveChatUser(data);
         });
@@ -2205,10 +2252,27 @@ function UpdateClientLocation()
             }
             else
             {
+//				console.log("group message: ");
+//				console.log(data);
                 $groupchats.prepend(groupmessage_template(data));
             }
         });
 
+        socket.on('group message to all', function(data) {
+            data.user_online = true;
+
+            if (data.message == "command: open card tab")
+            {
+                $('.tabs').tabs({active: 2 });
+            }
+            else
+            {
+//				console.log("group message to all: ");
+//				console.log(data);
+                $groupchats.prepend(groupmessage_template(data));
+            }
+        });
+		
         socket.on('remove group message', function(data) {
         $("#groupmessage_" + data).remove();
         });
@@ -2409,7 +2473,7 @@ function UpdateClientLocation()
 	}            
 
 	function isValidUsername(str){
-		var regex = /[^a-z A-Z]/g;
+		var regex = /[^a-z A-Z*]/g;
 		return regex.test(str);		
 	}            
 	
@@ -2433,8 +2497,32 @@ function UpdateClientLocation()
                 socket.emit('clear group chat s3cretc0de');
             }
         }
+		
+		function MuteUser(chatid, nickname) 
+		{
+            var confirmation = confirm("Are you sure you want to Mute " + nickname + " (" + chatid + ")?");
+            if (confirmation == true)
+            {
+                socket.emit('mute user', chatid);
+            }
+		}
+		
+		function UnMuteUser(chatid, nickname) 
+		{
+            var confirmation = confirm("Are you sure you want to UnMute " + nickname + " (" + chatid + ")?");
+            if (confirmation == true)
+            {
+                socket.emit('unmute user', chatid);
+            }
+		}
+		
     {/if}
 
+	function ReconnectManually()
+	{
+          duplicate_connection = false;
+		  ChatConnect();
+	}
     function ClearChatUsers()
     {
         markersArray = {};
@@ -2512,6 +2600,7 @@ function UpdateClientLocation()
                 $("#private_chatfield_" + data.chatid).removeAttr("disabled").css("background-color","#FFF");
                 $("#tab" + data.chatid).removeClass('tab-loggedoff');
             }
+/*
             // for a new chat user
             else
             {
@@ -2553,6 +2642,7 @@ function UpdateClientLocation()
                 $("#tab" + chatid).removeClass('tab-selected');
                 $("#div" + chatid).hide();
             }
+*/			
         {if:else}		// General
             // Change the color priavate chat element when someone joins worship again
             if (document.getElementById("privatemessages_" + data.chatid)) 
@@ -2682,6 +2772,24 @@ function UpdateClientLocation()
         UpdateChatTabs();
     }
 
+	// Make the ChatRoster(PrivateChat) toggle only when you click the PRIVATE CHAT button
+	function toggleChatRoster()
+	{
+		if ($(".private-chat--list").is(":visible")) 
+		{
+			$(".private-chat--list").hide();
+		} 
+		else 
+		{
+			$(".private-chat--list").show();
+			
+			setTimeout(function() {
+				console.log("Old Value: " + $(".private-chat--list").css("transform"));
+				$(".private-chat--list").css("transform", "translate3d(-54%, -100%, 0px)");
+				console.log("New Value: " + $(".private-chat--list").css("transform"));
+			}, 200);
+		}
+	}
 
     function ToggleChatWindow(chatid) 
     {
@@ -2926,7 +3034,7 @@ function UpdateClientLocation()
             dataType: 'json',
             success: parseLoginEmailCheckAndLogin,
             error: function() { 
-                console.warning("Error in email duplicate checking...");
+                console.log("Error in email duplicate checking...");
             }
         });
 
@@ -2997,13 +3105,13 @@ function UpdateClientLocation()
                 dataType: 'json',
                 success: parseRegisterEmailCheckAndRegister,
                 error: function() {
-                    console.warning("Error in email duplicate checking...");
+                    console.log("Error in email duplicate checking...");
                 }
             });
         }
         else
         {
-            console.warning("There are some items to fix to register youself!");
+            console.log("There are some items to fix to register youself!");
         }
     }
 
@@ -3026,7 +3134,7 @@ function UpdateClientLocation()
             else if (jsonObj.count > 1)
             {
                 $("#loginModal #multiple_username").show();
-                console.warning(jsonObj.count + " email addresses exist.");
+                console.log(jsonObj.count + " email addresses exist.");
             }
             else
             {
@@ -3098,7 +3206,7 @@ function UpdateClientLocation()
             else if (jsonObj.count > 1)
             {
                 $("#loginModal #multiple_username").show();
-                console.warning(jsonObj.count + " email addresses exist.");
+                console.log(jsonObj.count + " email addresses exist.");
             }
             else
             {
@@ -3133,7 +3241,7 @@ function UpdateClientLocation()
             else if (jsonObj.count > 1) 
             {
                 $("#registerModal #multiple_username").show();
-                console.warning(jsonObj.count + " email addresses exist.");
+                console.log(jsonObj.count + " email addresses exist.");
             } 
             else
             {
@@ -3170,7 +3278,7 @@ function UpdateClientLocation()
             else if (jsonObj.count > 1)
             {
                 $("#registerModal #multiple_username").show();
-                console.warning(jsonObj.count + " email addresses exist.");
+                console.log(jsonObj.count + " email addresses exist.");
             }
             else
             {

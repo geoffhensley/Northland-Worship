@@ -1292,7 +1292,7 @@ function UpdateClientLocation()
                         {/if}
                     </div>
                     <div class="groupchat-message--name pb-1">
-                        {{nickname}}{{#ifCond usertype "minister"}} - Minister{{/ifCond}}{{#ifCond usertype "host"}} - Host{{/ifCond}}{{#ifCond usertype "support"}} - Tech Support{{/ifCond}}
+                        {{nickname}} {{#ifCond usertype "minister"}} - Minister{{/ifCond}}{{#ifCond usertype "host"}} - Host{{/ifCond}}{{#ifCond usertype "support"}} - Tech Support{{/ifCond}}
                     </div>
                     <div class="groupchat-message--content">
                         <p>{{{message}}}</p>
@@ -2772,9 +2772,9 @@ function UpdateClientLocation()
             $privatechats.append(privatecontainer_template({chatid : chatid, tabnickname: tab_nickname, nickname: nickname, local: tab_location, img: tab_photo}));
             autosize($("private_chatfield_" + chatid));
 
-			{if group_id == "19"}
+			{if group_id == "1" || group_id == "19"}
 //				console.log(nickname + ", " + $("#admin_greeting").val());
-				$("#private_chatfield_" + chatid).val(nickname + ", " + $("#admin_greeting").val());
+				$("#private_chatfield_" + chatid).val("Hey " + nickname + ", " + $("#admin_greeting").val());
 			{/if}
 
             $("#private_chatfield_" + chatid).keypress(function(e) {

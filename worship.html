@@ -5,6 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
 
+
+
     <title>Online Worship - Northland Church</title>
     <meta content="Northland Church" property="og:title">
     <meta content="video.other" property="og:type">
@@ -24,7 +26,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     {!-- Relative stylesheet inside EE template group --}
-	<link rel="stylesheet" href="style">
+	<link rel="stylesheet" href="../style">
 
     {!-- Global site tag (gtag.js) - Google Analytics --}
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-966214-29"></script>
@@ -639,7 +641,7 @@
                     {/if}
 
                     {if service_live == "true"}
-                        <div class="alert alert-secondary" role="alert">
+                        <div class="alert alert-secondary nopadding" role="alert">
                             Having video problems? <br class="d-md-none"><span id="backup-replace"><a href="#" onclick="LoadYoutube(); return false;" class="underline">Click here to use our backup stream.</a></span>
                         </div>
 
@@ -672,38 +674,34 @@
 
                         <div id="current-viewers" class="below_videotab">Current Viewers: </div>
 
-                        {!-- Button trigger modal --}
-<!--						
-                        <button id="btn1" type="button" class="btn btn-primary" data-toggle="modal" data-target="#worshipModal" style="display:none">Launch Worship Modal</button>
--->						
                     {/if}
 
 					<div id="alert-container"></div>
                 </div>
 
                 <div class="onlineworship-social float-right d-none d-md-flex">
-                    <h3 class="sidebar-heading-h3">Share</h3>
-                    <div class="share-button facebook w-embed">
-                      <a onclick="window.open(this.href, 'twitter-share','width=580,height=296');return false;" href="http://www.facebook.com/sharer/sharer.php?u=https://www.northlandchurch.church/worship">
-                          <div>
-                              <img src="https://uploads-ssl.webflow.com/5a941dc804115100018caf6f/61099c0a32cfaf12f5d678f9_Facebook.svg">
-                          </div>
-                      </a>
-                  </div>
-                  <div class="share-button twitter w-embed">
-                      <a onclick="window.open(this.href, 'twitter-share','width=580,height=296');return false;" href="http://twitter.com/share?url=https://www.northlandchurch.church/worship&amp;text=Worship with me at Northland Church online. @northlandchurch">
-                          <div>
-                              <img src="https://uploads-ssl.webflow.com/5a941dc804115100018caf6f/610996cecd780b233b1f6815_Twitter.svg">
-                          </div>
-                      </a>
-                  </div>
-                  <div class="share-button email w-embed">
-                      <a href="#" data-toggle="modal" data-target="#inviteModal">
-                          <div>
-                              <img src="https://uploads-ssl.webflow.com/5a941dc804115100018caf6f/61099cba3dbc314da9d79116_email.svg">
-                          </div>
-                      </a>
-                  </div>
+					<h3 class="sidebar-heading-h3">Share</h3>
+					<div class="share-button facebook w-embed">
+						<a onclick="window.open(this.href, 'twitter-share','width=580,height=296');return false;" href="http://www.facebook.com/sharer/sharer.php?u=https://www.northlandchurch.church/worship">
+							<div>
+								<img src="https://uploads-ssl.webflow.com/5a941dc804115100018caf6f/61099c0a32cfaf12f5d678f9_Facebook.svg">
+							</div>
+						</a>
+					</div>
+					<div class="share-button twitter w-embed">
+						<a onclick="window.open(this.href, 'twitter-share','width=580,height=296');return false;" href="http://twitter.com/share?url=https://www.northlandchurch.church/worship&amp;text=Worship with me at Northland Church online. @northlandchurch">
+							<div>
+								<img src="https://uploads-ssl.webflow.com/5a941dc804115100018caf6f/610996cecd780b233b1f6815_Twitter.svg">
+							</div>
+						</a>
+					</div>
+					<div class="share-button email w-embed">
+						<a href="#" data-toggle="modal" data-target="#inviteModal">
+							<div>
+								<img src="https://uploads-ssl.webflow.com/5a941dc804115100018caf6f/61099cba3dbc314da9d79116_email.svg">
+							</div>
+						</a>
+					</div>
                 </div>
 
                 <div class="clear"></div>
@@ -757,7 +755,7 @@
                 {!-- TAB: Give --}
 				<div class="tab-pane fade" id="give" role="tabpanel" aria-labelledby="give-tab">
                     <div class="giving-form">
-                        <h4>Why We Give</h4>
+                        <h3>Why We Give</h3>
                         <p>
                             God has demonstrated grace to us, giving us what we don’t deserve and can never earn. 
                             In this same way, in all areas of our lives—with our time, our energy and our 
@@ -774,7 +772,7 @@
                         </p>
                         <form id="giving-form" class="mt-4">
                             <div id="amount" role="group" class="form-group">
-                                <h4>Give Now</h4>
+                                <h3>Give Now</h3>
                                 <p>Amount:</p>
                                 <div>
                                     <input name="amount" type="number" required="required" aria-required="true" class="form-control">
@@ -1306,9 +1304,10 @@ function UpdateClientLocation()
 {!-- Template for Private Chat Container --}
 <script type="text/x-handlebars-template" id="privatecontainer_html">
     <li id="privatecontainer_{{chatid}}" class="single-chat selected">
-        <div class="chat-tab tab-selected" id="tab{{chatid}}" style="display:block">{{tabnickname}}</div>
-
-        <div class="single-chat-window" id="div{{chatid}}" style="display: block;">
+<!--        <div class="chat-tab tab-selected" id="tab{{chatid}}" style="display:block">{{tabnickname}}</div>	-->
+<!--        <div class="single-chat-window" id="div{{chatid}}" style="display: block;">	-->
+        <div class="chat-tab " id="tab{{chatid}}" style="display:block">{{tabnickname}}</div>
+        <div class="single-chat-window" id="div{{chatid}}" style="display: none;">
             <div class="single-chat-header" id="chat-header{{chatid}}">
                 <div class="groupchat-avatar groupchat-avatar--mini">
                     <div class="groupchat-avatar--bg">
@@ -1316,9 +1315,8 @@ function UpdateClientLocation()
                     </div>
                 </div>
                 <h1>{{nickname}}</h1>
-<!--				<button type="button" class="close" onclick="ClosePrivateChat('{{chatid}}');" aria-label="Close">x</button>	-->
+<!--			<button type="button" class="close" onclick="ClosePrivateChat('{{chatid}}');" aria-label="Close">x</button>	-->
 				<button type="button" class="close" aria-label="Close">x</button>
-<!--                <a class="chat-close" data-id="{{chatid}}" href="javascript:ClosePrivateChat('{{chatid}}')">X</a>	-->
                 <br>
                 <p class="mb-0"><small>{{local}}<small></p>
                 <div class="clear"></div>
@@ -1669,10 +1667,11 @@ function UpdateClientLocation()
 
         $(document).on('click', '.single-chat-header', function(event) {
 			console.log(".single-chat-header clicked");
-			ToggleChatWindow($(this).attr('id').replace("chat-header",""));
 			if (event.target.innerHTML != "x")
 			{
+//				ToggleChatWindow($(this).attr('id').replace("chat-header",""));
 			}
+			ToggleChatWindow($(this).attr('id').replace("chat-header",""));
 
 			return false;
         });
@@ -1686,6 +1685,7 @@ function UpdateClientLocation()
         $('.dropdown-menu').on('click', function(event){
             var events = $._data(document, 'events') || {};
             events = events.click || [];
+
             for(var i = 0; i < events.length; i++) {
                 if(events[i].selector) {
                     //Check if the clicked element matches the event selector
@@ -2239,7 +2239,7 @@ function UpdateClientLocation()
         });
 
         socket.on('new chat user', function(data) {
-//			console.log(data);
+	//		console.log(data);
 			AddChatUser(data);
 
 			$(".private_link_" + data.chatid).show();
@@ -2338,10 +2338,28 @@ function UpdateClientLocation()
 			console.log("Receiving private message...", data);
 			if(data.chatid && data.nickname) 
 			{
+				// If there is no chat between this person
 				if ($("#privatecontainer_" + data.chatid).length == 0) 
 				{
-					StartPrivateChat(data.chatid, data.nickname);
+//					StartPrivateChat(data.chatid, data.nickname);
+					StartPrivateChatWhenNewMsg(data.chatid, data.nickname);
+					
+					// Show a new message notification on the private chat tab on the bottom and Add an alert div 
+					$("#tab" + data.chatid).addClass('new-message');
+
+					var alert_html = "";
+					//  Adding alert
+					if ($(".alert_" + data.chatid).length == 0)
+					{
+						alert_html = '<div class="alert alert-success alert-dismissible fade show alert_' + data.chatid + '" role="alert">' 
+							+ 'New Message from <a class="alert-link" style="cursor: pointer;" onclick="ToggleChatWindow(\'' + data.chatid + '\'); ToggleMessageAlert(\'' + data.chatid + '\', \'' + data.nickname + '\'); return false;">' + data.nickname + '</a>'
+							+ '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+							+ '</div>';
+
+						$("#alert-container").prepend(alert_html);
+					}
 				}
+				// If there is chat between this person 
 				else 
 				{
 					if (!$("#div" + data.chatid).is(":visible")) 
@@ -2771,8 +2789,7 @@ function UpdateClientLocation()
             autosize($("private_chatfield_" + chatid));
 
 			{if group_id == "1" || group_id == "19"}
-//				console.log(nickname + ", " + $("#admin_greeting").val());
-				$("#private_chatfield_" + chatid).val("Hey " + nickname + ", " + $("#admin_greeting").val());
+				$("#private_chatfield_" + chatid).val(nickname + ", " + $("#admin_greeting").val());
 			{/if}
 
             $("#private_chatfield_" + chatid).keypress(function(e) {
@@ -2811,13 +2828,75 @@ function UpdateClientLocation()
         else 
         {
 //			console.log("ToggleChatWindow in StartPrivateChat..");
-            ToggleChatWindow(chatid);
+//            ToggleChatWindow(chatid);
         }
 
         $("#private_chatfield_" + chatid).focus();
 
         UpdateChatTabs();
+
+		ToggleChatWindow(chatid);
     }
+
+
+	// Process an incoming private chat information create Private Chat Container
+    function StartPrivateChatWhenNewMsg(chatid, nickname) 
+    {
+        if ($("#privatecontainer_" + chatid).length == 0) 
+        {
+            var tab_nickname = "";
+            var tab_location = usersArray[chatid].location;
+            var tab_photo = usersArray[chatid].photourl;
+
+			// Process an anonymous worshiper's name
+            if (nickname.indexOf("Worshiper ") != -1) {
+                tab_nickname = nickname.replace("Worshiper ", "");
+            }
+            else if (nickname.length > 10) { tab_nickname = nickname.substr(0,10) + "...";	}
+            else { tab_nickname = nickname; }
+
+			// Put a private chat information into Private Chat Container Handlebar Templeate
+            $privatechats.append(privatecontainer_template({chatid : chatid, tabnickname: tab_nickname, nickname: nickname, local: tab_location, img: tab_photo}));
+            autosize($("private_chatfield_" + chatid));
+
+			{if group_id == "1" || group_id == "19"}
+				$("#private_chatfield_" + chatid).val("Hey " + nickname + ", " + $("#admin_greeting").val());
+			{/if}
+
+			// An Eventhandler for a Textarea in the Private Chat Container
+            $("#private_chatfield_" + chatid).keypress(function(e) {
+				if (e.keyCode == 13) {
+					e.preventDefault();
+					let message = $("#private_chatfield_" + chatid).val()
+					if (message) 
+					{
+						SendPrivateMessage(chatid, message);
+						$("#private_chatfield_" + chatid).val("");
+						$("#private_chatfield_" + chatid).resize();
+
+						// Change the text of the new message alert element
+						var nickname = $("#private_chatfield_" + chatid).data("chatname");
+						var alert_html = 'You replied to <a class="alert-link" style="cursor: pointer;" onclick="ToggleChatWindow(\'' + chatid + '\'); return false;">' + nickname + '</a>'
+									+ '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+
+						var $el = $(".alert_" + chatid);
+						$el.html(alert_html);
+						$el.removeClass('alert-success').removeClass('alert-dark').addClass('alert-light');
+					}
+                }
+            });
+
+            // Reposition tabs if it's outside the max in the tab slider
+            var chatid_tab_index = $('#privatecontainer_' + chatid).index('.single-chat');
+
+            if (chatid_tab_index > chat_tabs_max + chat_slider_index - 1) 
+            {
+                SetChatTabIndex(chatid_tab_index - chat_tabs_max + 1);
+            }
+        }
+
+        UpdateChatTabs();
+    }	
 
     function ClosePrivateChat(chatid) 
     {
@@ -2981,6 +3060,38 @@ function UpdateClientLocation()
             $('#div' + temp_divid).css({'bottom': '56px', 'left': $('#privatecontainer_' + temp_divid).position().left});
         });
 
+    }
+
+
+    function UpdateChatTabsWithoutMove() 
+    {
+        chat_tabs_open = $('.single-chat').length;
+//		console.log("chat_tabs_open: ", chat_tabs_open);
+
+        if (chat_tabs_open > chat_tabs_max) 
+        {
+            chat_tab_bar_width = chat_tabs_max * 100; // 102 pixels wide per chat tab
+
+            if(chat_slider_index >= 0 && (chat_tabs_max + chat_slider_index) < chat_tabs_open) {
+//                console.log("chat-right show");
+				$('#chat-right').show();
+            } else {
+//                console.log("chat-right hide");
+                $('#chat-right').hide();
+            }
+
+            if(chat_slider_index <= 0) {
+                $('#chat-left').hide();
+            } else {
+                $('#chat-left').show();
+            }
+        }
+        else
+        {
+            chat_tab_bar_width = chat_tabs_open * 100; // 102 pixels wide per chat tab
+            $('#chat-left').hide();
+            $('#chat-right').hide();
+        }
     }
 
     var ChatUserUpdateStartedFlag = false;

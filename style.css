@@ -511,6 +511,8 @@ button,
 	z-index: 60;
 	width: 98%;
 	position: fixed;
+	border-top: 1px solid #dee2e6;
+	border-left: 1px solid #dee2e6;
 }
 
 #chat-left {
@@ -848,4 +850,11 @@ button,
 	background-color: #1d1d1d;
 	padding: 10px 20px;
 	color: #fff;
+}
+
+#worship-contain .tab-content {
+	border: 1px solid #dee2e6;
+}
+.nopadding {
+	padding: 0;
 }

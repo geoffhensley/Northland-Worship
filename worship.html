@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
 
-
+	<meta name="robots" content="nofollow">
 
     <title>Online Worship - Northland Church</title>
     <meta content="Northland Church" property="og:title">
@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 
     {!-- Relative stylesheet inside EE template group --}
-	<link rel="stylesheet" href="../style">
+	<link rel="stylesheet" href="style">
 
     {!-- Global site tag (gtag.js) - Google Analytics --}
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-966214-29"></script>
@@ -641,7 +641,7 @@
                     {/if}
 
                     {if service_live == "true"}
-                        <div class="alert alert-secondary nopadding" role="alert">
+                        <div class="alert alert-secondary" role="alert">
                             Having video problems? <br class="d-md-none"><span id="backup-replace"><a href="#" onclick="LoadYoutube(); return false;" class="underline">Click here to use our backup stream.</a></span>
                         </div>
 
@@ -710,9 +710,9 @@
 		<div class="col-lg-5 omega worship-contain--col">
 			<nav class="tab-nav">
 				<div class="nav nav-tabs nav-pills nav-justified justify-content-center" role="tablist">
-					<a class="d-flex justify-content-center align-items-center nav-item nav-link active" id="map-tab" data-toggle="tab" href="#map" role="tab" aria-controls="map" aria-selected="true">Map</a>
+					{!--<a class="d-flex justify-content-center align-items-center nav-item nav-link active" id="map-tab" data-toggle="tab" href="#map" role="tab" aria-controls="map" aria-selected="true">Map</a>--}
                     {!-- <a class="d-flex justify-content-center align-items-center nav-item nav-link" id="notes-tab" data-toggle="tab" href="#notes" role="tab" aria-controls="notes" aria-selected="false">Notes</a>	--}
-					<a class="d-flex justify-content-center align-items-center nav-item nav-link" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="false">Group Chat</a>
+					<a class="d-flex justify-content-center align-items-center nav-item nav-link active" id="chat-tab" data-toggle="tab" href="#chat" role="tab" aria-controls="chat" aria-selected="false">Group Chat</a>
                     <a class="d-flex justify-content-center align-items-center nav-item nav-link" id="guide-tab" data-toggle="tab" href="#guide" role="tab" aria-controls="guide" aria-selected="false">Worship Guide</a>
                     <a class="d-flex justify-content-center align-items-center nav-item nav-link" id="give-tab" data-toggle="tab" href="#give" role="tab" aria-controls="give" aria-selected="false">Give</a>
 				</div>
@@ -720,7 +720,7 @@
 
 			<div class="tab-content">
                 {!-- TAB: Map --}
-				<div class="tab-pane fade show active" id="map" role="tabpanel" aria-labelledby="map-tab"></div>
+				<div class="tab-pane fade" id="map" role="tabpanel" aria-labelledby="map-tab" style="display:none"></div>
 
                 {!-- TAB: Notes --}
 				{!-- <div class="tab-pane fade" id="notes" role="tabpanel" aria-labelledby="notes-tab">
@@ -728,7 +728,7 @@
 				</div> --}
 
                 {!-- TAB: Chat --}
-				<div class="tab-pane fade" id="chat" role="tabpanel" aria-labelledby="chat-tab">
+				<div class="tab-pane fade show active" id="chat" role="tabpanel" aria-labelledby="chat-tab">
 					<div class="row">
 						<div class="col">
 							<div id="chat-field-box">
@@ -755,7 +755,7 @@
                 {!-- TAB: Give --}
 				<div class="tab-pane fade" id="give" role="tabpanel" aria-labelledby="give-tab">
                     <div class="giving-form">
-                        <h3>Why We Give</h3>
+                        <h4>Why We Give</h4>
                         <p>
                             God has demonstrated grace to us, giving us what we don’t deserve and can never earn. 
                             In this same way, in all areas of our lives—with our time, our energy and our 
@@ -772,7 +772,7 @@
                         </p>
                         <form id="giving-form" class="mt-4">
                             <div id="amount" role="group" class="form-group">
-                                <h3>Give Now</h3>
+                                <h4>Give Now</h4>
                                 <p>Amount:</p>
                                 <div>
                                     <input name="amount" type="number" required="required" aria-required="true" class="form-control">
@@ -2173,7 +2173,7 @@ function UpdateClientLocation()
     //////////////////////////////////////////////////////////////////////////////////////
     function ChatConnect() 
     {
-        socket = io.connect('https://chatworship.northlandchurch.net:3000', {
+        socket = io.connect('https://nodeworship.northlandchurch.net:3000', {
             'reconnect': true,
             'reconnectionDelay': 5000,
             'reconnectionAttempts': 100,
